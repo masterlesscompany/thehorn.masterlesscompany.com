@@ -24,7 +24,7 @@
   <div class="nav-in">
     <a class="brand" href="{{ '/' | relative_url }}">
       <svg class="seal" aria-hidden="true"><use href="#i-seal"/></svg>
-      <span><b>{{ site.title }}</b><small>FREE COMPANY</small></span>
+      <span><b>{{ site.title }}</b><small>COMPANY OF THE HORN</small></span>
     </a>
     <div class="nav-links">
       <a href="{{ '/' | relative_url }}"{% if page.url == '/' %} aria-current="page"{% endif %}>장부</a>
@@ -43,15 +43,15 @@
 <footer>
   <div class="wrap foot">
     <div>
-      <div class="name">{{ site.title }} <span style="font-family:var(--cinzel);font-weight:600;font-size:13px;letter-spacing:.2em;color:var(--ember);">FREE COMPANY</span></div>
+      <div class="name">{{ site.title }} <span style="font-family:var(--cinzel);font-weight:600;font-size:13px;letter-spacing:.2em;color:var(--ember);">COMPANY OF THE HORN</span></div>
       <p>Character-first 2D auto-battle · Campaign-based mission progression · Autonomous character growth · Traceable agent decisions · Minimum Viable Gaming Agent.</p>
-      <p>Wanted AI Championship 2026 출품작의 프로젝트 사이트. 기획 정본 v5.2 (2026-09-10) 기준.</p>
+      <p>Wanted AI Championship 2026 출품작 · 팀 BeyondFacade. 기획 원문은 v5.2 (2026-09-10) — 원문에는 가칭 「자유중대」로 적혀 있다.</p>
     </div>
     <div class="foot-links">
       <a href="{{ '/screens/' | relative_url }}">한 판 따라가기</a>
       <a href="{{ '/docs/' | relative_url }}">문서 서가 — 원문 6편</a>
       <a href="{{ '/log/' | relative_url }}">개발 로그</a>
-      <a href="https://github.com/{{ site.github_username }}/RPG-agnet" target="_blank" rel="noopener">게임 저장소 · {{ site.github_username }}/RPG-agnet ↗</a>
+      <a href="https://github.com/{{ site.github_org }}/{{ site.github_repo }}" target="_blank" rel="noopener">저장소 · {{ site.github_org }}/{{ site.github_repo }} ↗</a>
     </div>
   </div>
 </footer>

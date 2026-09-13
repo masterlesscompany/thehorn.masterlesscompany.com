@@ -1,45 +1,62 @@
 {% assign s = site.data.status %}
 <section class="chap tint" id="status">
 <div class="wrap">
-  {% include chap-head.html c=include.chap h="이미 증명한 것, 아직 남은 것." lead="게임 본체 저장소에는 이전 기획(v4 · 「에르덴 용병단」)을 구현한 코드가 있다. 무엇이 이미 테스트로 굳었고, v5.2 로 가려면 무엇이 바뀌어야 하는지 그대로 적는다." %}
+  {% include chap-head.html c=include.chap h="이미 만든 것, 아직 모르는 것." lead="팀 BeyondFacade 가 저장소를 연 지 이틀. 계약을 먼저 쓰고, 그 위에 결정 경로를 세우고, 모델 사다리를 실제로 재 봤다. 개발일지에 적힌 숫자만 옮긴다." %}
 
   <div class="warn">
     <svg class="ic" aria-hidden="true"><use href="#i-warn"/></svg>
-    <p><strong>이 장의 수치는 이전 버전(v4) 코드 기준 실측입니다 — v5.2 기능이 아닙니다.</strong>
-    측정일 {{ s.measured }} · 대상 커밋 <code>{{ s.commit }}</code> · 저장소 <code>{{ s.repo }}</code>. E1 은 규칙 기반 Fake 모델의 결과이고, 실모델 결과는 아직 없습니다.</p>
+    <p><strong>이 장의 수치는 팀 개발일지({{ s.source }})에 적힌 값입니다.</strong>
+    {{ s.as_of }} 기준 작업은 아직 커밋되지 않았고, 테스트 72건은 그날 다시 돌려 보지 못한 <strong>리포트 기록값</strong>입니다. 모델 품질 평가(게이트)는 아직 돌리지 않았습니다 — 아래 사다리 표는 속도·메모리 실측입니다.</p>
   </div>
 
   <div class="grid g4" style="margin-top:20px;">
     {% for x in s.stats %}<div class="stat"><div class="n">{{ x.n }}<small>{{ x.unit }}</small></div><div class="k">{{ x.k }}</div><div class="s">{{ x.s }}</div></div>{% endfor %}
   </div>
 
-  <div class="sub-h"><h3>기획서의 약속을 의견이 아니라 테스트로</h3></div>
+  <div class="sub-h"><h3>계약 5종 — 코드보다 먼저 쓴 것</h3><p class="muted">Freeze 전 v0.9 DRAFT. 파일마다 주인이 있고, 바꾸려면 주인에게 먼저 말한다</p></div>
   <div class="table-wrap">
     <table>
-      <thead><tr><th>약속</th><th>v4 코드에서 강제하는 방식</th><th>v5.2 에서도 유효한 근거</th></tr></thead>
-      <tbody>{% for g in s.guards %}<tr><td><strong>{{ g.rule }}</strong></td><td>{{ g.how }}</td><td>{{ g.v52 }}</td></tr>{% endfor %}</tbody>
+      <thead><tr><th>파일</th><th>줄</th><th>소유</th><th>무엇</th></tr></thead>
+      <tbody>{% for c in s.contracts %}<tr><td><code>{{ c.file }}</code></td><td class="num">{{ c.lines }}</td><td><strong>{{ c.owner }}</strong></td><td>{{ c.what }}</td></tr>{% endfor %}</tbody>
     </table>
+  </div>
+  <p class="muted" style="margin-top:10px;">숨은 생각(CoT)을 기록하지 않는다는 약속은 관례가 아니라 스키마다 — Trace 레코드에 <code>thinking</code> · <code>chain_of_thought</code> 필드가 있으면 검증에서 떨어진다.</p>
+
+  <div class="sub-h"><h3>코드가 캐릭터 대신 결정할 때</h3><p class="muted">HANDS OFF — 대신 내린 결정은 숨기지 않고 <code>fallback=True</code> 로 남긴다</p></div>
+  <div class="grid g2">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>코드</th><th>상황</th><th>처리</th></tr></thead>
+        <tbody>{% for f in s.fallback %}<tr><td><strong>{{ f.code }}</strong></td><td>{{ f.when }}</td><td>{{ f.then }}</td></tr>{% endfor %}</tbody>
+      </table>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Bounded Context</th><th>파일 · 줄</th><th>무엇</th></tr></thead>
+        <tbody>{% for b in s.bcs %}<tr><td><code>{{ b.name }}</code></td><td class="num">{{ b.files }} · {{ b.lines }}</td><td>{{ b.what }}</td></tr>{% endfor %}</tbody>
+      </table>
+    </div>
   </div>
 
-  <div class="sub-h"><h3>E1 · 단장이 실제로 도움이 되는가</h3><p class="muted">Fake 모델 · 조합당 시드 200 · 같은 시드로 ON/OFF 를 짝지어 비교(McNemar). p 는 “이 차이가 우연일 확률”이고, 작을수록 우연이 아니다</p></div>
+  <div class="sub-h"><h3>모델 사다리 실측 — Qwen3.5 · thinking OFF / ON</h3><p class="muted">RTX 5060 Ti · 고정 입출력 JSON · temperature 0 · seed 12031 · warm · 각 3회. 결정 1건당 시간</p></div>
   <div class="table-wrap">
     <table>
-      <thead><tr><th>조합</th><th>단장 ON 승률</th><th>OFF 승률</th><th>ON만 이김 / OFF만 이김</th><th>p</th><th>판정</th></tr></thead>
-      <tbody>{% for r in s.e1 %}<tr><td><strong>{{ r.combo }}</strong></td><td class="num">{{ r.on }}</td><td class="num">{{ r.off }}</td><td class="num">{{ r.wins }}</td><td class="num">{{ r.p }}</td><td>{{ r.verdict }}</td></tr>{% endfor %}</tbody>
+      <thead><tr><th>모델</th><th>OFF</th><th>ON</th><th>tok/s</th><th>로드 후 VRAM</th></tr></thead>
+      <tbody>{% for r in s.ladder %}<tr><td><strong>{{ r.model }}</strong></td><td class="num">{{ r.think_off }}</td><td class="num">{{ r.think_on }}</td><td class="num">{{ r.tps }}</td><td class="num">{{ r.vram }}</td></tr>{% endfor %}</tbody>
     </table>
   </div>
-  <p class="muted" style="margin-top:10px;">전사 몰빵에서 단장이 오히려 손해라는 결과를 감추지 않는다 — 조합을 가리지 않는 고정 편성 규칙의 한계이고, 다음 실험 대상이다.</p>
+  <div class="grid g2" style="margin-top:16px;">
+    <div class="leaf">
+      <h4>「미종료」는 모델 불합격이 아니다</h4>
+      <p>컨텍스트 8K 에서 thinking 이 끝나지 않고 예산을 다 태웠다 — 생성이 정확히 8192 − 프롬프트에서 끊겼다. 2b 를 32K 로 다시 돌리니 끝났다. 측정 설정의 실패이지 스키마 게이트 실패로 적지 않는다.</p>
+    </div>
+    <div class="leaf">
+      <h4>344 Snapshot 한 벌을 도는 데</h4>
+      <div class="table-wrap" style="margin-top:8px;"><table><tbody>{% for w in s.wallclock %}<tr><td>{{ w.k }}</td><td class="num"><strong>{{ w.v }}</strong></td></tr>{% endfor %}</tbody></table></div>
+      <p class="muted" style="margin-top:8px;">OFF 전체가 20분 안이다. 임계경로는 GPU 가 아니라 Snapshot 저작 · thinking ON 격자 · Harness 구축이다.</p>
+    </div>
+  </div>
 
-  <div class="sub-h"><h3>v4 → v5.2 전환 격차</h3></div>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>영역</th><th>v4 코드 (지금)</th><th>v5.2 정본 (이 사이트)</th></tr></thead>
-      <tbody>{% for g in s.gap %}<tr><td><strong>{{ g.area }}</strong></td><td>{{ g.v4 }}</td><td>{{ g.v52 }}</td></tr>{% endfor %}</tbody>
-    </table>
-  </div>
-  <div class="leaf" style="margin-top:16px;">
-    <h4>v4 가 이미 증명했고 v5.2 가 그대로 가져가는 것</h4>
-    <div class="tags" style="margin-top:10px;">{% for k in s.kept %}<span class="tag tag-moss">{{ k }}</span>{% endfor %}</div>
-  </div>
+  <p class="muted" style="margin-top:20px;">누가 무엇을 앞두고 있는지는 <a href="{{ '/kanban/' | relative_url }}">팀 칸반</a>, 날마다의 기록은 <a href="{{ '/log/' | relative_url }}">개발 로그</a>에 있다.</p>
 </div>
 </section>

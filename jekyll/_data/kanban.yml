@@ -1,102 +1,69 @@
-# 역할별 칸반 — RPG 저장소 기획서 v4(2026-09-09) 기준. v5.2 기능이 아니다.
+# 팀 칸반 — devlog/devlog.md(팀 개발일지) 기준. 사람이 고치고, 사이트 반영은 매일 23:00.
 #
-# 역할은 기획서 v4 §3.2 표 그대로다(코어 2 + 위성 3). 카드는 §12 절단선의 "실제 상태"와
-# §14.2 구현 현황 · §14.3 미뤄진 것 · §14.4 앞으로 진행 순서에서 옮겼고, 어느 역할에
-# 두느냐는 §3.2 "담당 범위" 로 나눴다 — 원문에 카드별 담당자가 적혀 있지는 않다.
+# 줄 = 일지 머리말의 팀원 5인 + 담당 미정. 역할 표기도 머리말 그대로다.
+# 카드 출처는 일지의 "다음 작업" 체크리스트(09-10 §7 · 09-11 §11)와 본문의 소유 표(09-11 §3).
+# 일지에 이름이 적힌 일은 그 사람에게, 이름은 없지만 역할 범위가 분명한 일은 그 역할에 둔다
+# (`basis: role` 로 표시). 둘 다 아니면 "담당 미정" — 추측으로 사람에게 붙이지 않는다.
 #
-# col: done(9/9 기준 돌아감) · a(→9/20 A 제출) · b(→10/17 B 데모데이) · hold(보류 · C 이후)
-# b 카드의 seq 는 §14.4 표의 순번이다 — 앞 순번이 끝나야 뒤가 시작한다.
+# col: done(완료) · next(다음) · carry(이월 — 09-10 에서 넘어왔거나 선행 결정 대기) · decide(결정 필요)
+# flag: 예정일이 지났는데 일지에 기록이 없는 카드
 # 주의: 키 이름에 `no:` 를 쓰지 않는다(YAML 1.1 → false).
 
 updated: 2026-09-13
-source: "기획서 v4 (2026-09-09) §3.2 · §12 · §14"
+source: "팀 개발일지 2026-09-10 · 2026-09-11"
 
 columns:
-  - { id: done, name: 완료,        sub: "2026-09-09 기준 코드에서 돈다" }
-  - { id: a,    name: A 제출,      sub: "지금 → 9/20 · 기능 추가 없음" }
-  - { id: b,    name: B 데모데이,  sub: "9/21 → 10/17 · 순번대로" }
-  - { id: hold, name: 보류 · C,    sub: "사유가 있는 보류 · 10/18 이후" }
-
-# 역할을 가리지 않는 것 — §3.4 검증 날, §14.4 상시.
-common:
-  - { title: "9/19 검증 날", src: "§3.4 · §14.4", note: "새 기능 없이 5명이 각자 다른 경로로 완주" }
-  - { title: "10/15~16 검증 날", src: "§3.4 · §14.4 B-10", note: "이틀. 새 기능 없이" }
-  - { title: "마일스톤마다 페르소나 QA 5인", src: "§14.4 상시", note: "발견은 docs/qa/ 에 남기고, 고치고, 재검한다" }
+  - { id: done,   name: 완료,      sub: "09-10 · 09-11 일지에 적힌 것" }
+  - { id: next,   name: 다음,      sub: "09-11 §11 에서 새로 생긴 일" }
+  - { id: carry,  name: 이월,      sub: "09-10 에서 넘어왔거나 선행 결정 대기" }
+  - { id: decide, name: 결정 필요, sub: "Freeze · 커밋 전에 정할 것" }
 
 roles:
-  - id: core-a
-    name: 코어 A
-    scope: 규칙 엔진(순수 도메인) · 하네스(스키마·검증·재시도·폴백) · Fake/Replay 어댑터 · 진영 대칭 전투 엔진
-  - id: core-b
-    name: 코어 B
-    scope: 오케스트레이터·캐릭터 에이전트 프롬프트 · 재계획 트리거 · 승산 휴리스틱 · 보스 in-context 적응
-  - id: eval
-    name: 평가·실험
-    scope: 트레이스 스키마 소유자 · 실험 러너 · 분포 차트 · 모델 벤치마크
-  - id: front
-    name: 프론트·배포
-    scope: 3패널 트레이스 뷰어 · 실도메인 배포 · 투표 사용자 진입 화면
-  - id: pm
-    name: 콘텐츠·발표·PM
-    scope: 세계관 · 캐릭터 프로필 · 이벤트 스키마 · 시드 시나리오 · 발표자료
+  - { id: ryu,   name: 류준,   scope: "Team Lead · Agent Harness" }
+  - { id: shin,  name: 신채연, scope: "Game Frontend · Rule Engine" }
+  - { id: jang,  name: 장민석, scope: "Evaluation" }
+  - { id: kim,   name: 김충식, scope: "Scenario · Content" }
+  - { id: lee,   name: 이은상, scope: "QA" }
+  - { id: none,  name: 담당 미정, scope: "일지에 담당이 적히지 않은 일" }
 
 cards:
-  # ── 코어 A ─────────────────────────────────────────
-  - { role: core-a, col: done, title: "규칙 엔진(진영 대칭) + 하네스 + Fake/Replay", src: "§12" }
-  - { role: core-a, col: done, title: "쓰러짐 3분기 + 굴림·경계", src: "§6.0 · §14.2" }
-  - { role: core-a, col: done, title: "결과 5등급 · 「철수」에 부상자 허용", src: "§12 · 팀 결정 #13" }
-  - { role: core-a, col: done, title: "뿔피리 + 전령관 지연", src: "§8.2 · §12" }
-  - { role: core-a, col: done, title: "끌려감 · 회수 결정(비용·기한 표시, 저장만)", src: "§6.8 · §14.2" }
-  - { role: core-a, col: done, title: "인터미션 — 훈련 거부 · 생애 이벤트 파라미터 변경", src: "§5.1 · §6.7" }
-  - { role: core-a, col: b,    seq: 2, title: "최소 교전 턴 하한 (보스 8 / 일반 3)", src: "팀 결정 #5 · §14.4", note: "실모델 연결 직후여야 회귀 테스트가 의미를 갖는다" }
-  - { role: core-a, col: b,    seq: 6, title: "회수 출동 개방", src: "§6.8 · §14.4", note: "성공률 60~70% 로 튠" }
-  - { role: core-a, col: hold, title: "HORN_CHARGES 를 계약 단위로", src: "§14.3", note: "설계 결정 대기 — 18출동 계약이 열릴 때 세션 수명과 함께" }
-  - { role: core-a, col: hold, title: "저장된 런 이어 돌리기 (boss_title·forsaken 복원)", src: "§14.3", note: "B단계 해당 기능의 일부로" }
-  - { role: core-a, col: hold, title: "생애주기 완성 — 이탈 → 충원 주사위 → 대체자 → 복귀 → 사망 파급", src: "§14.2 · §14.4 C", note: "지금은 스키마만" }
+  # ── 류준 · Team Lead · Agent Harness ─────────────────
+  - { role: ryu, col: done, title: "decision_io · trace 스키마 v0.9", src: "09-11 §3", note: "숨은 CoT 금지(C9)를 관례가 아니라 스키마로 강제" }
+  - { role: ryu, col: done, title: "reason_codes v0.9 — 62개, 호출당 25~28개", src: "09-11 §3", with: 김충식 }
+  - { role: ryu, col: done, title: "apps/agent 결정 유즈케이스 — 계약 검증 · Retry · Fallback", src: "09-11 §4", basis: role, note: "F02(Legal Action 밖)는 Retry 없이 즉시 Fallback" }
+  - { role: ryu, col: next, title: "계약 소유자 확인 4건", src: "09-11 §11", note: "CoT 가드 깊이 · actor 종류 · 실패 코드 필수 필드 · life_seed.text 명명" }
+  - { role: ryu, col: carry, title: "DecisionResult 재설계", src: "09-11 §7 · §11", basis: role, note: "시도별 실패/출력을 Trace 에 어떻게 남길지 정한 뒤" }
+  - { role: ryu, col: carry, title: "Fallback 미구현 scope 2개 — HORN_RESPONSE · Camp", src: "09-11 §4 · §11", basis: role, note: "뿔피리·Camp 가 계획에 들어올 때" }
+  - { role: ryu, col: decide, title: "커밋 — 브랜치를 딸지 main 에 올릴지", src: "09-11 §11", basis: role, note: "09-11 작업 전량이 미커밋" }
 
-  # ── 코어 B ─────────────────────────────────────────
-  - { role: core-b, col: done, title: "2층 판단 — 단장 + 단원 3", src: "§8.3 · §12" }
-  - { role: core-b, col: done, title: "재계획 트리거 · 승산 휴리스틱 · 포기", src: "§12" }
-  - { role: core-b, col: done, title: "보스 in-context 적응(한 판 안) · 전열 붕괴", src: "§12 · 팀 결정 #2" }
-  - { role: core-b, col: done, title: "보스 호칭 생성", src: "§8.5 · 팀 결정 #3" }
-  - { role: core-b, col: done, title: "학습 카드 — 출처 라운드·인물·종", src: "§8.4 · §12" }
-  - { role: core-b, col: done, title: "E1 Fake 단장 규칙 수정", src: "팀 결정 #14", note: "지목은 닿는 적 안에서만, 적 3기 이상이면 광역 우선" }
-  - { role: core-b, col: b,    seq: 1, title: "실모델 연결 — gemini / anthropic 어댑터", src: "§14.4", note: "열쇠. 아래 절반이 이것에 막혀 있다" }
-  - { role: core-b, col: b,    seq: 7, title: "보스 호칭 + 카드가 판을 넘는 시연 경로", src: "§14.4", note: "5·6번이 있어야 성립" }
-  - { role: core-b, col: b,    seq: 9, title: "MBTI 표현 레이어 · 조언(희소)", src: "§12 · §14.4", note: "여력 시" }
-  - { role: core-b, col: hold, title: "보스 적응이 손에 안 닿는다 (지목 명중 47%)", src: "§14.3", note: "밸런스 설계 변경 — 기획서 승인 대기" }
-  - { role: core-b, col: hold, title: "적응 4종 중 셋이 같은 필드(boss_focus)", src: "§14.3", note: "「돌파」 관통화는 설계 변경" }
-  - { role: core-b, col: hold, title: "E3 세 축 계수 가르기 (ADJUST_RISK = ADJUST_SACRIFICE)", src: "§14.3", note: "밸런스 변경 — 실모델을 붙여도 안 갈라진다" }
-  - { role: core-b, col: hold, title: "학습 카드 완성 — 카운터 카드 10~12장 · 패턴 지표 7종 · 보스 3형태 슬롯", src: "§14.3 · §14.4 C", note: "카드 풀이 커질 때 apply_cards 를 Strategy 로" }
+  # ── 신채연 · Game Frontend · Rule Engine ─────────────
+  - { role: shin, col: done, title: "rule_engine.api.md v0.9", src: "09-11 §3" }
+  - { role: shin, col: done, title: "apps/game — Trace JSONL append-only 어댑터", src: "09-11 §4", basis: role, note: "비어 있지 않은 파일에는 쓰기를 거부" }
+  - { role: shin, col: next, title: "게임 클라이언트 Flutter 전환", src: "09-10 §7 · 팀 결정 09-13", basis: role, note: "Next.js / Vite 후보를 Flutter 로 닫았다 → frontend/Dockerfile · compose 프로파일 해제" }
 
-  # ── 평가·실험 ───────────────────────────────────────
-  - { role: eval, col: done, title: "트레이스 스키마 KINDS 29종 + 계약 샘플", src: "§3.3", note: "샘플이 낡았는지 묻는 테스트까지" }
-  - { role: eval, col: done, title: "실험 E1 (200시드)", src: "§10.1 · §12" }
-  - { role: eval, col: done, title: "실험 E2 · E3", src: "§10.1 · §12" }
-  - { role: eval, col: done, title: "자동 대전 · 시드 결정론 27,954 이벤트", src: "§9.3 · §12" }
-  - { role: eval, col: b,    seq: 1, title: "E4 모델 벤치마크", src: "§14.4", note: "실모델 연결과 함께" }
-  - { role: eval, col: b,    seq: 3, title: "mission_end.ended_by + E7 로그", src: "§14.3 · §14.4", note: "트레이스 계약 추가라 UI 작업 전에" }
-  - { role: eval, col: b,    seq: 4, title: "E7 구현 — 뿔피리 vs 자율 후퇴", src: "§14.4", note: "데모 10분의 5번 슬라이드" }
-  - { role: eval, col: hold, title: "수하·소환·회수 payload 근거 · 효율 페널티 라벨", src: "§14.3", note: "다음 라운드에 트레이스 계약과 한 번에" }
-  - { role: eval, col: hold, title: "E5·E6·E8 · 5축 결산 리포트 · 평가 에이전트", src: "§14.4 C" }
-  - { role: eval, col: hold, title: "밸런스 지표 — 완주율·평균 사망·회수 성공률·성별 대칭", src: "§14.4 C" }
+  # ── 장민석 · Evaluation ─────────────────────────────
+  - { role: jang, col: done, title: "snapshot.format.md v0.9", src: "09-11 §3" }
+  - { role: jang, col: done, title: "eval/reproducibility.py — 계약 해시 · stale 표시", src: "09-11 §5", basis: role }
+  - { role: jang, col: done, title: "thinking 을 고정값에서 평가 축으로 — 사다리 4단 × 2설정", src: "09-11 §1", basis: role }
+  - { role: jang, col: done, title: "축 B 실측 — Qwen3.5 사다리 지연시간 · VRAM", src: "09-11 §8 · §9", basis: role, note: "OFF 전 사다리 19분. ON 은 2b 기준 78배" }
+  - { role: jang, col: next, title: "P1/P2 일정 재계산", src: "09-11 §11", basis: role, note: "thinking ON 78배 실측 반영" }
+  - { role: jang, col: next, title: "벤치마크 스크립트 · 원시 측정 데이터 보존", src: "09-11 §11", basis: role, note: "세션 스크래치에만 있다 — backend/eval/ 로 옮길지" }
+  - { role: jang, col: decide, title: "thinking ON 격자 축소 규모", src: "09-11 §2 · §11", basis: role, note: "Freeze 전. 줄일 대상은 ON 이지 OFF 가 아니다" }
 
-  # ── 프론트·배포 ─────────────────────────────────────
-  - { role: front, col: done, title: "인스펙터 + 서사 스트림 + 대시보드", src: "§11.2 · §12" }
-  - { role: front, col: done, title: "뿔피리·끌려감·회수·카드·호칭이 화면에 나온다", src: "§14.4" }
-  - { role: front, col: a,    title: "배포 확인 — 실도메인 · 투표 사용자 진입 화면 · 백엔드 두절 안내", src: "§14.4 A-1" }
-  - { role: front, col: b,    seq: 8, title: "인스펙터·결산 마감 — 지목 추적 · 효율 라벨 · 뿔피리/포기 구분", src: "§14.3 · §14.4", note: "3번의 계약 위에서 한 번에" }
-  - { role: front, col: hold, title: "뿔피리 잔여 새로고침 복원 (horn_left)", src: "§14.3", note: "세션 수명 결정과 같이" }
-  - { role: front, col: hold, title: "회차 뒤집힘 표시 — 「1차 출동(7회차)」 병기", src: "§14.3", note: "회차 번호 표기 규칙 전체와 함께" }
+  # ── 김충식 · Scenario · Content ─────────────────────
+  - { role: kim, col: next, title: "09-12 Reason Code Pilot Run", src: "09-11 §2 · §11", with: 류준, flag: 기록 없음, note: "9b · 2b · Seed 1 · 결정 유형별 40건 → bge-m3 → pgvector" }
+  - { role: kim, col: next, title: "09-13 Reason Code v1.0 FREEZE", src: "09-11 §2 · §11", with: 류준, flag: 기록 없음, note: "reason_note 필드 제거. 이후는 버전 범프로만" }
+  - { role: kim, col: decide, title: "OTHER 탈출구 채택 여부 · 사용률 상한", src: "09-11 §2 · §11", with: 류준, note: "Freeze 전" }
 
-  # ── 콘텐츠·발표·PM ──────────────────────────────────
-  - { role: pm, col: done, title: "기획서 v4 · 통합시나리오 v2", src: "§13 · §14", note: "로스터 성향 4축 실제 값 포함" }
-  - { role: pm, col: done, title: "팀 결정 14건 확정", src: "§14.1" }
-  - { role: pm, col: done, title: "로스터 5인 프리셋 · 성별", src: "§7.4 · 팀 결정 #10" }
-  - { role: pm, col: done, title: "A단계 몬스터 — 고블린 · 놀 · 성장기 미노타우루스", src: "팀 결정 #11" }
-  - { role: pm, col: a,    title: "로스터 스프라이트 재생성 · README · 발표자료", src: "§14.4 A-3", note: "남는 시간에만" }
-  - { role: pm, col: b,    seq: 5, title: "봄 사이클 5판 + 6회차 보스전 콘텐츠", src: "§14.4", note: "카드가 실제 로그에서 생기는 걸 보이려면 앞 판이 있어야 한다" }
-  - { role: pm, col: b,    seq: 9, title: "은화 · 성물", src: "§12 · §14.4", note: "여력 시" }
-  - { role: pm, col: b,    title: "데모데이 10분 구성 · 발표자료", src: "§11.3" }
-  - { role: pm, col: hold, title: "설계 문서 §5.6·§6.4 갱신 · spec-trace 대응표", src: "§14.3", note: "A단계 제출 뒤 한 번에" }
-  - { role: pm, col: hold, title: "18출동 전체 — 미션 12종 프리셋 · 오크 · 성체 · 킹 · 전리품 편제", src: "§14.3 · §14.4 C", note: "지금 채우면 거의 같은 판이 열여섯 번" }
+  # ── 이은상 · QA ─────────────────────────────────────
+  - { role: lee, col: next, title: "pytest 직접 재실행 확인", src: "09-11 §6 · §11", basis: role, note: "72건은 리포트 기록값이다. 커밋 전에 한 번" }
+
+  # ── 담당 미정 ───────────────────────────────────────
+  - { role: none, col: done, title: "포트 3700 / 8700 / 5436 · 플러그인 3종 · 지침 6종 826줄", src: "09-10 §1~3" }
+  - { role: none, col: done, title: "백엔드 스캐폴드 Fractal 11-File Set 정합 · .gitignore 3종", src: "09-10 §4~5" }
+  - { role: none, col: done, title: "로컬 DB — pgvector pg17 기동", src: "09-10 §6" }
+  - { role: none, col: carry, title: "backend/main.py 작성", src: "09-10 §7 · 09-11 §11", note: "0바이트라 backend 컨테이너가 뜨지 않는다" }
+  - { role: none, col: carry, title: "alembic init", src: "09-10 §7 · 09-11 §11", note: "마이그레이션 방식 확정 후" }
+  - { role: none, col: carry, title: "ERD 초안", src: "09-10 §7 · 09-11 §11", note: "테이블 1개 = Fractal 11-File Set 1개" }
+  - { role: none, col: carry, title: "docs/adr/ 개설 (최소 3건)", src: "09-10 §7 · 09-11 §11", note: "thinking 축 승격 · Reason Code Pilot 유도가 후보" }
+  - { role: none, col: carry, title: "core/ 매니저 네이밍 접두사", src: "09-10 §7 · 09-11 §11" }

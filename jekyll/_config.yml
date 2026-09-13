@@ -1,10 +1,10 @@
-# 자유중대 (Free Company) — 프로젝트 사이트
+# Masterless Company (용병단명 뿔피리 / Company of the Horn) — 프로젝트 사이트
 #
 # 소스는 저장소 루트가 아니라 이 `jekyll/` 하위에 격리한다 — 하네스(.claude/)·
 # 스크립트·설계 문서가 지킬 스캔 범위에 섞이지 않게 한다(secu-agent 원형).
 
-title: 자유중대
-title_en: Free Company
+title: Masterless Company
+title_en: Company of the Horn
 tagline: 캐릭터를 조종하지 않는다. 출발점과 환경을 만들 뿐이다.
 description: >-
   AI 캐릭터가 주어진 신체·성격·초기 방향 안에서 스스로 성장하고 판단하는 과정을
@@ -13,13 +13,15 @@ description: >-
 lang: ko
 
 # ⚠ baseurl 은 여기서 비워 둔다 — 로컬 `jekyll serve` 기준이다.
-# 배포는 프로젝트 페이지(whoareryu.github.io/thehorn/)라 `/thehorn` 가 한 겹
-# 붙는데, 배포 워크플로가 `--baseurl` 로 덮어쓴다.
+# 배포는 사용자 도메인(thehorn.masterlesscompany.com)이라 빈 값 그대로다. 배포
+# 워크플로는 configure-pages 가 주는 base_path 로 `--baseurl` 을 덮어쓴다 — 도메인이
+# 빠지면 `/<저장소명>` 이 한 겹 붙으므로 링크는 여전히 relative_url 을 통과시킨다.
 # 그래서 사이트 안의 모든 내부 링크는 반드시 relative_url 필터를 통과시킨다.
 # scripts/check_site.py 가 원시 `href="/…"` 의 부재를 검사한다.
 baseurl: ""
-url: "https://whoareryu.github.io"
-github_username: whoareryu
+url: "https://thehorn.masterlesscompany.com"
+github_org: masterlesscompany
+github_repo: thehorn.masterlesscompany.com
 
 plugins: []
 

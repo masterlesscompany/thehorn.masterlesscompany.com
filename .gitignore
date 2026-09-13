@@ -33,3 +33,9 @@ backend/eval/out/
 _site/
 .jekyll-cache/
 .jekyll-metadata
+
+# 개발일지 산출물 — scripts/split_devlog.py 가 devlog/devlog.md 에서 빌드 직전에 만든다
+jekyll/_logs/*-team.md
+jekyll/_includes/devlog_head.md
+jekyll/_includes/devlog_extra.md
+

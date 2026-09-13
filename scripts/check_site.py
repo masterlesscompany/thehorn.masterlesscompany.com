@@ -193,15 +193,36 @@ def main() -> int:
                 if frag not in ids:
                     fail("내부 링크 해소", f"{rel(p)}: '#{frag}' 앵커 없음 ({rel(target)})")
 
-    # 7. 구현 현황이 v4 기준임을 밝히는가
+    # 7. 구현 현황이 출처를 밝히는가 — 일지에 적힌 값이고, 72건은 재실행 전 기록값이다(설계 2026-09-13 §2.2)
     idx = pages.get(site / "index.html", "")
     sec = re.search(r'<section class="chap[^"]*" id="status">.*?</section>', idx, re.S)
-    if not sec or "v5.2 기능이 아닙니다" not in sec.group(0):
-        fail("구현 현황은 v4 기준 명시", "index.html #status 에 경고 문구가 없다")
+    for must in ("팀 개발일지", "리포트 기록값"):
+        if not sec or must not in sec.group(0):
+            fail("구현 현황은 출처 명시", f"index.html #status 에 '{must}' 가 없다")
+    # 데이터 키가 YAML 1.1 예약어(on/off/no/yes)면 값이 조용히 사라져 빈 칸이 된다 — 실제로 한 번 겪었다.
+    if sec and (m := re.search(r"<td[^>]*>\s*</td>", sec.group(0))):
+        fail("구현 현황은 출처 명시", f"index.html #status 에 빈 표 칸이 있다 — _data 키 이름을 확인: {m.group(0)}")
+
+    # 8. 칸반 · 개발 로그가 원본과 어긋나지 않는가
+    #    칸반 카드가 없는 줄을 가리키면 조용히 사라진다. 로그 편 수가 원본의 날짜 절 수와 다르면
+    #    split_devlog.py 를 빼먹고 빌드한 것이다 — 원본에 있는 날이 사이트에 없다.
+    kanban = (SRC / "_data" / "kanban.yml").read_text(encoding="utf-8")
+    roles = set(re.findall(r"^\s*-\s*\{\s*id:\s*([\w-]+)\s*,\s*name:", kanban, re.M))
+    for r in re.findall(r"role:\s*([\w-]+)", kanban):
+        if r not in roles:
+            fail("칸반 · 로그가 원본과 일치", f"_data/kanban.yml: 정의되지 않은 줄 '{r}'")
+    devlog = REPO / "devlog" / "devlog.md"
+    days = re.findall(r"^## \d{4}-\d{2}-\d{2}\s*$", devlog.read_text(encoding="utf-8"), re.M) if devlog.exists() else []
+    logged = len(re.findall(r'<details class="leaf team"', pages.get(site / "log" / "index.html", "")))
+    if not days:
+        fail("칸반 · 로그가 원본과 일치", "devlog/devlog.md 에 날짜 절이 없다 — 검사가 빈 집합을 통과하고 있다")
+    elif logged != len(days):
+        fail("칸반 · 로그가 원본과 일치", f"/log/ 팀 일지 {logged}편 ≠ 원본 날짜 절 {len(days)}개 — split_devlog.py 를 먼저 돌렸나")
 
     checks = [
         "상용 게임명 금지 (Visual §35)", "뿔피리 개수 표기 금지 (기획서 §34)", "목업마다 MOCK 배지 (Visual §29.8)",
-        "평가 결과는 NOT RUN (PART 1 §42)", "내부 링크는 relative_url (배포 baseurl)", "내부 링크 해소", "구현 현황은 v4 기준 명시",
+        "평가 결과는 NOT RUN (PART 1 §42)", "내부 링크는 relative_url (배포 baseurl)", "내부 링크 해소", "구현 현황은 출처 명시",
+        "칸반 · 로그가 원본과 일치",
     ]
     for c in checks:
         if c in fails:

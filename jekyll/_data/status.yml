@@ -1,46 +1,47 @@
-# 구현 현황 — ⚠ v4(에르덴 용병단) 코드 기준 실측이다. v5.2 기능이 아니다.
+# 구현 현황 — 팀 개발일지(devlog/devlog.md) 기준. 수치는 일지에 적힌 값만 옮긴다. 추정·반올림 금지.
 #
-# 수치는 ~/Documents/RPG 에서 실제로 돌려 본 값만 쓴다. 추정·반올림 금지.
-# 측정: 2026-09-11, 대상 커밋 e19b54c
-#   backend  `uv run pytest -q`  → 487 passed
-#   frontend `npm test`          → 22 pass
-#   `git rev-list --count HEAD`  → 47
-#   docs/devlog 46편 · docs/qa 3편 · backend+frontend .py/.ts/.tsx 14,593줄
+# ⚠ 일지 09-11 기준 팀 저장소는 커밋 0건(작업 트리)이다. 테스트 72건은 그날 세션에서
+#   직접 재실행하지 못한 "리포트 기록값"이라고 일지가 스스로 밝혔다(09-11 §6) — 그대로 적는다.
+# 일지가 새 날짜를 더하면 여기도 사람이 고친다. 사이트 반영은 매일 23:00.
 
-measured: "2026-09-11"
-commit: e19b54c
-repo: RPG-agnet
+as_of: "2026-09-11"
+source: 팀 개발일지 2026-09-10 · 2026-09-11
 
 stats:
-  - { n: "487", unit: 건, k: 백엔드 테스트, s: "uv run pytest -q · 전부 통과" }
-  - { n: "22",  unit: 건, k: 프론트 테스트, s: "npm test · 전부 통과" }
-  - { n: "47",  unit: 커밋, k: 3일간, s: "2026-09-07 ~ 09-09" }
-  - { n: "14.6", unit: k줄, k: 애플리케이션 코드, s: "Python · TypeScript" }
+  - { n: "2",  unit: 일,  k: 작업한 날,        s: "09-10 뼈대·규칙·인프라 · 09-11 첫 코드" }
+  - { n: "72", unit: 건,  k: 테스트,          s: "리포트 기록값 — 재실행 전 (09-11 §6)" }
+  - { n: "5",  unit: 종,  k: 계약,            s: "전부 v0.9 DRAFT (09-11 §3)" }
+  - { n: "0",  unit: 커밋, k: 09-11 작업,      s: "main 작업 트리에만 있다 (09-11)" }
 
-# 기획서의 약속을 의견이 아니라 테스트로 굳힌 것 (RPG CLAUDE.md "기획서가 테스트로 굳혀진 것")
-guards:
-  - { rule: 성별은 엔진 영향 0,      how: "판정 계층이 gender 를 읽지 않는다 — AST 테스트" , v52: "§6 Gender 영향 0" }
-  - { rule: 행운은 판단에 개입하지 않는다, how: "judgment 가 luck 을 읽지 않는다 — AST 테스트", v52: "§45 행운=실행 굴림" }
-  - { rule: MBTI 는 문자열로 던지지 않는다, how: "조립된 프롬프트에 MBTI 문자열이 없다", v52: "PART 1 §41 MUST NOT" }
-  - { rule: 같은 시드 = 같은 판,       how: "난수는 전부 Dice 포트 · CI 가 다른 프로세스에서도 확인", v52: "§43 Seed + Replay 재현" }
+# 09-11 §3 — 소유자는 일지 표 그대로
+contracts:
+  - { file: decision_io.schema.json, lines: 68,  owner: 류준,        what: "결정 입출력 — input 7필드 · reason_codes 1~4개" }
+  - { file: trace.schema.json,       lines: 48,  owner: 류준,        what: "Trace — 필수 10필드 · thinking/chain_of_thought 필드 금지" }
+  - { file: rule_engine.api.md,      lines: 61,  owner: 신채연,      what: "Rule Engine API" }
+  - { file: snapshot.format.md,      lines: 64,  owner: 장민석,      what: "Snapshot 포맷" }
+  - { file: reason_codes.v0.9.json,  lines: 109, owner: 류준 · 김충식, what: "Reason Code 62개 · 호출당 25~28개 노출" }
 
-# E1 · 단장이 실제로 도움이 되는가 — Fake(규칙 기반) 모델, 조합당 시드 200, 짝비교(McNemar).
-# 출처: RPG README.md "실험 — 말이 아니라 숫자로". 실모델 결과가 아니다.
-e1:
-  - { combo: 힐러 없음,   on: "84%", off: "26%", wins: "119 / 3", p: "<0.0001", verdict: 유의하게 이득 }
-  - { combo: 균등,        on: "96%", off: "80%", wins: "38 / 5",  p: "<0.0001", verdict: 유의하게 이득 }
-  - { combo: 방패병 몰빵, on: "0%",  off: "0%",  wins: "0 / 0",   p: "1.00",    verdict: 아무도 못 이긴다 }
-  - { combo: 전사 몰빵,   on: "78%", off: "94%", wins: "5 / 38",  p: "<0.0001", verdict: 유의하게 손해 }
+# 09-11 §4 — Bounded Context
+bcs:
+  - { name: apps/agent, files: 24, lines: 394, what: "결정 유즈케이스 — 계약 검증 · Retry · Fallback. LLM 은 Output Port 뒤, 어댑터는 Fake 하나" }
+  - { name: apps/game,  files: 11, lines: 63,  what: "Trace 기록 — JSONL append-only 어댑터" }
 
-# v4 → v5.2 전환 격차. 오른쪽이 이 사이트가 설명하는 정본이다(기획서 §44 제거 · §45 유지).
-gap:
-  - { area: 캐릭터,    v4: "고정 Named 5인",                          v52: "절차 생성 10인 — Physical·Age·MBTI 주사위" }
-  - { area: 클래스,    v4: "중장병·방패병·전령관·약탈병·장궁병",       v52: "Warrior·Guardian·Archer·Bard·Rogue — CLASS ≠ BUILD" }
-  - { area: 성장,      v4: "유저가 능력치를 배분",                      v52: "초기 Stats 만 유저, 이후 Growth 는 단원(Character AI)" }
-  - { area: 캠페인,    v4: "보스전 1판 · 2판 + 인터미션",               v52: "20 Mission · 4 Cycle · Camp 4회 · +5년 ×4" }
-  - { area: 보스 적응, v4: "in-context 관측 4규칙",                    v52: "Behavior Fingerprint — 같은 방법의 반복을 벌한다" }
-  - { area: 평가,      v4: "E1·E2·E3 — Fake 모델",                    v52: "E4 Model Ladder — 실모델 어댑터 미착수" }
-  - { area: 화면,      v4: "그래픽 없는 서사 + 인스펙터 2패널",         v52: "Character-first 2D Auto Battle + Evaluation Dashboard" }
+# 09-11 §4 — 코드가 캐릭터 대신 결정하면 반드시 fallback=True 로 드러낸다(HANDS OFF)
+fallback:
+  - { code: F01, when: "JSON 파싱 실패 · 스키마 위반 · 어휘 밖 코드",       then: "Retry 1회 후 Fallback" }
+  - { code: F02, when: "decision / target / weapon 이 Legal Action 밖",   then: "Retry 없이 즉시 Fallback" }
+  - { code: F15, when: "LLM 타임아웃",                                   then: "즉시 Fallback" }
 
-# v4 코드가 이미 증명하고 v5.2 가 그대로 유지하는 것(기획서 §45)
-kept: [뿔피리, Taken, Injury·Death, 트레이스·인스펙터, Replay, 시드 재현, 철수 판단, 트롤픽 허용, Rule Engine / LLM 분리]
+# 키를 on:/off: 로 쓰지 않는다 — YAML 1.1 에서 true/false 가 된다(no: 와 같은 함정).
+# 09-11 §8 · §9 — RTX 5060 Ti · 프롬프트 1,370토큰(§9 는 1,368) · temperature 0 · seed 12031 · warm · 각 3회
+ladder:
+  - { model: 0.8b, think_off: "0.45초", think_on: "미종료", tps: "280", vram: "1,559 MiB" }
+  - { model: 2b,   think_off: "0.63초", think_on: "48.9초 (32K ctx)", tps: "155", vram: "3,329 MiB" }
+  - { model: 4b,   think_off: "0.92초", think_on: "미종료", tps: "111", vram: "4,189 MiB" }
+  - { model: 9b,   think_off: "1.34초", think_on: "15.7초", tps: "71",  vram: "6,815 MiB" }
+
+# 344 Snapshot(Smoke 24 + DEV 160 + HOLDOUT 160) 기준 벽시계 추정 — 일지 §8
+wallclock:
+  - { k: "P0 제출 최소선 — 9b + 4b · OFF · 688건", v: "13분" }
+  - { k: "OFF 전 사다리 4단 · 1,376건",           v: "19분" }
+  - { k: "ON 2단(9b · 2b)만",                     v: "6시간 10분" }

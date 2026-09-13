@@ -2,7 +2,7 @@
 layout: base
 title: 개발 로그
 permalink: /log/
-description: 사이트를 만든 기록. 커밋마다 무엇을 왜 했는지.
+description: Masterless Company 팀 개발일지. 날마다 무엇을 왜 했는지 — 매일 23:00 에 반영된다.
 ---
 {% assign logs = site.logs | sort: "path" | reverse %}
 {% comment %}
@@ -15,13 +15,16 @@ description: 사이트를 만든 기록. 커밋마다 무엇을 왜 했는지.
   <div class="wrap">
     <p class="anno">THE CHRONICLE · {{ logs | size }} ENTRIES</p>
     <h1 style="font-size:46px;">무엇을 <em>왜</em> 했는지.</h1>
-    <p class="lead">커밋마다 한 편씩 남긴다. 커밋 훅이 메시지를 그대로 옮기므로, 잘못 짚었다가 되돌린 것까지 남는다.</p>
+    <p class="lead">팀이 <code>devlog/devlog.md</code> 에 날마다 이어 쓰는 일지를 <strong>매일 밤 23:00</strong> 에 날짜별로 옮긴다. 잘못 짚었다가 되돌린 것까지 원문 그대로 남기고, 원문끼리 어긋나는 곳에는 편집자 주만 단다.</p>
   </div>
 </header>
 
 <div class="ledger">
   <section class="chap">
     <div class="wrap-narrow">
+      <div class="leaf logbody" style="margin-bottom:28px;">{% capture h %}{% include devlog_head.md %}{% endcapture %}{{ h | markdownify }}</div>
+      {% capture extra %}{% include devlog_extra.md %}{% endcapture %}
+      {% if extra != "" %}<details class="leaf logbody" style="margin-bottom:40px;"><summary>한눈에 보는 마일스톤</summary>{{ extra | markdownify }}</details>{% endif %}
       {% if logs.size == 0 %}
         <div class="leaf"><p>아직 기록이 없다. 첫 커밋이 들어오면 여기에 쌓인다.</p></div>
       {% endif %}
@@ -32,6 +35,14 @@ description: 사이트를 만든 기록. 커밋마다 무엇을 왜 했는지.
             <span class="muted" style="font-weight:700;">{{ day.items | size }}편</span>
           </div>
           {% for log in day.items %}
+            {% if log.area == 'team' %}
+            {% comment %} 팀 일지는 하루치가 길다 — 가장 최근 날짜만 펼치고 나머지는 접는다 {% endcomment %}
+            <details class="leaf team" style="padding:20px 22px;margin-bottom:10px;"{% if forloop.parentloop.first %} open{% endif %}>
+              <summary><span class="tag tag-wax">팀 개발일지</span> <span class="muted">{{ log.date | date: "%Y-%m-%d" }} · 펼치기</span></summary>
+              <div class="logbody" style="margin-top:14px;">{{ log.content | markdownify }}</div>
+            </details>
+            {% continue %}
+            {% endif %}
             <article class="leaf" style="padding:20px 22px;margin-bottom:10px;">
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
                 <span class="tag {% if log.area == 'mock' %}tag-ember{% elsif log.area == 'site' or log.area == 'data' %}tag-wax{% elsif log.area == 'docs' or log.area == 'qa' %}tag-moss{% endif %}">{{ log.area }}</span>
@@ -49,11 +60,20 @@ description: 사이트를 만든 기록. 커밋마다 무엇을 왜 했는지.
 
 <style>
 .logbody{font-size:15px;line-height:1.72;color:var(--ink-2);}
-.logbody > ul{margin:0;padding:0;list-style:none;}
-.logbody > ul > li{margin-bottom:14px;}
-.logbody > ul > li:last-child{margin-bottom:0;}
-.logbody > ul > li > strong:first-child{display:block;color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.45;margin-bottom:6px;}
-.logbody ul ul{margin:8px 0 0;padding-left:20px;list-style:disc;}
+article .logbody > ul{margin:0;padding:0;list-style:none;}
+article .logbody > ul > li{margin-bottom:14px;}
+article .logbody > ul > li:last-child{margin-bottom:0;}
+article .logbody > ul > li > strong:first-child{display:block;color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.45;margin-bottom:6px;}
+article .logbody ul ul{margin:8px 0 0;padding-left:20px;list-style:disc;}
 .logbody p{margin:0 0 8px;}
 .logbody code{background:rgba(255,252,243,.8);border:1px solid var(--parch-line);}
+.logbody h3{font-size:19px;margin:28px 0 10px;}
+.logbody > h3:first-child{margin-top:0;}
+.logbody table{display:block;overflow-x:auto;max-width:100%;border-collapse:collapse;margin:10px 0 14px;font-size:13.5px;}
+.logbody th,.logbody td{border:1px solid var(--parch-line);padding:6px 10px;vertical-align:top;}
+.logbody pre{overflow-x:auto;background:rgba(43,33,24,.06);padding:12px 14px;border-radius:8px;font-size:12.5px;}
+.logbody blockquote{margin:10px 0;padding:8px 14px;border-left:3px solid var(--wax);background:var(--wax-bg);}
+.logbody ul{padding-left:20px;}
+details.leaf summary{cursor:pointer;font-weight:700;}
+details.team[open] summary .muted{display:none;}
 </style>
