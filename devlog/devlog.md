@@ -28,7 +28,7 @@ categories: devlog
 | backend | 8700 | `http://localhost:8700` |
 | postgres | 5436 | `127.0.0.1` 바인딩 전용 |
 
-- Postgres 포트는 순번제로 배정. **5432** foodopsagent · **5433** lifetutorial · **5434** beyondfacade · **5435** pigfarm 이 사용 중이라 **5436** 이 다음 자리였다.
+- Postgres 포트는 순번제로 배정. **5432** foodopsagent · **5433** lifetutorial · **5434** beyondbob · **5435** pigfarm 이 사용 중이라 **5436** 이 다음 자리였다.
 - 할당 직전 `ss -ltn`으로 3700 · 8700 · 5436 세 포트가 모두 비어 있음을 확인했다.
 - 값의 단일 출처는 루트 `.env` (`FRONTEND_PORT` / `BACKEND_PORT` / `POSTGRES_PORT`)이고, `docker-compose.yml`이 이를 참조한다. 단독 실행용으로 `backend/.env` · `frontend/.env.local`에 같은 값을 둔다.
 
@@ -110,7 +110,7 @@ docs 디렉터리는 파일별로 앵커(`/docs/`)를 걸었다. 앵커 없이 `
 
 ### 6. 로컬 DB — pgvector pg17 기동 확인
 
-다른 저장소 6곳(`kr.co.foodrm`, `cloud.beyondfacade`, `com.lifetutorial`, `demo.pigfarm`, `com.foodopenlab`, `rpg-agent`)의 compose 구성을 읽고 공통 관례를 그대로 따랐다.
+다른 저장소 6곳(`kr.co.foodrm`, `cloud.beyondbob`, `com.lifetutorial`, `demo.pigfarm`, `com.foodopenlab`, `rpg-agent`)의 compose 구성을 읽고 공통 관례를 그대로 따랐다.
 
 **확인한 관례**: 이미지 `pgvector/pgvector:pg17` · 포트 `127.0.0.1:54XX:5432` (LAN 노출 차단) · 컨테이너명 `{프로젝트}-db`/`-api`/`-web` · 계정은 user·db = 프로젝트명, 비번 `{프로젝트}-dev` · named volume + `pg_isready` healthcheck · 백엔드는 `depends_on: condition: service_healthy`.
 
@@ -121,7 +121,7 @@ docs 디렉터리는 파일별로 앵커(`/docs/`)를 걸었다. 앵커 없이 `
 - **`backend/.env`** — `DATABASE_URL=postgresql+psycopg://masterless:masterless-dev@127.0.0.1:5436/masterless` (호스트용). 컨테이너 안에서는 compose가 `db:5432`로 덮어쓴다.
 - **`backend/requirements.txt`** — fastapi · uvicorn[standard] · SQLAlchemy>=2.0 · psycopg[binary] · pgvector · alembic · pydantic · pydantic-settings · python-dotenv · httpx · pytest (11개).
 
-**`frontend` 서비스는 `profiles: ["frontend"]`로 뺐다.** `frontend/Dockerfile`도 `package.json`도 없는 상태라 그대로 두면 `docker compose up`이 프론트 빌드에서 즉시 깨진다. `cloud.beyondfacade`도 같은 이유로 프로파일을 쓰고 있었다.
+**`frontend` 서비스는 `profiles: ["frontend"]`로 뺐다.** `frontend/Dockerfile`도 `package.json`도 없는 상태라 그대로 두면 `docker compose up`이 프론트 빌드에서 즉시 깨진다. `cloud.beyondbob`도 같은 이유로 프로파일을 쓰고 있었다.
 
 **기동 검증**:
 
