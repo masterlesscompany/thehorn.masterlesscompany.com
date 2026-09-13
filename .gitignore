@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# Node
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# 환경 변수 · 자격증명
+.env
+.env.*
+!.env.example
+
+# 서비스 계정 키. 커밋되면 API 키 유출보다 나쁘다.
+gcp-sa.json
+*-sa.json
+*service-account*.json
+
+# 런 기록 (로컬 플레이 산출물). 트레이스 샘플은 docs/trace-samples/ 에 따로 둔다.
+backend/runs/
+backend/eval/out/
+
+# OS
+.DS_Store
+
+# Jekyll
+_site/
+.jekyll-cache/
+.jekyll-metadata

@@ -1,0 +1,45 @@
+[project]
+name = "rpg-arena"
+version = "0.1.0"
+description = "자율 캐릭터 멀티에이전트 자동대전 — 게임을 검증 환경으로 쓰는 에이전트 testbed"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+]
+
+[project.optional-dependencies]
+# 실제 모델 어댑터. 없어도 Fake/Replay 로 게임 전체가 돈다.
+gemini = ["google-genai>=1.0"]
+anthropic = ["anthropic>=0.40"]
+
+[dependency-groups]
+dev = [
+    "httpx>=0.27",
+    "pytest>=8.0",
+    "ruff>=0.6",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "apps"]
+# LLM 실호출 테스트는 비용이 들고 결과가 매번 달라 CI 에서 제외한다.
+# 실행하려면: pytest -m llm
+markers = [
+    "llm: 실제 LLM API 를 호출하는 테스트 (기본 제외)",
+    "slow: 수백 판을 돌리는 실험 테스트. -m 'not slow' 로 제외할 수 있다",
+]
+addopts = "-m 'not llm'"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["core", "adapters", "api", "eval", "content"]

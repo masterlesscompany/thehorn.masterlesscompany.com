@@ -1,0 +1,29 @@
+# 로컬에서 두 프로세스를 한 번에 띄운다.
+#
+#   docker compose up --build
+#   → 백엔드 http://localhost:8000 · 화면 http://localhost:3000
+#
+# 자격증명이 없어도 뜬다 — 기본 모델이 Fake 다.
+services:
+  backend:
+    build: ./backend
+    ports: ["8000:8000"]
+    environment:
+      RPG_MODEL: ${RPG_MODEL:-fake}
+      RPG_MAX_CALLS: ${RPG_MAX_CALLS:-300}
+      BACKEND_SHARED_SECRET: ${BACKEND_SHARED_SECRET:-}
+    volumes:
+      - runs:/data
+
+  web:
+    build: ./frontend
+    ports: ["3000:3000"]
+    environment:
+      BACKEND_URL: http://backend:8000
+      BACKEND_SHARED_SECRET: ${BACKEND_SHARED_SECRET:-}
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  runs:
