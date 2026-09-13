@@ -1,0 +1,15 @@
+{% assign r = site.data.mock_roster %}
+<figure class="mock" data-mock="growth">
+{% include mock/_bar.html t="AI GROWTH REPORT" ko="성장 보고 · 유저는 찍지 않는다" %}
+<div class="mock-body">
+  <ul class="grow">
+    {% assign u = r | where: "id", "A" | first %}
+    <li>{% include emb.html c=u.cls %}<div><b>{{ u.name }}</b> <span class="dim">Growth +3 (생환 +1 · MVP +2)</span><p>AI → <b>CON +2 / WIS +1</b></p><div class="chipset"><span class="code">DAMAGE_TAKEN_HIGH</span><span class="code">ROLE_FRONTLINE</span></div></div></li>
+    {% assign u = r | where: "id", "F" | first %}
+    <li>{% include emb.html c=u.cls %}<div><b>{{ u.name }}</b> <span class="dim">Growth +1</span><p>AI → <b>AGI +1</b> · Spear 유지</p><div class="chipset"><span class="code">REACH_SUCCESS</span><span class="code">BUILD_INERTIA</span></div></div></li>
+    {% assign u = r | where: "id", "C" | first %}
+    <li>{% include emb.html c=u.cls %}<div><b>{{ u.name }}</b> <span class="dim">Growth +1</span><p>AI → <b>보류</b> — 다음 성장에 합산</p><div class="chipset"><span class="code">FATIGUE_HIGH</span><span class="code">P_WAIT_AND_SEE</span></div></div></li>
+  </ul>
+</div>
+<figcaption class="cap">“AI 가 성장했다”를 대사로 말하지 않고 이 화면에서 직접 보여준다. 체력이 모자랐던 방패잡이는 CON 을, Reach 로 이긴 창잡이는 AGI 를 올린다. 평가(RQ2)는 <b>최근 경험과 성장 방향이 이어지는가</b>를 잰다. 수치와 코드는 예시다.</figcaption>
+</figure>

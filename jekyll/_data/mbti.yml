@@ -1,0 +1,25 @@
+# MBTI 8축 — 기획서 §5. 심리 진단이 아니라 게임 행동 Rule Schema 다.
+# 16 Type 은 별도 스크립트가 아니라 네 글자의 합이다(ISTJ = I + S + T + J).
+# `measure` 는 Eval PART 1 §11 이 그 축을 무엇으로 재는지다.
+
+axes:
+  - pair: E / I
+    measure: 동일 상태에서 social·cooperative action 비율
+    poles:
+      - { l: E, name: Extraversion, quote: 혼자 해결하기보다 팀과 함께 해결하려 한다., does: [동료와 가까이 행동, 협동·지원 선호, Leisure 는 공동 활동] }
+      - { l: I, name: Introversion, quote: 팀 안에서도 자기 역할을 독립적으로 완수하려 한다., does: [자기 역할 독립 수행, 불필요한 지원 이동 감소, 집단 압력보다 자기 판단] }
+  - pair: S / N
+    measure: proven strategy vs exploratory strategy
+    poles:
+      - { l: S, name: Sensing,   quote: 지금 보이는 사실과 검증된 경험을 믿는다., does: [검증된 전술 반복, 성공한 무기 유지, 명확한 위협부터] }
+      - { l: N, name: Intuition, quote: 현재의 단서에서 다음 상황을 추론한다., does: [반복 패턴 추론, 새 전술 시도, Build 변경 가능성 증가] }
+  - pair: T / F
+    measure: objective efficiency vs ally-protection
+    poles:
+      - { l: T, name: Thinking, quote: 전체 결과를 가장 좋게 만드는 선택은 무엇인가?, does: [승산·효율 중시, Focus fire, 비용 대비 효과로 Rescue·Retreat] }
+      - { l: F, name: Feeling,  quote: 이 선택이 사람들에게 어떤 결과를 만드는가?, does: [동료 보호, 부상자 구조, 동료 상태로 작전 수정] }
+  - pair: J / P
+    measure: plan adherence·build inertia vs adaptation·re-plan
+    poles:
+      - { l: J, name: Judging,    quote: 계획을 세웠으면 실행한다., does: [계획 유지, Build 관성, 지시 순응 가능성 증가] }
+      - { l: P, name: Perceiving, quote: 상황이 바뀌면 계획도 바뀌어야 한다., does: [즉각 수정, Weapon 변경 가능성 증가, 지시를 현장 판단으로 해석] }

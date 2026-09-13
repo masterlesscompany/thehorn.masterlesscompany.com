@@ -1,0 +1,23 @@
+{% assign u = site.data.mock_roster | where: "id", "A" | first %}
+<figure class="mock" data-mock="inspector">
+{% include mock/_bar.html t="INSPECTOR" ko="열린 서랍 · 턴 4 · 트레이스 기반" %}
+<div class="mock-body insp">
+  <div class="insp-sum plate">
+    <p class="ph">무슨 일이 있었나</p>
+    <p style="margin:0;font-size:14.5px;"><b>{{ u.name }}</b>(Guardian)이 쓰러지기 직전의 <b>이졸데</b> 앞으로 나서 방패를 들었다.</p>
+  </div>
+  <dl class="kv insp-kv">
+    <dt>ACTION</dt><dd><span class="dtag hot" style="position:static;">PROTECT</span></dd>
+    <dt>STATE</dt><dd>Ally HP 18 · Self HP 63</dd>
+    <dt>REASON CODES</dt><dd class="chipset"><span class="code">F_ALLY_PROTECTION</span><span class="code">E_COOPERATION</span></dd>
+    <dt>OUTCOME</dt><dd>Damage prevented 14 <span class="dim">· Rule Engine 판정</span></dd>
+    {% comment %} 원문 예시(Visual §23)는 "2B Q4" 지만, 아직 어떤 모델도 돌리지 않았다 — 모델 이름을 쓰면 실행한 것처럼 읽힌다(QA R1 judge) {% endcomment %}
+    <dt>MODEL</dt><dd><span class="notrun">NOT RUN</span> <span class="dim">· 실험 후 모델·양자화가 여기 적힌다</span></dd>
+  </dl>
+  <details class="raw"><summary>원본 트레이스 보기</summary><pre>{"kind":"character_action","turn":4,"actor":"A","action":"PROTECT",
+ "state":{"ally_hp":18,"self_hp":63},
+ "reason_codes":["F_ALLY_PROTECTION","E_COOPERATION"],
+ "outcome":{"damage_prevented":14}}</pre></details>
+</div>
+<figcaption class="cap">순서는 <b>행동 → 사람이 읽는 요약 → Reason Code → 판정 결과 → (필요할 때) 원본 트레이스</b>다. 인스펙터는 이미 저장된 트레이스를 읽을 뿐이다. 나중에 LLM 이 “그럴듯한 이유”를 새로 지어 붙이지 않는다. 기본은 닫혀 있어 전투 화면을 가리지 않는다.</figcaption>
+</figure>

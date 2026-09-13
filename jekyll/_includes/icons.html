@@ -1,0 +1,38 @@
+{% comment %}
+  SVG 문장 스프라이트. 이미지 에셋 대신 선 몇 개로 그린다 — Visual Guide §10 "SVG 우선".
+  전부 currentColor 를 따르므로 밤·장부 어느 쪽에서도 같은 기호가 읽힌다.
+  쓰는 법: <svg class="ic" aria-hidden="true"><use href="#i-warrior"/></svg>
+{% endcomment %}
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <!-- 밀랍 인장 — 사이트 문장 -->
+    <symbol id="i-seal" viewBox="0 0 32 32"><path fill="currentColor" d="M16 2c2 1.6 3.4 1 5.3 1.9 1.8.9 2 2.6 3.6 3.9 1.5 1.3 3.2 1.1 4 3 .8 1.8-.2 3.3.1 5.2.3 1.9 1.6 3 1.1 5-.6 1.9-2.3 2.2-3.3 3.8-1.1 1.7-.9 3.3-2.6 4.4-1.7 1.1-3.3.3-5.2.9-1.8.6-2.8 2.1-4.8 2.1s-3-1.5-4.8-2.1c-1.9-.6-3.5.2-5.2-.9-1.7-1.1-1.5-2.7-2.6-4.4C2.6 23.2.9 22.9.3 21 -.2 19 1.1 17.9 1.4 16c.3-1.9-.7-3.4.1-5.2.8-1.9 2.5-1.7 4-3 1.6-1.3 1.8-3 3.6-3.9C11 3 12.4 3.6 14.4 2c.5-.4 1.1-.4 1.6 0z"/><path fill="none" stroke="#efe4cc" stroke-opacity=".85" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" d="M10.5 22.5c1.5-2.8 3-7.5 3.2-12.3M13.7 10.2c2.8.4 5.6 1.8 7.8 4.3-2.5-.6-4.8-.4-7 .6M12 17.2h5.5"/></symbol>
+    <!-- 클래스 5 -->
+    <symbol id="i-warrior" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19 17.5 6.5 19 3l-3.5 1.5L3 17"/><path d="m4 15 5 5M6.5 17.5 3.5 20.5"/></g></symbol>
+    <symbol id="i-guardian" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3 4.5 5.5v6c0 4.6 3.2 7.8 7.5 9.5 4.3-1.7 7.5-4.9 7.5-9.5v-6z"/><path d="M12 3v18M4.8 11h14.4"/></g></symbol>
+    <symbol id="i-archer" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3c6 3 6 15 0 18"/><path d="M6 3v18"/><path d="M3.5 12H21m0 0-3-2.5M21 12l-3 2.5"/></g></symbol>
+    <symbol id="i-bard" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5c3 0 7-1 11-4.5l1 1c.5 3 1 7-1 12l-1 .5C10 15 6 13.5 3 13.5z"/><path d="M3 9.5v4M16.5 8.5c1.2.6 2 1.8 2 3.2s-.8 2.6-2 3.2M19 6.5c2 1.2 3 3.1 3 5.2s-1 4-3 5.2"/></g></symbol>
+    <symbol id="i-rogue" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4.5 19.5 3 18 8.5l-8 8-2.5-2.5z"/><path d="m6 13 5 5M7.5 16.5 4 20"/></g></symbol>
+    <!-- 자원 · 상태 -->
+    <symbol id="i-gold" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6"><ellipse cx="12" cy="7" rx="7" ry="3"/><path d="M5 7v5c0 1.7 3.1 3 7 3s7-1.3 7-3V7M5 12v5c0 1.7 3.1 3 7 3s7-1.3 7-3v-5"/></g></symbol>
+    <symbol id="i-dice" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7z"/><path d="M3.5 7 12 11.5 20.5 7M12 11.5v10"/></g><g fill="currentColor"><circle cx="12" cy="6.8" r="1.1"/><circle cx="7" cy="12.5" r="1"/><circle cx="16.8" cy="12" r="1"/><circle cx="16.8" cy="16" r="1"/></g></symbol>
+    <symbol id="i-year" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12M6 21h12M7 3c0 5 5 6 5 9s-5 4-5 9M17 3c0 5-5 6-5 9s5 4 5 9"/><path d="M9 18.5h6"/></g></symbol>
+    <symbol id="i-hp" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7a4.3 4.3 0 0 1 7.5 2.8C19.5 15.4 12 20 12 20z"/></symbol>
+    <symbol id="i-fatigue" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 3.5c-3 4-5 6.7-5 9.5a5 5 0 0 0 10 0c0-2.8-2-5.5-5-9.5z"/><path d="M10 14.5a2 2 0 0 0 2 2"/></g></symbol>
+    <symbol id="i-growth" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9M7.5 13.5 12 9l4.5 4.5M5 4h14"/></g></symbol>
+    <symbol id="i-mvp" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.5l2.1 4.3 4.7.7-3.4 3.3.8 4.7-4.2-2.2-4.2 2.2.8-4.7-3.4-3.3 4.7-.7z"/><path d="M5 20.5h14"/></g></symbol>
+    <!-- 캠프 4 행동 -->
+    <symbol id="i-train" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m4 4 12 12M20 4 8 16"/><path d="m14 18 2-2 2 2M10 18l-2-2-2 2M3 21l3-3M21 21l-3-3"/></g></symbol>
+    <symbol id="i-rest" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M19.5 14.5A8 8 0 0 1 9.5 4.5a8 8 0 1 0 10 10z"/></symbol>
+    <symbol id="i-educate" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 6.5C9.5 4.8 6.5 4.5 3.5 5v13c3-.5 6-.2 8.5 1.5 2.5-1.7 5.5-2 8.5-1.5V5c-3-.5-6-.2-8.5 1.5z"/><path d="M12 6.5v13"/></g></symbol>
+    <symbol id="i-leisure" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M5.5 7.5h10V19a1.5 1.5 0 0 1-1.5 1.5H7A1.5 1.5 0 0 1 5.5 19z"/><path d="M15.5 10H18a1.5 1.5 0 0 1 1.5 1.5v3A1.5 1.5 0 0 1 18 16h-2.5M5.5 7.5c0-2 1.5-3.5 3.5-3 1-1.5 3.5-1.5 4.5 0 1.5-.3 2.5.8 2 3"/></g></symbol>
+    <!-- 체계 -->
+    <symbol id="i-camp" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20 12 5l9 15zM12 5v15M9 20l3-5 3 5"/><path d="M2 20h20"/></g></symbol>
+    <symbol id="i-boss" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9c0 6 3 11 7 11s7-5 7-11c-2 1.5-4.5 2-7 2s-5-.5-7-2z"/><path d="M5 9 3 3.5 8 7M19 9l2-5.5L16 7M9.5 14h.01M14.5 14h.01"/></g></symbol>
+    <symbol id="i-life" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21h6M10 21V11h4v10M12 11V8"/><path d="M12 8c-1.5-1.5-1.5-3.5 0-5 1.5 1.5 1.5 3.5 0 5z"/></g></symbol>
+    <symbol id="i-inspector" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5.5 5.5M8 10.5h5M10.5 8v5"/></g></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></g></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2.5 20h19z"/><path d="M12 10v4.5M12 17.5h.01"/></g></symbol>
+    <symbol id="i-scroll" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M6 4h11a2 2 0 0 1 2 2v12M6 4a2 2 0 0 0-2 2v1.5h4V6a2 2 0 0 0-2-2zM8 7.5V18a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-1H12v1a2 2 0 0 1-2 2"/><path d="M11 9h5M11 12.5h5"/></g></symbol>
+  </defs>
+</svg>

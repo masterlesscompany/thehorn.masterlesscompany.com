@@ -1,0 +1,55 @@
+---
+layout: base
+---
+{% assign shelf = site.specs | sort: "order" %}
+<header class="cover" style="padding:64px 0 40px;">
+  <div class="wrap-narrow">
+    <p class="anno"><a href="{{ '/docs/' | relative_url }}" style="color:var(--ember);text-decoration:none;">문서 서가</a> · 원문 {{ page.order }} / {{ shelf | size }}</p>
+    <h1 style="font-size:38px;">{{ page.title }}</h1>
+    <p class="lead" style="margin-top:14px;">{{ page.short }}</p>
+    <p style="margin:18px 0 0;font-family:var(--mono);font-size:12.5px;color:var(--on-night-3);">원문 파일 · {{ page.source }} — 본문은 원문 그대로다</p>
+    <nav class="shelf" aria-label="다른 문서">
+      {% for d in shelf %}
+        <a href="{{ d.url | relative_url }}"{% if d.url == page.url %} aria-current="page"{% endif %}>{{ d.order }}. {{ d.title }}</a>
+      {% endfor %}
+    </nav>
+  </div>
+</header>
+
+<div class="ledger">
+  <article class="wrap-narrow prose" style="padding-top:56px;padding-bottom:96px;">
+    {{ content }}
+    <div style="margin-top:56px;padding-top:28px;border-top:1px solid var(--parch-line);display:flex;gap:10px;flex-wrap:wrap;">
+      <a class="btn btn-ink" href="{{ '/docs/' | relative_url }}">← 문서 서가</a>
+      <a class="btn btn-ink" href="{{ '/' | relative_url }}">장부로</a>
+    </div>
+  </article>
+</div>
+
+<style>
+/* 문서 서가 탭 — 밤 표지 안에서 원문 사이를 오간다 */
+.shelf{display:flex;gap:6px;flex-wrap:wrap;margin-top:28px;}
+.shelf a{font-size:13px;padding:6px 11px;border-radius:7px;border:1px solid var(--iron);color:var(--on-night-2);text-decoration:none;background:rgba(0,0,0,.2);}
+.shelf a:hover{border-color:var(--ember);color:var(--on-night);}
+.shelf a[aria-current="page"]{background:var(--ember);color:var(--night);border-color:var(--ember-2);font-weight:700;}
+
+/* 원문 본문 — 긴 산문을 장부처럼 읽히게 */
+.prose{font-size:16.5px;line-height:1.82;color:var(--ink-2);}
+.prose > h1:first-child{display:none;} /* 제목은 표지가 이미 보여준다. 원문은 손대지 않고 숨기기만 한다 */
+.prose h1{font-size:30px;color:var(--ink);margin:56px 0 16px;}
+.prose h2{font-size:26px;color:var(--ink);margin:60px 0 16px;padding-bottom:10px;border-bottom:2px solid var(--ink);}
+.prose h3{font-size:20px;color:var(--ink);margin:40px 0 12px;}
+.prose h4{font-size:17px;color:var(--ink);margin:28px 0 8px;}
+.prose p{margin:0 0 16px;}
+.prose ul,.prose ol{margin:0 0 16px;padding-left:22px;}
+.prose li{margin-bottom:6px;}
+.prose li::marker{color:var(--wax);}
+.prose strong{color:var(--ink);}
+.prose hr{border:0;height:1px;background:var(--parch-line);margin:44px 0;}
+.prose blockquote{margin:20px 0;padding:14px 20px;background:var(--wax-bg);border-left:3px solid var(--wax);border-radius:0 var(--r-s) var(--r-s) 0;color:var(--ink);font-family:var(--serif);font-weight:700;}
+.prose blockquote p:last-child{margin-bottom:0;}
+.prose pre{background:var(--night-2);color:var(--on-night);border:1px solid var(--iron);border-radius:10px;padding:16px 18px;overflow-x:auto;font-size:13px;line-height:1.65;margin:0 0 18px;}
+.prose pre code{background:transparent;padding:0;color:inherit;font-size:inherit;}
+.prose table{display:block;overflow-x:auto;margin:0 0 18px;font-size:14.5px;border:1px solid var(--parch-line);border-radius:10px;background:rgba(255,252,243,.5);}
+@media (max-width:860px){.prose{font-size:16px;}.prose h2{font-size:22px;}}
+</style>

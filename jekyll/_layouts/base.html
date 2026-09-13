@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% if page.title and page.title != site.title %}{{ page.title }} · {{ site.title }}{% else %}{{ site.title }} ({{ site.title_en }}) — {{ site.tagline }}{% endif %}</title>
+<meta name="description" content="{{ page.description | default: site.description | strip_newlines | truncate: 160 }}">
+<meta property="og:title" content="{{ page.title | default: site.title }}">
+<meta property="og:description" content="{{ page.description | default: site.description | strip_newlines | truncate: 160 }}">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#17120d">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Noto+Serif+KR:wght@700;900&display=swap">
+<link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/mock.css' | relative_url }}">
+</head>
+<body>
+{% include icons.html %}
+
+<nav class="nav" aria-label="사이트">
+  <div class="nav-in">
+    <a class="brand" href="{{ '/' | relative_url }}">
+      <svg class="seal" aria-hidden="true"><use href="#i-seal"/></svg>
+      <span><b>{{ site.title }}</b><small>FREE COMPANY</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="{{ '/' | relative_url }}"{% if page.url == '/' %} aria-current="page"{% endif %}>장부</a>
+      <a href="{{ '/screens/' | relative_url }}"{% if page.url == '/screens/' %} aria-current="page"{% endif %}>한 판 따라가기</a>
+      <a href="{{ '/docs/' | relative_url }}"{% if page.url contains '/docs/' %} aria-current="page"{% endif %}>문서 서가</a>
+      <a href="{{ '/kanban/' | relative_url }}"{% if page.url == '/kanban/' %} aria-current="page"{% endif %}>칸반</a>
+      <a href="{{ '/log/' | relative_url }}"{% if page.url == '/log/' %} aria-current="page"{% endif %}>개발 로그</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+{{ content }}
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <div class="name">{{ site.title }} <span style="font-family:var(--cinzel);font-weight:600;font-size:13px;letter-spacing:.2em;color:var(--ember);">FREE COMPANY</span></div>
+      <p>Character-first 2D auto-battle · Campaign-based mission progression · Autonomous character growth · Traceable agent decisions · Minimum Viable Gaming Agent.</p>
+      <p>Wanted AI Championship 2026 출품작의 프로젝트 사이트. 기획 정본 v5.2 (2026-09-10) 기준.</p>
+    </div>
+    <div class="foot-links">
+      <a href="{{ '/screens/' | relative_url }}">한 판 따라가기</a>
+      <a href="{{ '/docs/' | relative_url }}">문서 서가 — 원문 6편</a>
+      <a href="{{ '/log/' | relative_url }}">개발 로그</a>
+      <a href="https://github.com/{{ site.github_username }}/RPG-agnet" target="_blank" rel="noopener">게임 저장소 · {{ site.github_username }}/RPG-agnet ↗</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

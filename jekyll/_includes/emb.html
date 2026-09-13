@@ -1,0 +1,1 @@
+{% comment %} 클래스 문장 초상 자리. 가짜 그림 대신 문장을 둔다(CLAUDE.md 비주얼 규약). 인자: c(클래스 key) · label {% endcomment %}<span class="emb {{ include.c }}"{% if include.label %} role="img" aria-label="{{ include.label }}"{% else %} aria-hidden="true"{% endif %}><svg class="ic" aria-hidden="true"><use href="#i-{{ include.c }}"/></svg></span>

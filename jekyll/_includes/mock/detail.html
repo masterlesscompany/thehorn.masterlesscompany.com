@@ -1,0 +1,39 @@
+{% assign p = site.data.mock_roster | where: "id", "F" | first %}
+<figure class="mock" data-mock="detail">
+{% include mock/_bar.html scroll="1" t="CHARACTER DETAIL" ko="단원 상세" %}
+<div class="mock-scroll"><div class="mock-body wide det">
+  <div class="det-id plate">
+    {% include emb.html c=p.cls %}
+    <b class="det-name">{{ p.name }}</b>
+    <span class="dim">전투 외형 · Male Warrior (Base 공유)</span>
+    <dl class="kv" style="margin-top:12px;">
+      <dt>HEIGHT</dt><dd>{{ p.h }} cm</dd><dt>WEIGHT</dt><dd>{{ p.w }} kg</dd><dt>BODY</dt><dd>{{ p.body }}</dd>
+      <dt>AGE</dt><dd>{{ p.age }}</dd><dt>MBTI</dt><dd>{{ p.mbti }}</dd><dt>WEAPON</dt><dd>{{ p.weapon }}</dd>
+    </dl>
+    <p class="det-seed">“{{ p.seed }}”</p>
+  </div>
+  <div class="plate">
+    <p class="ph">STATS · 초기 → 현재</p>
+    <ul class="stats">
+      <li><b>STR</b><span class="meter"><i style="width:50%"></i></span><em>10 → 10</em></li>
+      <li><b>AGI</b><span class="meter"><i style="width:95%"></i></span><em>17 → 19</em></li>
+      <li><b>CON</b><span class="meter"><i style="width:60%"></i></span><em>11 → 12</em></li>
+      <li><b>INT</b><span class="meter"><i style="width:40%"></i></span><em>8 → 8</em></li>
+      <li><b>WIS</b><span class="meter"><i style="width:55%"></i></span><em>10 → 11</em></li>
+      <li><b>LUK</b><span class="meter"><i style="width:45%"></i></span><em>9 → 9</em></li>
+    </ul>
+  </div>
+  <div class="plate">
+    <p class="ph">HISTORY</p>
+    {% comment %} 기획서 §38 Growth History 예시를 그대로 옮겼다 {% endcomment %}
+    <ol class="hist">
+      <li><b>M1</b>Warrior · <span class="code">AI chose Spear</span></li>
+      <li><b>M3</b>Growth +3 · AI → AGI +2 / CON +1</li>
+      <li><b>Camp 1</b>User REST · Character <span class="bang">TRAIN !</span></li>
+      <li><b>M5</b>Spear 유지</li>
+      <li><b>M8</b>좁은 지형 반복 · AI Spear → Short Sword</li>
+    </ol>
+  </div>
+</div></div>
+<figcaption class="cap">같은 전투 외형을 공유해도 <b>이 단원은 고유한 Agent 다.</b> 초상과 스프라이트는 성별 × Class 로 10종뿐이지만, 키 · 몸무게 · 체형 · 나이 · MBTI · Life Seed · Stats 는 사람마다 다르고 전부 판단 입력에 들어간다. 스탯 이름과 수치는 예시다.</figcaption>
+</figure>

@@ -1,0 +1,25 @@
+<figure class="mock" data-mock="campaign">
+{% include mock/_bar.html scroll="1" t="CAMPAIGN" ko="20년 캠페인 지도 · 현재 M3" %}
+<div class="mock-scroll"><div class="mock-body wide">
+  <div class="cmap">
+    {% for c in site.data.missions.cycles %}
+    <section class="cyc {{ c.key }}" aria-label="Cycle {{ c.n }} {{ c.season }}">
+      <header><b>CYCLE {{ c.n }}</b><span>{{ c.season }} · {{ c.era }}</span><small>{{ c.years }}</small></header>
+      <ol class="nodes">
+        {% assign ms = site.data.missions.missions | where: "cycle", c.n %}
+        {% for m in ms %}
+          {% if m.n < 3 %}{% assign nstate = "cleared" %}{% elsif m.n == 3 %}{% assign nstate = "current" %}{% else %}{% assign nstate = "locked" %}{% endif %}
+          <li class="node {{ m.kind }} {{ nstate }}">
+            <span class="dot">{% if m.kind != "normal" %}<svg class="ic" aria-hidden="true"><use href="#i-boss"/></svg>{% else %}{{ m.n }}{% endif %}</span>
+            <span class="lbl"><b>M{{ m.n }}{% if m.kind == "boss" %} Boss{% elsif m.kind == "final" %} Final{% endif %}</b><small>{{ m.crew }}명{% if nstate == "cleared" %} · ✓{% elsif nstate == "current" %} · 현재{% endif %}</small></span>
+          </li>
+          {% if m.camp %}<li class="node camp"><span class="dot"><svg class="ic" aria-hidden="true"><use href="#i-camp"/></svg></span><span class="lbl"><b>Camp {{ m.camp }}</b><small>5턴</small></span></li>{% endif %}
+        {% endfor %}
+        <li class="node life"><span class="dot"><svg class="ic" aria-hidden="true"><use href="#i-year"/></svg></span><span class="lbl"><b>+5년</b><small>Life · Dice</small></span></li>
+      </ol>
+    </section>
+    {% endfor %}
+  </div>
+</div></div>
+<figcaption class="cap">스무 개 계약이 네 계절로 흐른다 — 봄에서 겨울로 가는 색은 시간의 은유일 뿐 규칙에 닿지 않는다. 노드마다 <b>출전 인원이 고정</b>이다. 막사는 Camp, 뿔 달린 투구는 Boss, 모래시계는 +5년 · Life Event · Recruitment Dice 다.</figcaption>
+</figure>

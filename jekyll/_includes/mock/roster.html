@@ -1,0 +1,21 @@
+<figure class="mock" data-mock="roster">
+{% include mock/_bar.html t="ROSTER" ko="명부 · 10 / 10" %}
+<div class="mock-body">
+  <ul class="rgrid">
+    {% for p in site.data.mock_roster %}
+      {% assign k = site.data.classes | where: "key", p.cls | first %}
+      <li class="rcard{% if p.st != '대기' %} flag{% endif %}">
+        {% include emb.html c=p.cls %}
+        <div class="rmeta">
+          <b>{{ p.name }}</b>
+          <span class="dim">{{ k.name }} · {{ p.age }} · {{ p.mbti }}</span>
+          <span class="rbar"><svg class="ic" aria-hidden="true"><use href="#i-hp"/></svg><span class="meter{% if p.hp < 50 %} low{% endif %}"><i style="width:{{ p.hp }}%"></i></span><em>HP {{ p.hp }}</em></span>
+          <span class="rbar"><svg class="ic" aria-hidden="true"><use href="#i-fatigue"/></svg><span class="meter fat"><i style="width:{{ p.fat }}%"></i></span><em>피로 {{ p.fat }}</em></span>
+        </div>
+        <span class="rst">{{ p.st }}</span>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+<figcaption class="cap">명부 카드는 <b>초상 · 이름 · Class · 나이 · MBTI · HP · 피로 · 상태</b>만 보여준다. 키와 몸무게 같은 신체 세부값은 상세 화면에만 있다 — 그래도 단원(Character AI)에는 실제 값이 그대로 들어간다.</figcaption>
+</figure>

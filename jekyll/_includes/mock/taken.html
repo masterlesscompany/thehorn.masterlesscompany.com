@@ -1,0 +1,19 @@
+{% assign t = site.data.mock_roster | where: "id", "D" | first %}
+<figure class="mock" data-mock="taken">
+{% include mock/_bar.html t="TAKEN" ko="미션 종료 직후 · 즉시 결정" %}
+<div class="mock-body modal-back">
+  <div class="modal" role="dialog" aria-label="구조 결정 예시">
+    {% include emb.html c=t.cls %}
+    <p class="modal-h">{{ t.name }}이 돌아오지 못했습니다.</p>
+    <dl class="kv" style="margin:14px auto;max-width:260px;">
+      <dt>외부 용병단 구조비</dt><dd><b>100 Gold</b> <span class="dim">(Cycle 1 · ×1.0)</span></dd>
+      <dt>현재 Gold</dt><dd>320 → 220</dd>
+    </dl>
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+      <span class="gbtn hot">파견한다</span><span class="gbtn">포기한다</span>
+    </div>
+    <p class="dim" style="font-size:12px;margin:14px 0 0;">파견 → 즉시 성공 · 즉시 복귀 &nbsp;|&nbsp; 포기 → 영구 상실 · 빈 자리 즉시 충원</p>
+  </div>
+</div>
+<figcaption class="cap">구조 미션도, 구조 기한도, 실패 확률도, 카운트다운도 없다. 질문은 하나다 — <b>돈을 쓸 것인가.</b> 구조비는 Cycle 이 지날수록 ×1.5 · ×2.25 · ×3.0 으로 오른다.</figcaption>
+</figure>

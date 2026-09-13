@@ -1,0 +1,76 @@
+---
+layout: base
+title: 한 판 따라가기
+permalink: /screens/
+description: 본부에서 검증까지 — 기획서 §47 Screen Flow 순서로 본 P0 핵심 화면 16개의 목업.
+---
+
+<header class="cover" style="padding:80px 0 64px;">
+  <div class="wrap">
+    <p class="anno">SCREEN FLOW · P0 {{ site.data.screens | size }} SCREENS</p>
+    <h1 style="font-size:46px;">본부에서 검증까지,<br>한 판을 <em>따라가 본다.</em></h1>
+    <p class="lead">
+      기획서의 Screen Flow 순서대로 핵심 화면 {{ site.data.screens | size }}개를 목업으로 옮겼습니다.
+      인물과 수치는 전부 <strong style="color:var(--on-night);">예시(MOCK)</strong>이고,
+      평가 화면의 결과 칸은 실험 전이라 비어 있습니다.
+    </p>
+    <ol class="flow tour-flow" style="margin-top:30px;">
+      {% for scr in site.data.screens %}<li><a href="#{{ scr.id }}">{{ scr.ko }}</a></li>{% if scr.id == "fingerprint" %}<li><a href="#plus5">+5년</a></li>{% endif %}{% endfor %}
+    </ol>
+  </div>
+</header>
+
+<div class="ledger">
+  {% for scr in site.data.screens %}
+    <section class="chap tour{% cycle '', ' tint' %}" id="{{ scr.id }}">
+      <div class="wrap">
+        <div class="chap-head" style="margin-bottom:8px;">
+          <span class="numeral" aria-hidden="true">{{ forloop.index }}</span>
+          <div>
+            {% comment %} P0 번호와 조항 인용은 팀 내부 코드다 — 방문자에게는 몇 번째 화면인지만 먼저 보인다(QA R1 voter) {% endcomment %}
+            <p class="kicker">{{ forloop.index }}번째 화면 · {{ scr.name }}</p>
+            <h2 style="font-size:30px;">{{ scr.ko }}</h2>
+            <p class="lead" style="font-size:17px;">{{ scr.say }}</p>
+            <p class="muted" style="font-size:12.5px;margin-top:6px;">원문 {{ scr.ref }} · Visual Guide §15 의 P0 #{{ scr.num }}</p>
+          </div>
+        </div>
+        {% capture mockpath %}mock/{{ scr.mock }}.html{% endcapture %}
+        {% include {{ mockpath }} %}
+      </div>
+    </section>
+    {% if scr.id == "fingerprint" %}
+    <section class="chap tour" id="plus5">
+      <div class="wrap">
+        <div class="chap-head" style="margin-bottom:8px;">
+          <span class="numeral" aria-hidden="true">+5</span>
+          <div>
+            <p class="kicker">P1 · +5 Years · 통합시나리오 §46</p>
+            <h2 style="font-size:30px;">다섯 해</h2>
+            <p class="lead" style="font-size:17px;">P1 화면이지만 스무 판을 스무 해로 읽히게 하는 핵심 연출이라 함께 둔다.</p>
+          </div>
+        </div>
+        {% include mock/years.html %}
+      </div>
+    </section>
+    {% endif %}
+  {% endfor %}
+
+  <section class="chap">
+    <div class="wrap">
+      <div class="leaf">
+        <h4>P1 — 데모데이 이후</h4>
+        <div class="tags" style="margin-top:10px;">{% for p in site.data.screens_p1 %}<span class="tag">{{ p }}</span>{% endfor %}</div>
+        <p style="margin-top:12px;">이 화면들은 Battle Slice 와 Evaluation Slice 가 둘 다 준비된 뒤에 만든다(Visual Guide §14 Gate D).</p>
+      </div>
+      <div class="btns"><a class="btn btn-wax" href="{{ '/' | relative_url }}">← 장부로</a><a class="btn btn-ink" href="{{ '/docs/visual/' | relative_url }}">Visual / UI Guide 원문</a></div>
+    </div>
+  </section>
+</div>
+
+<style>
+.tour-flow li{background:rgba(0,0,0,.3);border:1px solid var(--iron);padding:0;}
+.tour-flow li+li::before{color:var(--on-night-3);}
+.tour-flow a{display:inline-block;padding:5px 10px;color:var(--on-night-2);text-decoration:none;font-size:13px;}
+.tour-flow a:hover{color:var(--ember-2);}
+.tour{padding:72px 0;}
+</style>

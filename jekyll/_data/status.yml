@@ -1,0 +1,46 @@
+# 구현 현황 — ⚠ v4(에르덴 용병단) 코드 기준 실측이다. v5.2 기능이 아니다.
+#
+# 수치는 ~/Documents/RPG 에서 실제로 돌려 본 값만 쓴다. 추정·반올림 금지.
+# 측정: 2026-09-11, 대상 커밋 e19b54c
+#   backend  `uv run pytest -q`  → 487 passed
+#   frontend `npm test`          → 22 pass
+#   `git rev-list --count HEAD`  → 47
+#   docs/devlog 46편 · docs/qa 3편 · backend+frontend .py/.ts/.tsx 14,593줄
+
+measured: "2026-09-11"
+commit: e19b54c
+repo: RPG-agnet
+
+stats:
+  - { n: "487", unit: 건, k: 백엔드 테스트, s: "uv run pytest -q · 전부 통과" }
+  - { n: "22",  unit: 건, k: 프론트 테스트, s: "npm test · 전부 통과" }
+  - { n: "47",  unit: 커밋, k: 3일간, s: "2026-09-07 ~ 09-09" }
+  - { n: "14.6", unit: k줄, k: 애플리케이션 코드, s: "Python · TypeScript" }
+
+# 기획서의 약속을 의견이 아니라 테스트로 굳힌 것 (RPG CLAUDE.md "기획서가 테스트로 굳혀진 것")
+guards:
+  - { rule: 성별은 엔진 영향 0,      how: "판정 계층이 gender 를 읽지 않는다 — AST 테스트" , v52: "§6 Gender 영향 0" }
+  - { rule: 행운은 판단에 개입하지 않는다, how: "judgment 가 luck 을 읽지 않는다 — AST 테스트", v52: "§45 행운=실행 굴림" }
+  - { rule: MBTI 는 문자열로 던지지 않는다, how: "조립된 프롬프트에 MBTI 문자열이 없다", v52: "PART 1 §41 MUST NOT" }
+  - { rule: 같은 시드 = 같은 판,       how: "난수는 전부 Dice 포트 · CI 가 다른 프로세스에서도 확인", v52: "§43 Seed + Replay 재현" }
+
+# E1 · 단장이 실제로 도움이 되는가 — Fake(규칙 기반) 모델, 조합당 시드 200, 짝비교(McNemar).
+# 출처: RPG README.md "실험 — 말이 아니라 숫자로". 실모델 결과가 아니다.
+e1:
+  - { combo: 힐러 없음,   on: "84%", off: "26%", wins: "119 / 3", p: "<0.0001", verdict: 유의하게 이득 }
+  - { combo: 균등,        on: "96%", off: "80%", wins: "38 / 5",  p: "<0.0001", verdict: 유의하게 이득 }
+  - { combo: 방패병 몰빵, on: "0%",  off: "0%",  wins: "0 / 0",   p: "1.00",    verdict: 아무도 못 이긴다 }
+  - { combo: 전사 몰빵,   on: "78%", off: "94%", wins: "5 / 38",  p: "<0.0001", verdict: 유의하게 손해 }
+
+# v4 → v5.2 전환 격차. 오른쪽이 이 사이트가 설명하는 정본이다(기획서 §44 제거 · §45 유지).
+gap:
+  - { area: 캐릭터,    v4: "고정 Named 5인",                          v52: "절차 생성 10인 — Physical·Age·MBTI 주사위" }
+  - { area: 클래스,    v4: "중장병·방패병·전령관·약탈병·장궁병",       v52: "Warrior·Guardian·Archer·Bard·Rogue — CLASS ≠ BUILD" }
+  - { area: 성장,      v4: "유저가 능력치를 배분",                      v52: "초기 Stats 만 유저, 이후 Growth 는 단원(Character AI)" }
+  - { area: 캠페인,    v4: "보스전 1판 · 2판 + 인터미션",               v52: "20 Mission · 4 Cycle · Camp 4회 · +5년 ×4" }
+  - { area: 보스 적응, v4: "in-context 관측 4규칙",                    v52: "Behavior Fingerprint — 같은 방법의 반복을 벌한다" }
+  - { area: 평가,      v4: "E1·E2·E3 — Fake 모델",                    v52: "E4 Model Ladder — 실모델 어댑터 미착수" }
+  - { area: 화면,      v4: "그래픽 없는 서사 + 인스펙터 2패널",         v52: "Character-first 2D Auto Battle + Evaluation Dashboard" }
+
+# v4 코드가 이미 증명하고 v5.2 가 그대로 유지하는 것(기획서 §45)
+kept: [뿔피리, Taken, Injury·Death, 트레이스·인스펙터, Replay, 시드 재현, 철수 판단, 트롤픽 허용, Rule Engine / LLM 분리]

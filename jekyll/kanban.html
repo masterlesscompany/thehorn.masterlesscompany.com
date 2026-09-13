@@ -1,0 +1,118 @@
+---
+layout: base
+title: 역할별 칸반
+permalink: /kanban/
+description: 기획서 v4 §3.2 의 다섯 역할이 무엇을 끝냈고 무엇을 앞두고 있는지. §12 · §14 에서 옮긴 보드.
+---
+{% assign k = site.data.kanban %}
+
+<header class="cover" style="padding:80px 0 60px;">
+  <div class="wrap">
+    <p class="anno">THE MUSTER BOARD · {{ k.cards | size }} CARDS · {{ k.roles | size }} ROLES</p>
+    <h1 style="font-size:46px;">누가 <em>무엇을</em> 들고 있는지.</h1>
+    <p class="lead">코어 2 + 위성 3. 위성은 코어를 건드리지 않고 코어의 출력(로그)을 소비한다 — 기획서 v4 §3.1.</p>
+  </div>
+</header>
+
+<div class="ledger">
+  <section class="chap" style="padding:56px 0 88px;">
+    <div class="wrap">
+      <div class="leaf kb-warn">
+        <p><b>게임 저장소 기획서 v4 (2026-09-09) 기준이며, 이 사이트가 소개하는 v5.2 기능이 아닙니다.</b>
+        역할은 v4 §3.2 표 그대로이고, 카드는 §12 · §14.2~14.4 에서 옮겼습니다.
+        원문에 카드별 담당자가 적혀 있지 않아 §3.2 「담당 범위」로 나눴습니다 — 팀이 확인하기 전의 배정입니다.
+        <span class="muted">갱신 {{ k.updated }}</span></p>
+      </div>
+
+      <div class="sub-h" style="margin-top:44px;"><h3>역할을 가리지 않는 것</h3><p class="muted">전원</p></div>
+      <div class="kb-common">
+        {% for c in k.common %}
+          <div class="kb-card">
+            <b>{{ c.title }}</b>
+            {% if c.note %}<p>{{ c.note }}</p>{% endif %}
+            <span class="kb-src">{{ c.src }}</span>
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="sub-h" style="margin-top:44px;"><h3>역할 × 단계</h3><p class="muted">B 데모데이 카드의 번호는 §14.4 순번 — 앞 번호가 끝나야 뒤가 시작한다</p></div>
+      <div class="kb-scroll">
+        <div class="kb-board" role="table" aria-label="역할별 칸반">
+          <div class="kb-row kb-head" role="row">
+            <div class="kb-role" role="columnheader">역할</div>
+            {% for col in k.columns %}
+              <div class="kb-colhead kb-{{ col.id }}" role="columnheader">
+                <b>{{ col.name }}</b><small>{{ col.sub }}</small>
+              </div>
+            {% endfor %}
+          </div>
+
+          {% for r in k.roles %}
+            {% assign mine = k.cards | where: "role", r.id %}
+            <div class="kb-row" role="row" id="{{ r.id }}">
+              <div class="kb-role" role="rowheader">
+                <b>{{ r.name }}</b>
+                <small>{{ r.scope }}</small>
+                <span class="kb-count">{{ mine | size }}장</span>
+              </div>
+              {% for col in k.columns %}
+                {% assign here = mine | where: "col", col.id %}
+                <div class="kb-cell kb-{{ col.id }}" role="cell">
+                  {% for c in here %}
+                    <div class="kb-card">
+                      {% if c.seq %}<span class="kb-seq">B-{{ c.seq }}</span>{% endif %}
+                      <b>{{ c.title }}</b>
+                      {% if c.note %}<p>{{ c.note }}</p>{% endif %}
+                      <span class="kb-src">{{ c.src }}</span>
+                    </div>
+                  {% endfor %}
+                  {% if here.size == 0 %}
+                    <p class="kb-empty">{% if col.id == 'a' %}A단계에 더 넣지 않는다 (§14.4){% else %}—{% endif %}</p>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <p class="muted" style="margin-top:28px;">출처: {{ k.source }}. 보류 카드는 사유 없이 두지 않는다 — §14.3.</p>
+      <a class="btn btn-ink" href="{{ '/log/' | relative_url }}" style="margin-top:12px;">개발 로그 →</a>
+    </div>
+  </section>
+</div>
+
+<style>
+.kb-warn{padding:18px 22px;border-color:rgba(142,42,31,.25);}
+.kb-warn p{font-size:14.5px;}
+.kb-common{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;}
+.kb-scroll{overflow-x:auto;margin:0 -4px;padding:4px;}
+.kb-board{min-width:1040px;border:1px solid var(--parch-line);border-radius:var(--r);overflow:hidden;background:rgba(255,252,243,.35);}
+.kb-row{display:grid;grid-template-columns:200px repeat(4,1fr);border-top:1px solid var(--parch-line);}
+.kb-row:first-child{border-top:0;}
+.kb-head{background:var(--night);color:var(--on-night);}
+.kb-head .kb-role{font-family:var(--cinzel);font-size:12px;letter-spacing:.2em;color:var(--ember);display:flex;align-items:center;}
+.kb-colhead{padding:14px 14px 12px;border-left:1px solid var(--iron);border-top:3px solid var(--rivet);}
+.kb-colhead b{display:block;font-family:var(--serif);font-size:16px;}
+.kb-colhead small{color:var(--on-night-3);font-size:12px;}
+.kb-colhead.kb-done{border-top-color:var(--pass);}
+.kb-colhead.kb-a{border-top-color:var(--wax-2);}
+.kb-colhead.kb-b{border-top-color:var(--ember);}
+.kb-colhead.kb-hold{border-top-color:var(--notrun);}
+.kb-role{padding:16px 14px;}
+.kb-role b{display:block;font-family:var(--serif);font-size:18px;color:var(--ink);margin-bottom:6px;}
+.kb-role small{display:block;font-size:12.5px;line-height:1.55;color:var(--ink-3);}
+.kb-count{display:inline-block;margin-top:10px;font-family:var(--mono);font-size:11.5px;color:var(--ink-3);}
+.kb-cell{padding:10px;border-left:1px solid var(--parch-line);display:flex;flex-direction:column;gap:8px;}
+.kb-cell.kb-done{background:rgba(93,112,64,.05);}
+.kb-cell.kb-a{background:var(--wax-bg);}
+.kb-cell.kb-b{background:rgba(217,145,58,.07);}
+.kb-card{background:rgba(255,252,243,.92);border:1px solid var(--parch-line);border-radius:var(--r-s);padding:10px 12px;position:relative;box-shadow:0 1px 0 rgba(43,33,24,.06);}
+.kb-card b{display:block;font-size:13.5px;line-height:1.5;color:var(--ink);}
+.kb-card p{margin:4px 0 0;font-size:12.5px;line-height:1.55;color:var(--ink-2);}
+.kb-src{display:inline-block;margin-top:6px;font-family:var(--mono);font-size:11px;color:var(--ink-3);}
+.kb-seq{float:right;margin:0 0 4px 8px;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ember-d);background:var(--ember-bg);border-radius:4px;padding:1px 6px;}
+.kb-cell.kb-done .kb-card b{color:var(--ink-2);}
+.kb-empty{margin:4px 2px;font-size:12.5px;color:var(--ink-3);}
+@media (max-width:640px){ .kb-common{grid-template-columns:1fr;} }
+</style>

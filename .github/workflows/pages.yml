@@ -1,10 +1,16 @@
-# Pages 가 build_type: workflow 로 설정돼 있어 클래식 자동 빌드가 돌지 않는다.
-# 이 워크플로가 지킬을 빌드해 배포한다.
 name: Deploy Jekyll site to Pages
+
+# 원격 저장소가 아직 없다(로컬 git 만 — 2026-09-11 결정). 원격을 만들면 이 워크플로가
+# 그대로 돈다. 무료 플랜은 **public** 저장소에만 Pages 를 준다 — secu-agent 에서
+# private 전환 뒤 configure-pages 가 Not Found 로 죽은 적이 있다.
+# 처음 한 번 Settings → Pages → Source 를 "GitHub Actions" 로 지정한다.
 
 on:
   push:
     branches: [main]
+    paths:
+      - 'jekyll/**'
+      - '.github/workflows/pages.yml'
   workflow_dispatch:
 
 permissions:
@@ -12,7 +18,6 @@ permissions:
   pages: write
   id-token: write
 
-# 배포는 겹치면 안 된다. 진행 중인 배포를 취소하지는 않는다.
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -22,19 +27,37 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v5
-      - uses: actions/jekyll-build-pages@v1
+
+      - uses: ruby/setup-ruby@v1
         with:
-          source: ./
-          destination: ./_site
+          ruby-version: '3.3'
+          bundler-cache: true
+          working-directory: jekyll
+
+      - id: pages
+        uses: actions/configure-pages@v5
+
+      # baseurl 을 여기서 덮어쓴다. _config.yml 은 빈 값(로컬 기준)이고
+      # 배포는 프로젝트 페이지라 `/thehorn` 가 한 겹 붙는다.
+      - name: Build with Jekyll
+        working-directory: jekyll
+        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+        env:
+          JEKYLL_ENV: production
+
+      - name: 사이트 검사
+        run: python3 scripts/check_site.py --baseurl "${{ steps.pages.outputs.base_path }}"
+
       - uses: actions/upload-pages-artifact@v3
+        with:
+          path: jekyll/_site
 
   deploy:
-    needs: build
-    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4

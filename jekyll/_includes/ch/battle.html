@@ -1,0 +1,23 @@
+<section class="chap tint" id="battle">
+<div class="wrap">
+  {% include chap-head.html c=include.chap h="유저의 버튼은 하나, 뿔피리뿐이다." lead="전투는 짧은 동작의 2D 자동전투다. 배치와 행동은 단장과 단원이 정하고, 결과는 Rule Engine 이 판정하고, 애니메이션은 그 결과를 보여줄 뿐이다." %}
+
+  {% include mock/battle.html %}
+  {% include mock/inspector.html %}
+
+  <div class="grid g3" style="margin-top:28px;">
+    <div class="leaf"><svg class="ic-big" aria-hidden="true"><use href="#i-bard"/></svg><h4>뿔피리 — 강제 철수</h4><p>불면 전투가 철수 절차로 바뀐다. 미션 목표는 실패할 수 있지만 사람을 살린다. 한 번 불면 끝이므로 <strong>남은 횟수를 세지 않는다.</strong></p></div>
+    <div class="leaf"><svg class="ic-big" aria-hidden="true"><use href="#i-warn"/></svg><h4>Bard 가 없으면 한 턴 늦다</h4><p>Bard 가 출전 중이면 신호가 즉시 전달되고, 없으면 1턴 늦는다. 그 한 턴이 부상 · Taken · 죽음을 만들 수 있다. Bard 는 나팔수가 아니라 지원 클래스다.</p></div>
+    <div class="leaf"><svg class="ic-big" aria-hidden="true"><use href="#i-eye"/></svg><h4>단장은 “싸울 가치가 있는가”부터</h4><p>작전 · 전황 · Re-plan · Boss 적응 감지 · 자율 철수. 단원 개인의 성장과 무기는 정하지 않는다 — 그건 단원의 몫이다.</p></div>
+  </div>
+
+  <div class="leaf" style="margin-top:16px;">
+    <h4>UI 는 판단을 보여주는 창이다 — 판단을 바꾸지 않는다</h4>
+    <ul class="ink" style="margin-top:10px;">
+      <li>전투 애니메이션은 Rule Engine 결과를 표현할 뿐 판정을 바꾸지 않는다. 애니메이션이 끝났다고 AI 가 판단하지 않는다.</li>
+      <li>스프라이트가 같아 보여도 단원에게는 실제 키 · 몸무게 · 체형이 전달된다.</li>
+      <li>같은 트레이스는 같은 사건을 재현한다. 파티클 위치나 전환 시간은 달라도 된다.</li>
+    </ul>
+  </div>
+</div>
+</section>

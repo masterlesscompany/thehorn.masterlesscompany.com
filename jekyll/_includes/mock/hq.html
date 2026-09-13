@@ -1,0 +1,28 @@
+<figure class="mock" data-mock="hq">
+{% include mock/_bar.html t="HEADQUARTERS" ko="용병단 본부" %}
+<div class="mock-body hq">
+  <div class="hud hq-top">
+    {% comment %} 상단 Resource 는 셋뿐 — Visual Guide §16. 뿔피리는 Inventory 가 아니다(기획서 §34). {% endcomment %}
+    <span class="res"><svg class="ic" aria-hidden="true"><use href="#i-gold"/></svg>200 <small>Gold</small></span>
+    <span class="res"><svg class="ic" aria-hidden="true"><use href="#i-dice"/></svg>0 <small>Recruitment Dice</small></span>
+    <span class="res"><svg class="ic" aria-hidden="true"><use href="#i-year"/></svg>1361 <small>Cycle 1 · 봄</small></span>
+  </div>
+  <div class="hq-grid">
+    <div class="plate hq-next">
+      <p class="ph">다음 계약</p>
+      {% assign m1 = site.data.missions.missions | first %}
+      <div class="hq-m"><span class="mno">M{{ m1.n }}</span><div><b>{{ m1.title }}</b><span class="dim">출전 {{ m1.crew }}명 · 최소 {{ m1.guard }}개 Class</span></div></div>
+      <p class="dim" style="margin:10px 0 14px;font-size:13px;">{{ m1.note }}.</p>
+      <span class="gbtn hot"><svg class="ic" aria-hidden="true"><use href="#i-scroll"/></svg>계약서 펼치기</span>
+    </div>
+    <div class="hq-tiles">
+      <span class="tile"><svg class="ic" aria-hidden="true"><use href="#i-scroll"/></svg>캠페인</span>
+      <span class="tile"><svg class="ic" aria-hidden="true"><use href="#i-guardian"/></svg>명부 <small>10 / 10</small></span>
+      <span class="tile off"><svg class="ic" aria-hidden="true"><use href="#i-camp"/></svg>야영지 <small>M3 이후</small></span>
+      <span class="tile"><svg class="ic" aria-hidden="true"><use href="#i-inspector"/></svg>장부 · 트레이스</span>
+      <span class="tile"><svg class="ic" aria-hidden="true"><use href="#i-eye"/></svg>검증</span>
+    </div>
+  </div>
+</div>
+<figcaption class="cap">상단 자원은 <b>Gold · Recruitment Dice · Campaign Year</b> 셋뿐이다. 뿔피리는 소모품이 아니라 전투 중 철수 신호라서 남은 개수를 세지 않는다. 시작 Gold 200 은 원문의 예시(초반 구조 2명 분)이고 실제 값은 Pilot 에서 정한다.</figcaption>
+</figure>

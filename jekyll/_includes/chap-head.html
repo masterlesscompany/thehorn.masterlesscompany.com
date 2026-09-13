@@ -1,0 +1,9 @@
+{% comment %} 장 머리 — 밀랍 인장 숫자 + 장 이름 + 제목 + 리드. 인자: c(chapters.yml 행) · h(제목, HTML 허용) · lead {% endcomment %}
+<div class="chap-head">
+  <span class="numeral" aria-hidden="true">{{ include.c.num }}</span>
+  <div>
+    <p class="kicker">CHAPTER {{ include.c.num }} · {{ include.c.t }}</p>
+    <h2>{{ include.h }}</h2>
+    {% if include.lead %}<p class="lead">{{ include.lead }}</p>{% endif %}
+  </div>
+</div>

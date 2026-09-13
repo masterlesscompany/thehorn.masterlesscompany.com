@@ -1,0 +1,35 @@
+{% assign camps = site.data.missions.missions | where_exp: "m", "m.camp" | map: "n" %}
+<section class="chap" id="camp">
+<div class="wrap">
+  {% include chap-head.html c=include.chap h="“오늘은 전원 쉬어.” 그런데 셋이 쉬지 않았다." lead="캠프는 단원의 자율성이 전투보다 더 똑똑히 보이는 장면이다. 전투는 주사위와 승패가 섞이지만, 캠프에는 성격 · 삶의 이유 · 지금 상태 · 유저의 지시만 남는다." %}
+
+  <div class="grid g2" style="align-items:start;">
+    {% include mock/camp.html %}
+    <div style="padding-top:28px;">
+      <div class="grid g2">
+        <div class="leaf"><svg class="ic-big" aria-hidden="true"><use href="#i-train"/></svg><h4>TRAIN</h4><p>성장 기회 · 무기 숙련 · Stat 성장. 피로가 오른다.</p></div>
+        <div class="leaf"><svg class="ic-big" aria-hidden="true"><use href="#i-rest"/></svg><h4>REST</h4><p>피로 감소 · 부상 회복 · 정신적 부담 감소.</p></div>
+        <div class="leaf"><svg class="ic-big" aria-hidden="true"><use href="#i-educate"/></svg><h4>EDUCATE</h4><p>WIS · INT 계열 · 전술 숙련 · 새 Build 탐색.</p></div>
+        <div class="leaf"><svg class="ic-big" aria-hidden="true"><use href="#i-leisure"/></svg><h4>LEISURE</h4><p>정신 피로 감소 · 사기 · 관계 · 삶의 압박 완화.</p></div>
+      </div>
+      <p class="muted" style="margin-top:12px;">캠프는 M{{ camps | join: " · M" }} 뒤에 온다. 서사가 아무리 다양해도 내부 행동은 이 넷뿐이다 — 그래야 코드와 평가가 안정적이다.</p>
+    </div>
+  </div>
+
+  {% include mock/camp-result.html %}
+
+  <div class="grid g2" style="margin-top:28px;">
+    <div class="leaf">
+      <span class="tag tag-wax">REST 지시 → TRAIN</span>
+      <h4 style="margin-top:10px;">ISTJ · 가족 부양 · 직전 미션 실수 · 불안 높음</h4>
+      <p class="say" style="font-size:17px;margin-top:10px;">“다시는 같은 실수를 하지 않겠다며 혼자 훈련장으로 갔다.”</p>
+    </div>
+    <div class="leaf">
+      <span class="tag tag-wax">TRAIN 지시 → LEISURE</span>
+      <h4 style="margin-top:10px;">ENFP · 피로 매우 높음 · 전쟁이 끝나면 술집을 열고 싶다</h4>
+      <p class="say" style="font-size:17px;margin-top:10px;">“훈련장에 얼굴만 비추고 동료들과 술집으로 사라졌다.”</p>
+    </div>
+  </div>
+  <p class="say" style="margin-top:36px;">나는 환경을 만들 수 있지만, 사람을 직접 조종할 수는 없다.<cite>첫 캠프에서 유저가 깨닫는 것 — 통합시나리오 v3.2 §7</cite></p>
+</div>
+</section>

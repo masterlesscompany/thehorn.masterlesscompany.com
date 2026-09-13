@@ -1,0 +1,59 @@
+---
+layout: base
+title: 개발 로그
+permalink: /log/
+description: 사이트를 만든 기록. 커밋마다 무엇을 왜 했는지.
+---
+{% assign logs = site.logs | sort: "path" | reverse %}
+{% comment %}
+  where: "date", d 는 동작하지 않는다 — 프론트매터의 date 가 Time 객체라 비교가 매번
+  빗나간다(secu-agent 에서 겪었다). 문자열로 묶는다.
+{% endcomment %}
+{% assign days = logs | group_by_exp: "l", "l.date | date: '%Y-%m-%d'" %}
+
+<header class="cover" style="padding:80px 0 60px;">
+  <div class="wrap">
+    <p class="anno">THE CHRONICLE · {{ logs | size }} ENTRIES</p>
+    <h1 style="font-size:46px;">무엇을 <em>왜</em> 했는지.</h1>
+    <p class="lead">커밋마다 한 편씩 남긴다. 커밋 훅이 메시지를 그대로 옮기므로, 잘못 짚었다가 되돌린 것까지 남는다.</p>
+  </div>
+</header>
+
+<div class="ledger">
+  <section class="chap">
+    <div class="wrap-narrow">
+      {% if logs.size == 0 %}
+        <div class="leaf"><p>아직 기록이 없다. 첫 커밋이 들어오면 여기에 쌓인다.</p></div>
+      {% endif %}
+      {% for day in days %}
+        <div style="margin-bottom:48px;">
+          <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding-bottom:12px;margin-bottom:20px;border-bottom:2px solid var(--ink);">
+            <h2 style="font-size:24px;margin:0;">{{ day.name | date: "%Y년 %-m월 %-d일" }}</h2>
+            <span class="muted" style="font-weight:700;">{{ day.items | size }}편</span>
+          </div>
+          {% for log in day.items %}
+            <article class="leaf" style="padding:20px 22px;margin-bottom:10px;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                <span class="tag {% if log.area == 'mock' %}tag-ember{% elsif log.area == 'site' or log.area == 'data' %}tag-wax{% elsif log.area == 'docs' or log.area == 'qa' %}tag-moss{% endif %}">{{ log.area }}</span>
+                <span style="font-family:var(--mono);font-size:12px;color:var(--ink-3);">#{{ log.seq }}</span>
+              </div>
+              <div class="logbody">{{ log.content | markdownify }}</div>
+            </article>
+          {% endfor %}
+        </div>
+      {% endfor %}
+      <a class="btn btn-ink" href="{{ '/' | relative_url }}">← 장부로</a>
+    </div>
+  </section>
+</div>
+
+<style>
+.logbody{font-size:15px;line-height:1.72;color:var(--ink-2);}
+.logbody > ul{margin:0;padding:0;list-style:none;}
+.logbody > ul > li{margin-bottom:14px;}
+.logbody > ul > li:last-child{margin-bottom:0;}
+.logbody > ul > li > strong:first-child{display:block;color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.45;margin-bottom:6px;}
+.logbody ul ul{margin:8px 0 0;padding-left:20px;list-style:disc;}
+.logbody p{margin:0 0 8px;}
+.logbody code{background:rgba(255,252,243,.8);border:1px solid var(--parch-line);}
+</style>

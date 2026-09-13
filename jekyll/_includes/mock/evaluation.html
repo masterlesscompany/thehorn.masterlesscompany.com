@@ -1,0 +1,60 @@
+{% assign e = site.data.eval %}
+{% comment %}
+  ⚠ 결과 칸(data-result)은 전부 NOT RUN 이다 — 공식 E4 Run 이 아직 없다(Eval PART 1 §42·§43.8).
+  이 부품에는 통과·실패를 뜻하는 영문 판정어를 쓰지 않는다. check_site.py 가 둘 다 검사한다.
+{% endcomment %}
+<figure class="mock" data-mock="evaluation">
+{% include mock/_bar.html scroll="1" t="EVALUATION" ko="E4 · Minimum Viable Gaming Agent" badge="MOCK · 구조만 · 결과 없음" %}
+<div class="mock-scroll"><div class="mock-body wide ev">
+  <dl class="ev-head">
+    {% for h in e.header %}<div><dt>{{ h.k }}</dt><dd>{% if h.v == "NOT RUN" %}<span class="notrun" data-result>NOT RUN</span>{% else %}{{ h.v }}{% endif %}</dd></div>{% endfor %}
+  </dl>
+
+  <div class="ev-grid">
+    <section class="plate">
+      <p class="ph">① MODEL DESCENT</p>
+      <ol class="ladder">
+        {% for m in e.ladder %}<li><b>{{ m.size }}</b><small>{{ m.role }}</small><span class="notrun" data-result>{{ m.status }}</span></li>{% endfor %}
+      </ol>
+      <p class="dim ev-note">모든 Critical Gate 를 통과한 가장 작은 모델에 표시가 붙는다.</p>
+    </section>
+
+    <section class="plate">
+      <p class="ph">② TASK × MODEL HEATMAP</p>
+      <table class="heat">
+        <thead><tr><th scope="col"><span class="sr-only">Task</span></th>{% for m in e.ladder %}<th scope="col">{{ m.size }}</th>{% endfor %}</tr></thead>
+        <tbody>
+          {% for t in e.tasks %}<tr><th scope="row">{{ t }}</th>{% for m in e.ladder %}<td><span class="notrun" data-result>NOT RUN</span></td>{% endfor %}</tr>{% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="plate">
+      <p class="ph">③ QUALITY × VRAM</p>
+      <div class="scatter" role="img" aria-label="Quality × VRAM 산점도 — 아직 실행하지 않음">
+        <svg viewBox="0 0 200 120" aria-hidden="true"><path d="M24 8v96h168" fill="none" stroke="currentColor" stroke-width="1"/><text x="108" y="118" font-size="8" fill="currentColor" text-anchor="middle">Peak VRAM →</text><text x="10" y="56" font-size="8" fill="currentColor" transform="rotate(-90 10 56)" text-anchor="middle">Agent Quality →</text></svg>
+        <span class="notrun" data-result>NOT RUN</span>
+      </div>
+      <p class="dim ev-note">Gate 통과 여부 · Pareto frontier · 선정된 최소 모델이 여기 찍힌다.</p>
+    </section>
+
+    <section class="plate">
+      <p class="ph">④ PERSONA RETENTION</p>
+      <ul class="axes">{% for a in site.data.mbti.axes %}<li><b>{{ a.pair }}</b><span class="notrun" data-result>NOT RUN</span></li>{% endfor %}</ul>
+    </section>
+
+    <section class="plate">
+      <p class="ph">⑤ CAMP AUTONOMY · Directive = REST</p>
+      <ul class="axes">{% for m in e.ladder %}<li><b>{{ m.size }}</b><span class="notrun" data-result>NOT RUN</span></li>{% endfor %}</ul>
+      <p class="dim ev-note">REST · TRAIN · EDUCATE · LEISURE 분포와 Justified Refusal · Mechanical Compliance Collapse.</p>
+    </section>
+
+    <section class="plate">
+      <p class="ph">⑥ FAILURE DRILL-DOWN</p>
+      <ol class="drill">{% for d in e.drill %}<li>{{ d }}</li>{% endfor %}</ol>
+      <p class="dim ev-note">차트의 칸을 누르면 이 순서로 내려간다.</p>
+    </section>
+  </div>
+</div></div>
+<figcaption class="cap">평가 대시보드는 부록이 아니라 <b>Battle 과 같은 급의 P0 화면</b>이다. 아직 공식 실험을 돌리지 않았으므로 칸마다 <b>NOT RUN</b> 이 적혀 있다 — 원문의 규칙대로 실험하지 않은 값은 채우지 않는다. 사다리의 8B · 4B · 2B · 1B 는 원문의 예시 크기다.</figcaption>
+</figure>

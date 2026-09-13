@@ -1,0 +1,102 @@
+# 역할별 칸반 — RPG 저장소 기획서 v4(2026-09-09) 기준. v5.2 기능이 아니다.
+#
+# 역할은 기획서 v4 §3.2 표 그대로다(코어 2 + 위성 3). 카드는 §12 절단선의 "실제 상태"와
+# §14.2 구현 현황 · §14.3 미뤄진 것 · §14.4 앞으로 진행 순서에서 옮겼고, 어느 역할에
+# 두느냐는 §3.2 "담당 범위" 로 나눴다 — 원문에 카드별 담당자가 적혀 있지는 않다.
+#
+# col: done(9/9 기준 돌아감) · a(→9/20 A 제출) · b(→10/17 B 데모데이) · hold(보류 · C 이후)
+# b 카드의 seq 는 §14.4 표의 순번이다 — 앞 순번이 끝나야 뒤가 시작한다.
+# 주의: 키 이름에 `no:` 를 쓰지 않는다(YAML 1.1 → false).
+
+updated: 2026-09-13
+source: "기획서 v4 (2026-09-09) §3.2 · §12 · §14"
+
+columns:
+  - { id: done, name: 완료,        sub: "2026-09-09 기준 코드에서 돈다" }
+  - { id: a,    name: A 제출,      sub: "지금 → 9/20 · 기능 추가 없음" }
+  - { id: b,    name: B 데모데이,  sub: "9/21 → 10/17 · 순번대로" }
+  - { id: hold, name: 보류 · C,    sub: "사유가 있는 보류 · 10/18 이후" }
+
+# 역할을 가리지 않는 것 — §3.4 검증 날, §14.4 상시.
+common:
+  - { title: "9/19 검증 날", src: "§3.4 · §14.4", note: "새 기능 없이 5명이 각자 다른 경로로 완주" }
+  - { title: "10/15~16 검증 날", src: "§3.4 · §14.4 B-10", note: "이틀. 새 기능 없이" }
+  - { title: "마일스톤마다 페르소나 QA 5인", src: "§14.4 상시", note: "발견은 docs/qa/ 에 남기고, 고치고, 재검한다" }
+
+roles:
+  - id: core-a
+    name: 코어 A
+    scope: 규칙 엔진(순수 도메인) · 하네스(스키마·검증·재시도·폴백) · Fake/Replay 어댑터 · 진영 대칭 전투 엔진
+  - id: core-b
+    name: 코어 B
+    scope: 오케스트레이터·캐릭터 에이전트 프롬프트 · 재계획 트리거 · 승산 휴리스틱 · 보스 in-context 적응
+  - id: eval
+    name: 평가·실험
+    scope: 트레이스 스키마 소유자 · 실험 러너 · 분포 차트 · 모델 벤치마크
+  - id: front
+    name: 프론트·배포
+    scope: 3패널 트레이스 뷰어 · 실도메인 배포 · 투표 사용자 진입 화면
+  - id: pm
+    name: 콘텐츠·발표·PM
+    scope: 세계관 · 캐릭터 프로필 · 이벤트 스키마 · 시드 시나리오 · 발표자료
+
+cards:
+  # ── 코어 A ─────────────────────────────────────────
+  - { role: core-a, col: done, title: "규칙 엔진(진영 대칭) + 하네스 + Fake/Replay", src: "§12" }
+  - { role: core-a, col: done, title: "쓰러짐 3분기 + 굴림·경계", src: "§6.0 · §14.2" }
+  - { role: core-a, col: done, title: "결과 5등급 · 「철수」에 부상자 허용", src: "§12 · 팀 결정 #13" }
+  - { role: core-a, col: done, title: "뿔피리 + 전령관 지연", src: "§8.2 · §12" }
+  - { role: core-a, col: done, title: "끌려감 · 회수 결정(비용·기한 표시, 저장만)", src: "§6.8 · §14.2" }
+  - { role: core-a, col: done, title: "인터미션 — 훈련 거부 · 생애 이벤트 파라미터 변경", src: "§5.1 · §6.7" }
+  - { role: core-a, col: b,    seq: 2, title: "최소 교전 턴 하한 (보스 8 / 일반 3)", src: "팀 결정 #5 · §14.4", note: "실모델 연결 직후여야 회귀 테스트가 의미를 갖는다" }
+  - { role: core-a, col: b,    seq: 6, title: "회수 출동 개방", src: "§6.8 · §14.4", note: "성공률 60~70% 로 튠" }
+  - { role: core-a, col: hold, title: "HORN_CHARGES 를 계약 단위로", src: "§14.3", note: "설계 결정 대기 — 18출동 계약이 열릴 때 세션 수명과 함께" }
+  - { role: core-a, col: hold, title: "저장된 런 이어 돌리기 (boss_title·forsaken 복원)", src: "§14.3", note: "B단계 해당 기능의 일부로" }
+  - { role: core-a, col: hold, title: "생애주기 완성 — 이탈 → 충원 주사위 → 대체자 → 복귀 → 사망 파급", src: "§14.2 · §14.4 C", note: "지금은 스키마만" }
+
+  # ── 코어 B ─────────────────────────────────────────
+  - { role: core-b, col: done, title: "2층 판단 — 단장 + 단원 3", src: "§8.3 · §12" }
+  - { role: core-b, col: done, title: "재계획 트리거 · 승산 휴리스틱 · 포기", src: "§12" }
+  - { role: core-b, col: done, title: "보스 in-context 적응(한 판 안) · 전열 붕괴", src: "§12 · 팀 결정 #2" }
+  - { role: core-b, col: done, title: "보스 호칭 생성", src: "§8.5 · 팀 결정 #3" }
+  - { role: core-b, col: done, title: "학습 카드 — 출처 라운드·인물·종", src: "§8.4 · §12" }
+  - { role: core-b, col: done, title: "E1 Fake 단장 규칙 수정", src: "팀 결정 #14", note: "지목은 닿는 적 안에서만, 적 3기 이상이면 광역 우선" }
+  - { role: core-b, col: b,    seq: 1, title: "실모델 연결 — gemini / anthropic 어댑터", src: "§14.4", note: "열쇠. 아래 절반이 이것에 막혀 있다" }
+  - { role: core-b, col: b,    seq: 7, title: "보스 호칭 + 카드가 판을 넘는 시연 경로", src: "§14.4", note: "5·6번이 있어야 성립" }
+  - { role: core-b, col: b,    seq: 9, title: "MBTI 표현 레이어 · 조언(희소)", src: "§12 · §14.4", note: "여력 시" }
+  - { role: core-b, col: hold, title: "보스 적응이 손에 안 닿는다 (지목 명중 47%)", src: "§14.3", note: "밸런스 설계 변경 — 기획서 승인 대기" }
+  - { role: core-b, col: hold, title: "적응 4종 중 셋이 같은 필드(boss_focus)", src: "§14.3", note: "「돌파」 관통화는 설계 변경" }
+  - { role: core-b, col: hold, title: "E3 세 축 계수 가르기 (ADJUST_RISK = ADJUST_SACRIFICE)", src: "§14.3", note: "밸런스 변경 — 실모델을 붙여도 안 갈라진다" }
+  - { role: core-b, col: hold, title: "학습 카드 완성 — 카운터 카드 10~12장 · 패턴 지표 7종 · 보스 3형태 슬롯", src: "§14.3 · §14.4 C", note: "카드 풀이 커질 때 apply_cards 를 Strategy 로" }
+
+  # ── 평가·실험 ───────────────────────────────────────
+  - { role: eval, col: done, title: "트레이스 스키마 KINDS 29종 + 계약 샘플", src: "§3.3", note: "샘플이 낡았는지 묻는 테스트까지" }
+  - { role: eval, col: done, title: "실험 E1 (200시드)", src: "§10.1 · §12" }
+  - { role: eval, col: done, title: "실험 E2 · E3", src: "§10.1 · §12" }
+  - { role: eval, col: done, title: "자동 대전 · 시드 결정론 27,954 이벤트", src: "§9.3 · §12" }
+  - { role: eval, col: b,    seq: 1, title: "E4 모델 벤치마크", src: "§14.4", note: "실모델 연결과 함께" }
+  - { role: eval, col: b,    seq: 3, title: "mission_end.ended_by + E7 로그", src: "§14.3 · §14.4", note: "트레이스 계약 추가라 UI 작업 전에" }
+  - { role: eval, col: b,    seq: 4, title: "E7 구현 — 뿔피리 vs 자율 후퇴", src: "§14.4", note: "데모 10분의 5번 슬라이드" }
+  - { role: eval, col: hold, title: "수하·소환·회수 payload 근거 · 효율 페널티 라벨", src: "§14.3", note: "다음 라운드에 트레이스 계약과 한 번에" }
+  - { role: eval, col: hold, title: "E5·E6·E8 · 5축 결산 리포트 · 평가 에이전트", src: "§14.4 C" }
+  - { role: eval, col: hold, title: "밸런스 지표 — 완주율·평균 사망·회수 성공률·성별 대칭", src: "§14.4 C" }
+
+  # ── 프론트·배포 ─────────────────────────────────────
+  - { role: front, col: done, title: "인스펙터 + 서사 스트림 + 대시보드", src: "§11.2 · §12" }
+  - { role: front, col: done, title: "뿔피리·끌려감·회수·카드·호칭이 화면에 나온다", src: "§14.4" }
+  - { role: front, col: a,    title: "배포 확인 — 실도메인 · 투표 사용자 진입 화면 · 백엔드 두절 안내", src: "§14.4 A-1" }
+  - { role: front, col: b,    seq: 8, title: "인스펙터·결산 마감 — 지목 추적 · 효율 라벨 · 뿔피리/포기 구분", src: "§14.3 · §14.4", note: "3번의 계약 위에서 한 번에" }
+  - { role: front, col: hold, title: "뿔피리 잔여 새로고침 복원 (horn_left)", src: "§14.3", note: "세션 수명 결정과 같이" }
+  - { role: front, col: hold, title: "회차 뒤집힘 표시 — 「1차 출동(7회차)」 병기", src: "§14.3", note: "회차 번호 표기 규칙 전체와 함께" }
+
+  # ── 콘텐츠·발표·PM ──────────────────────────────────
+  - { role: pm, col: done, title: "기획서 v4 · 통합시나리오 v2", src: "§13 · §14", note: "로스터 성향 4축 실제 값 포함" }
+  - { role: pm, col: done, title: "팀 결정 14건 확정", src: "§14.1" }
+  - { role: pm, col: done, title: "로스터 5인 프리셋 · 성별", src: "§7.4 · 팀 결정 #10" }
+  - { role: pm, col: done, title: "A단계 몬스터 — 고블린 · 놀 · 성장기 미노타우루스", src: "팀 결정 #11" }
+  - { role: pm, col: a,    title: "로스터 스프라이트 재생성 · README · 발표자료", src: "§14.4 A-3", note: "남는 시간에만" }
+  - { role: pm, col: b,    seq: 5, title: "봄 사이클 5판 + 6회차 보스전 콘텐츠", src: "§14.4", note: "카드가 실제 로그에서 생기는 걸 보이려면 앞 판이 있어야 한다" }
+  - { role: pm, col: b,    seq: 9, title: "은화 · 성물", src: "§12 · §14.4", note: "여력 시" }
+  - { role: pm, col: b,    title: "데모데이 10분 구성 · 발표자료", src: "§11.3" }
+  - { role: pm, col: hold, title: "설계 문서 §5.6·§6.4 갱신 · spec-trace 대응표", src: "§14.3", note: "A단계 제출 뒤 한 번에" }
+  - { role: pm, col: hold, title: "18출동 전체 — 미션 12종 프리셋 · 오크 · 성체 · 킹 · 전리품 편제", src: "§14.3 · §14.4 C", note: "지금 채우면 거의 같은 판이 열여섯 번" }

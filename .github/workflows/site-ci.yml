@@ -1,0 +1,31 @@
+name: Site CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+          working-directory: jekyll
+
+      # 로컬 기준(baseurl 빈 값)과 배포 기준(/thehorn) 두 번 빌드해 검사한다.
+      # 빈 baseurl 에서는 relative_url 을 빼먹은 링크도 우연히 풀리기 때문이다.
+      - name: 빌드 · 검사 (로컬 기준)
+        run: |
+          cd jekyll && bundle exec jekyll build && cd ..
+          python3 scripts/check_site.py
+
+      - name: 빌드 · 검사 (배포 기준 /thehorn)
+        run: |
+          cd jekyll && bundle exec jekyll build --baseurl /thehorn && cd ..
+          python3 scripts/check_site.py --baseurl /thehorn

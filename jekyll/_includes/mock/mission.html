@@ -1,0 +1,21 @@
+{% assign m = site.data.missions.missions | where: "n", 2 | first %}
+<figure class="mock" data-mock="mission">
+{% include mock/_bar.html t="CONTRACT" ko="계약서 · Mission Detail" %}
+<div class="mock-body">
+  <div class="contract">
+    <div class="contract-h">
+      <span class="mno">M{{ m.n }}</span>
+      <div><b>{{ m.title }}</b><span>Cycle 1 · 봄 · 마을 방책(Village / Palisade)</span></div>
+      <svg class="ic wax-seal" aria-hidden="true"><use href="#i-seal"/></svg>
+    </div>
+    <dl class="kv ink">
+      <dt>목표</dt><dd>습격대로부터 마을 방책을 지킨다</dd>
+      <dt>적</dt><dd>Goblin Raider ×3 · Orc Shieldbearer ×1</dd>
+      <dt>출전</dt><dd><b>정확히 {{ m.crew }}명</b> — 최소 {{ m.guard }}개 Class (초반 Troll Guard)</dd>
+      <dt>보상</dt><dd>Gold · Growth(생환자 +1, MVP 추가 +2) · MVP</dd>
+      <dt>위험</dt><dd>초반 — Death 매우 낮음 · Injury 높음 · Taken 중간</dd>
+    </dl>
+  </div>
+</div>
+<figcaption class="cap">몇 명을 보낼지는 유저가 정하지 않는다. 미션이 인원을 못박는다 — 유저는 <b>누구를</b> 보낼지만 고른다. 첫 두 계약에만 최소 2개 Class 조건이 붙고, M3 부터는 7 Bard 도 허용된다. 망하면 결과가 알려준다.</figcaption>
+</figure>

@@ -1,0 +1,22 @@
+# P0 핵심 Screen 16 — Visual Guide §15. 화면 투어(/screens/)의 순서는 기획서 §47
+# Screen Flow 를 따른다 — 한 판을 따라가며 화면이 나오는 순서다. `num` 은 §15 의 번호다
+# (`no` 라고 쓰면 YAML 1.1 이 키를 불리언 false 로 읽는다 — 실제로 번호가 비어 나왔다).
+# `mock` 은 _includes/mock/ 의 부품 이름, `ref` 는 그 화면을 규정하는 원문 조항이다.
+
+- { num: 1,  id: hq,          name: Landing / HQ,       ko: 용병단 본부,     mock: hq,          ref: "Visual §16", say: "상단 Resource 는 Gold · Recruitment Dice · Campaign Year 뿐. 뿔피리는 Inventory 가 아니다." }
+- { num: 2,  id: campaign,    name: Campaign,           ko: 캠페인 지도,     mock: campaign,    ref: "Visual §19 · 시나리오 §41", say: "20 Mission 노드가 네 계절로 흐른다. Normal · Boss · Camp · Life Check · Cleared · Current · Locked." }
+- { num: 3,  id: creation,    name: Character Creation, ko: 단원 탄생,       mock: creation,    ref: "기획서 §2", say: "주사위와 룰렛이 몸과 성격을 정하고, 유저는 성별·Class·초기 Stats 만 고른 뒤 손을 뗀다." }
+- { num: 4,  id: roster,      name: Roster,             ko: 명부,            mock: roster,      ref: "Visual §17", say: "카드에는 최소 정보만. Physical 세부값은 숨긴다." }
+- { num: 5,  id: detail,      name: Character Detail,   ko: 단원 상세,       mock: detail,      ref: "Visual §18", say: "같은 전투 외형을 공유해도 이 단원은 고유한 Agent 다." }
+- { num: 6,  id: mission,     name: Mission Detail,     ko: 계약서,          mock: mission,     ref: "기획서 §12 · §13", say: "미션이 정확한 인원을 요구한다. 몇 명이 아니라 누구를 보낼지를 정한다." }
+- { num: 7,  id: party,       name: Party Select,       ko: 출전 선택,       mock: party,       ref: "Visual §20", say: "Required 5 · Selected 5 / 5. M1·M2 만 Troll Guard 를 안내한다." }
+- { num: 8,  id: battle,      name: Battle,             ko: 전장,            mock: battle,      ref: "Visual §21 · §22 · §26", say: "단원이 화면의 중심. 2-depth Formation, 1초짜리 결정 태그, RETREAT SIGNAL." }
+- { num: 9,  id: inspector,   name: Inspector Drawer,   ko: 인스펙터,        mock: inspector,   ref: "Visual §23", say: "기본은 닫힌 서랍. 열면 ACTION · STATE · REASON CODES · OUTCOME · MODEL. 트레이스만 보여준다." }
+- { num: 10, id: result,      name: Result / MVP,       ko: 전과 보고,       mock: result,      ref: "Visual §24 · 기획서 §18", say: "Result → Reward → MVP → Casualty → Taken? → AI Growth. MVP 는 Damage 만으로 뽑지 않는다." }
+- { num: 12, id: taken,       name: Taken / Rescue,     ko: 끌려간 자,       mock: taken,       ref: "기획서 §15 · Visual §25", say: "구조비를 낼 것인가. 파견하면 즉시 성공, 즉시 복귀. 기한도 실패 확률도 없다." }
+- { num: 11, id: growth,      name: AI Growth,          ko: 성장 보고,       mock: growth,      ref: "기획서 §38 · 시나리오 §43", say: "성장 포인트를 쓰는 것은 유저가 아니라 단원이다." }
+- { num: 13, id: camp,        name: Camp,               ko: 야영지,          mock: camp,        ref: "기획서 §19~§23", say: "다섯 턴, 한 턴에 부대 전체 지침 하나. 10명에게 따로 명령하지 않는다." }
+- { num: 14, id: camp-result, name: Camp Result,        ko: 야영 결과,       mock: camp-result, ref: "Visual §27", say: "지시와 다른 행동에는 ! — 누르면 인스펙터가 이유를 연다." }
+- { num: 15, id: fingerprint, name: Boss Fingerprint,   ko: 적의 장부,       mock: fingerprint, ref: "기획서 §35 · Visual §28", say: "적은 Class 가 아니라 싸우는 습관을 기억한다." }
+- { num: 16, id: evaluation,  name: Evaluation Dashboard, ko: 검증,          mock: evaluation,  ref: "PART 1 §43 · Visual §29", say: "Battle 과 동급의 P0 화면. 실험하지 않은 칸은 NOT RUN." }
+# P1 화면 목록은 screens_p1.yml — 이 파일은 최상위가 목록이라 키를 섞을 수 없다.

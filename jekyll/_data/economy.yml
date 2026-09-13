@@ -1,0 +1,22 @@
+# 경제·보상·에셋 예산 — 사이트 수치의 단일 출처(QA R1 frontend: HTML 리터럴이 남아 있었다).
+# 구조비 배율은 기획서 §16, Growth 지급은 §18, P0 에셋 예산은 Visual Guide §11 이다.
+
+rescue_tiers:
+  - { cycle: 1, missions: M1–M5,   mult: ×1.0 }
+  - { cycle: 2, missions: M6–M10,  mult: ×1.5 }
+  - { cycle: 3, missions: M11–M15, mult: ×2.25 }
+  - { cycle: 4, missions: M16–M20, mult: ×3.0 }
+
+growth_payout:
+  - { kind: Normal, survivor: "+1", mvp: "+2" }
+  - { kind: Boss,   survivor: "+2", mvp: "+3" }
+
+# Visual Guide §6.2 · §7 · §8 · §9 · §10 · §11
+assets:
+  - { k: Player,    n: "79",    sub: "Master 10 · Core Pose 30 · Attack/Special 24 · Weapon/Tool 15" }
+  - { k: Enemy · Boss, n: "18", sub: "Goblin Raider · Gnoll Charger · Orc Shieldbearer 각 4 + Boss 1종 6" }
+  - { k: Background, n: "6",    sub: "HQ · 캠페인 지도 · 캠프 · 숲/도로 · 마을 방책 · Boss Arena" }
+  - { k: VFX,       n: "12",    sub: "Slash · Pierce · Blunt · Shield Block · Arrow · Projectile Hit · Dodge/Down Dust · Bandage · Morale · Horn · MVP" }
+  - { k: Icon,      n: "20–24", sub: "6 Stats · 5 Class · HP · 피로 · 부상 · Gold · Dice · Growth · Camp 4 · Inspector · Fingerprint — SVG 우선" }
+  - { k: Frame,     n: "8",     sub: "Character · Mission · Inspector · Result · Camp · Life · Evaluation · Modal" }
+assets_total: "143–147"

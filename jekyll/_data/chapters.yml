@@ -1,0 +1,13 @@
+# 장부의 장 목록 — 홈의 목차와 장 순서의 단일 출처. id 는 _includes/ch/<id>.html 과 앵커를 겸한다.
+- { num: I,    id: why,      t: 왜 존재하는가 }
+- { num: II,   id: hands,    t: 손을 떼는 지점 }
+- { num: III,  id: birth,    t: 한 사람의 탄생 }
+- { num: IV,   id: campaign, t: 20년 캠페인 }
+- { num: V,    id: camp,     t: 야영지 }
+- { num: VI,   id: battle,   t: 전장 }
+- { num: VII,  id: after,    t: 전장 뒤 }
+- { num: VIII, id: boss,     t: 적도 우리를 기억한다 }
+- { num: IX,   id: years,    t: 다섯 해 }
+- { num: X,    id: eval,     t: 검증 }
+- { num: XI,   id: scope,    t: 원칙과 스코프 }
+- { num: XII,  id: status,   t: 지금까지 한 것 }

@@ -1,0 +1,21 @@
+{% assign g = site.data.mock_roster | where: "id", "G" | first %}
+<figure class="mock" data-mock="years">
+{% include mock/_bar.html t="+5 YEARS" ko="첫 Life Checkpoint · M5 이후" %}
+<div class="mock-body years">
+  <div class="yr"><span>1361</span><i aria-hidden="true">→</i><span class="now">1366</span></div>
+  <p class="yr-say">5 YEARS HAVE PASSED</p>
+  <div class="grid g2" style="margin-top:22px;">
+    <div class="plate">
+      <p class="ph"><svg class="ic" aria-hidden="true"><use href="#i-life"/></svg> LIFE EVENT</p>
+      <p style="margin:0;font-size:14px;"><b>{{ g.name }}</b> · {{ g.age }} → {{ g.age | plus: 5 }}세 · 만성 부상</p>
+      <p class="dim" style="font-size:12.5px;margin:6px 0 0;">은퇴를 고민한다. 다음 Checkpoint 까지 후방 역할을 맡는다 — 효과의 범위는 Rule Engine 이 정한다.</p>
+    </div>
+    <div class="plate">
+      <p class="ph"><svg class="ic" aria-hidden="true"><use href="#i-dice"/></svg> RECRUITMENT DICE ×1</p>
+      <p style="margin:0;font-size:14px;">빈 자리가 생기면 쓸지 정한다.</p>
+      <p class="dim" style="font-size:12.5px;margin:6px 0 0;">안 쓰면 20세 Rookie · 쓰면 높은 눈 → Veteran, 낮은 눈 → Rookie</p>
+    </div>
+  </div>
+</div>
+<figcaption class="cap">Boss 가 끝날 때마다 모두가 다섯 살을 먹는다. 20세로 시작하면 40세에, 40세로 시작하면 60세에 캠페인이 끝난다. 결혼 · 출산 · 간병 · 가업 · 부상 · 은퇴가 스무 판을 <b>스무 해</b>로 만든다. Checkpoint 마다 큰 사건은 한두 개다.</figcaption>
+</figure>

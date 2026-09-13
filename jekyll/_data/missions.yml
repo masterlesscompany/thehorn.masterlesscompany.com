@@ -1,0 +1,64 @@
+# 20 Mission · 4 Cycle — 사이트 수치의 단일 출처.
+# 출전 인원은 기획서 §12, Camp 는 §19(M3·M7·M12·M17 뒤), Boss 는 §11·§35,
+# Troll Guard 는 §13, 제목·의미는 통합시나리오 v3.2 §4~§30 에서 옮겼다.
+# 계절은 통합시나리오 §41 의 연출 메타포다 — Rule 에 영향하지 않는다.
+
+cycles:
+  - n: 1
+    era: 초창기
+    season: 봄
+    key: spring
+    years: "1361–1365"
+    arc: 서로를 알아가는 5년
+    feel: 이 사람들이 누구인지 알아가는 단계.
+  - n: 2
+    era: 성장기
+    season: 여름
+    key: summer
+    years: "1366–1370"
+    arc: 적도 우리를 기억하기 시작한다
+    feel: 이들은 성장했고, 적도 우리를 기억한다.
+  - n: 3
+    era: 세대교체
+    season: 가을
+    key: autumn
+    years: "1371–1375"
+    arc: 성장과 세대교체
+    feel: 누군가는 떠나고, 새로운 사람이 들어오고, 팀의 세대가 바뀐다.
+  - n: 4
+    era: 마지막 시대
+    season: 겨울
+    key: winter
+    years: "1376–1380"
+    arc: 마지막 세대와 최종 적응
+    feel: 처음의 10명이 그대로 남아 있지 않을 수 있다. 그래도 용병단에는 20년의 History가 남아 있다.
+
+missions:
+  - { n: 1,  cycle: 1, crew: 3, kind: normal, title: 첫 계약,           note: "소규모 습격. 승패보다 이들이 어떻게 싸우는지를 본다", guard: 2 }
+  - { n: 2,  cycle: 1, crew: 5, kind: normal, title: 방어 계약,         note: "첫 표준 파티 · 첫 MVP 경쟁 · 로테이션 판단", guard: 2 }
+  - { n: 3,  cycle: 1, crew: 7, kind: normal, title: 대규모 호위,       note: "조합 제한 해제 · 전체 피로 상승", camp: 1 }
+  - { n: 4,  cycle: 1, crew: 2, kind: normal, title: 소수 정예,         note: "집중 육성 · Boss 전 마지막 일반전" }
+  - { n: 5,  cycle: 1, crew: 5, kind: boss,   title: 첫 Boss,           note: "Baseline Boss · 첫 Fingerprint 저장", stage: Baseline }
+  - { n: 6,  cycle: 2, crew: 4, kind: normal, title: 새로운 시대의 첫 전투, note: "변화한 팀의 첫 실제 검증" }
+  - { n: 7,  cycle: 2, crew: 6, kind: normal, title: 대규모 작전,       note: "피로와 Injury 압력 상승", camp: 2 }
+  - { n: 8,  cycle: 2, crew: 3, kind: normal, title: 소규모 계약,       note: "새 Build 를 시험하기 좋은 구간" }
+  - { n: 9,  cycle: 2, crew: 5, kind: normal, title: 표준 전투,         note: "M10 Boss 직전" }
+  - { n: 10, cycle: 2, crew: 5, kind: boss,   title: 첫 Adaptive Boss,  note: "과거 Fingerprint 와 현재를 비교", stage: 첫 적응 }
+  - { n: 11, cycle: 3, crew: 2, kind: normal, title: 중반 소수 정예,    note: "오래 키운 둘인가, 새로 온 사람인가" }
+  - { n: 12, cycle: 3, crew: 6, kind: normal, title: 대규모 전투,       note: "Camp III 직전", camp: 3 }
+  - { n: 13, cycle: 3, crew: 4, kind: normal, title: 정비와 검증,       note: "팀 구성 정비 · 새 Build 검증" }
+  - { n: 14, cycle: 3, crew: 7, kind: normal, title: 두 번째 최대 규모, note: "후반부 — Taken/Death 위험 상승" }
+  - { n: 15, cycle: 3, crew: 5, kind: boss,   title: 누적 Adaptive Boss, note: "두 번의 Fingerprint 와 최근 Cycle 을 함께 본다", stage: 누적 적응 }
+  - { n: 16, cycle: 4, crew: 3, kind: normal, title: 마지막 시대의 시작, note: "세대교체 후 새 핵심 멤버" }
+  - { n: 17, cycle: 4, crew: 6, kind: normal, title: 마지막 대규모 작전, note: "마지막 Camp 직전", camp: 4 }
+  - { n: 18, cycle: 4, crew: 2, kind: normal, title: 마지막 소수 임무,  note: "가장 믿는 둘인가, 마지막 성장 기회인가" }
+  - { n: 19, cycle: 4, crew: 4, kind: normal, title: 마지막 일반 계약,  note: "최종 Growth 반영" }
+  - { n: 20, cycle: 4, crew: 5, kind: final,  title: Final Boss,        note: "네 시대의 습관을 아는 적", stage: 최종 적응 }
+
+# 출전 인원별 설계 이유 (기획서 §12)
+crew_reasons:
+  - { n: "2",   why: 소수 정예 · 집중 육성 }
+  - { n: "3–4", why: 조합 판단 }
+  - { n: "5",   why: 표준 파티 }
+  - { n: "6–7", why: 대규모 출전 · 피로 }
+  - { n: "Boss 5", why: Fingerprint 비교 안정화 }

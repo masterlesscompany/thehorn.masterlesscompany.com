@@ -1,0 +1,81 @@
+---
+layout: base
+title: 자유중대
+permalink: /
+description: 캐릭터를 조종하지 않는 게임. AI 단원이 스스로 성장하고 판단하는 과정을 게임으로 기록하고, 그 자율성을 유지하는 가장 작은 모델을 찾는 Agent Testbed.
+---
+
+<header class="cover">
+  <div class="wrap">
+    <p class="anno">ANNO MCCCLXI · 1361 · FREE COMPANY</p>
+    <h1>장부의 첫 장에는<br>열 명의 <em>낯선 사람</em>이 있었다.</h1>
+    <p class="lead">
+      「자유중대」에서 당신은 캐릭터를 조종하지 않습니다. 몸과 성격은 주사위가 정하고,
+      당신은 출발 방향과 환경만 만듭니다. 그다음부터 AI 단원이 스스로 무기를 고르고, 성장하고,
+      싸우고 — <strong style="color:var(--on-night);">때로는 당신의 지시를 거부합니다.</strong>
+    </p>
+    <p class="disclose">
+      <svg class="ic" aria-hidden="true"><use href="#i-warn"/></svg>
+      지금 이 사이트는 <strong>기획과 핵심 화면 목업</strong>입니다. 게임은 개발 중이고, 모델 실험 결과는 아직 없습니다 —
+      화면 속 인물과 수치는 예시이며 평가 칸은 <code>NOT RUN</code> 입니다.
+    </p>
+    <div class="btns">
+      <a class="btn btn-ember" href="{{ '/screens/' | relative_url }}"><svg class="ic" aria-hidden="true"><use href="#i-scroll"/></svg>화면 미리보기 · 목업 16장</a>
+      <a class="btn btn-night" href="#why">기획 읽기 ↓</a>
+      <a class="btn btn-night" href="{{ '/docs/' | relative_url }}">원문 6편</a>
+    </div>
+    <p class="cover-hook">
+      유저: <b>“오늘은 전원 쉬어.”</b> → 열 명 중 셋이 쉬지 않았다.
+      한 명은 가족을 부양하느라 혼자 훈련장으로, 한 명은 동료를 끌고 술집으로 갔다.
+      <a href="#camp">그 장면 보기 ↓</a>
+    </p>
+    <div class="cover-qs">
+      <div><b>USER</b><p>유저는 캐릭터의 출발점과 환경을 만든다.</p></div>
+      <div><b>CHARACTER AI</b><p>단원은 그 안에서 자기 성장과 행동을 결정한다.</p></div>
+      <div><b>TESTBED</b><p>게임은 그 과정을 기록하고, 우리는 그 자율성을 유지하는 가장 작은 모델을 찾는다.</p></div>
+    </div>
+  </div>
+</header>
+
+<div class="ledger">
+  <nav class="toc wrap" id="toc" aria-label="장부 목차">
+    {% for c in site.data.chapters %}<a href="#{{ c.id }}"><span>{{ c.num }}</span>{{ c.t }}</a>{% endfor %}
+  </nav>
+  {% for c in site.data.chapters %}
+    {% capture ch %}ch/{{ c.id }}.html{% endcapture %}
+    {% include {{ ch }} chap=c %}
+    {% comment %} 장이 열둘이라 폰에서 중간에 길을 잃는다 — 장마다 목차로 돌아갈 길을 둔다(QA R1 voter) {% endcomment %}
+    <div class="wrap to-toc"><a href="#toc">↑ 목차</a></div>
+  {% endfor %}
+</div>
+
+<section class="closing">
+  <div class="wrap">
+    <p class="say">“장부의 첫 장에는 열 명의 낯선 사람이 있었다.<br>마지막 장에는 스무 해 동안 스스로 달라진 사람들의 기록이 남아 있었다.”</p>
+    <p>이 스무 해의 변화가 정말 AI 의 자율성이었는지, 그리고 더 작은 모델에서도 유지되는지 — 이제 비교합니다.</p>
+    <div class="btns" style="justify-content:center;">
+      <a class="btn btn-ember" href="#eval">검증 장으로</a>
+      <a class="btn btn-night" href="{{ '/screens/' | relative_url }}">한 판 따라가기</a>
+    </div>
+  </div>
+</section>
+
+<style>
+.toc{display:flex;flex-wrap:wrap;gap:6px 8px;padding-top:28px;padding-bottom:28px;border-bottom:1px solid var(--parch-line);}
+.toc a{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;color:var(--ink-2);text-decoration:none;padding:6px 11px;border-radius:7px;border:1px solid var(--parch-line);background:rgba(255,252,243,.45);}
+.toc a:hover{border-color:var(--wax);color:var(--wax);}
+.toc span{font-family:var(--cinzel);font-weight:700;font-size:11px;color:var(--wax);}
+.disclose{display:flex;gap:10px;align-items:flex-start;margin:26px 0 0;max-width:680px;padding:12px 14px;
+  border:1px solid rgba(217,145,58,.35);border-radius:10px;background:rgba(217,145,58,.08);
+  color:var(--on-night-2);font-size:14.5px;line-height:1.6;}
+.disclose .ic{color:var(--ember);margin-top:3px;}
+.disclose strong{color:var(--on-night);}
+.disclose code{background:rgba(0,0,0,.3);color:var(--on-night-2);}
+.cover-hook{margin:26px 0 0;max-width:680px;padding-left:16px;border-left:2px solid var(--ember);
+  color:var(--on-night-2);font-size:15px;line-height:1.7;}
+.cover-hook b{color:var(--on-night);font-family:var(--serif);}
+.cover-hook a{color:var(--ember-2);}
+.to-toc{padding-top:14px;padding-bottom:14px;text-align:right;}
+.to-toc a{font-size:13px;color:var(--ink-3);text-decoration:none;}
+.to-toc a:hover{color:var(--wax);}
+</style>

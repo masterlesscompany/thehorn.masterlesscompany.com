@@ -1,0 +1,22 @@
+# ⚠ 목업 전용 예시 명부 — 실제 플레이 데이터가 아니다(모든 목업에 MOCK 배지).
+#
+# 기획서 §2: 고정 이름·신체·클래스·성격을 가진 Named Character 는 없다. 이름은 매 플레이마다
+# 작가(Scenario Director)가 만든다. 그래서 여기 이름은 "이런 식으로 나올 수 있다"는 예시일 뿐이고,
+# v5.2 에서 제거된 고정 배역(토마·오드·마르탱 등, 기획서 §44)의 이름은 쓰지 않는다.
+#
+# 인물 B·C·F 의 조건은 원문 사례를 그대로 옮겼다:
+#   B = 기획서 §22 · 쉬운설명 §20 — ISTJ, 가족 부양, 직전 미션 실수, 불안 높음 → REST 지시에 TRAIN
+#   C = 기획서 §22 — ENFP, 피로 매우 높음, "전쟁이 끝나면 술집을 열고 싶다"
+#   F = 통합시나리오 §2.7 · 쉬운설명 §8 — 188cm / Lean / 74kg, ISTP, Warrior, AGI 중심 → Spear
+# `rest` 는 Camp 1턴 REST 지시에 대한 실제 행동과 Reason Code(Eval PART 1 §37 형식) 예시다.
+
+- { id: A, name: 하랄트,     g: 남, cls: guardian, weapon: Shield + Mace,   age: 34, mbti: ESFJ, hp: 92, fat: 30, st: 대기,  rest: { act: REST } }
+- { id: B, name: 이졸데,     g: 여, cls: warrior,  weapon: Hammer,          age: 31, mbti: ISTJ, hp: 70, fat: 45, st: 대기,  seed: 가족에게 돈을 보내기 위해 용병단에 들어왔다., rest: { act: TRAIN, codes: [RECENT_FAILURE, HIGH_ANXIETY, J_PLAN_COMMITMENT, LIFE_FAMILY_DUTY], say: 다시는 같은 실수를 하지 않겠다며 혼자 훈련장으로 갔다. } }
+- { id: C, name: 오스윈,     g: 남, cls: bard,     weapon: Tool Kit,        age: 26, mbti: ENFP, hp: 81, fat: 88, st: 피로,  seed: 전쟁이 끝나면 술집을 열고 싶다., rest: { act: LEISURE, codes: [FATIGUE_HIGH, E_SOCIAL, LIFE_TAVERN_DREAM], say: 쉬라는 말에 동료 셋을 끌고 술집으로 사라졌다. } }
+- { id: D, name: 브리지트,   g: 여, cls: archer,   weapon: Long Bow,        age: 38, mbti: INTJ, hp: 100, fat: 20, st: 대기, rest: { act: REST } }
+- { id: E, name: 레오폴트,   g: 남, cls: rogue,    weapon: Throwing Dagger, age: 22, mbti: INTP, hp: 64, fat: 35, st: 대기,  rest: { act: EDUCATE, codes: [N_EXPLORE, RECENT_BUILD_DOUBT], say: 지도를 펴 놓고 지난 매복 자리를 다시 그렸다. } }
+- { id: F, name: 콘라트,     g: 남, cls: warrior,  weapon: Spear,           age: 29, mbti: ISTP, hp: 88, fat: 25, st: 대기,  h: 188, w: 74, body: 마름, seed: 북쪽 국경 마을의 목수 집안 출신. 가족에게 돈을 보내기 위해 자유중대에 들어왔다., rest: { act: REST } }
+- { id: G, name: 아녜스,     g: 여, cls: guardian, weapon: Shield + Short Sword, age: 40, mbti: ISFJ, hp: 45, fat: 60, st: 부상, rest: { act: REST } }
+- { id: H, name: 지그문트,   g: 남, cls: archer,   weapon: Short Bow,       age: 24, mbti: ESTP, hp: 95, fat: 15, st: 대기,  rest: { act: TRAIN, codes: [P_OPPORTUNITY, RECENT_MVP, FATIGUE_LOW], say: 몸이 가벼우니 쉴 이유가 없다며 과녁 앞에 섰다. } }
+- { id: I, name: 마틸데,     g: 여, cls: rogue,    weapon: Short Dagger,    age: 33, mbti: ENTJ, hp: 90, fat: 40, st: 대기,  rest: { act: REST } }
+- { id: J, name: 로젠,       g: 여, cls: bard,     weapon: Tool Kit,        age: 27, mbti: INFJ, hp: 100, fat: 50, st: 대기, rest: { act: REST } }

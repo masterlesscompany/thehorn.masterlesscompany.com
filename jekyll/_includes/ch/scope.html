@@ -1,0 +1,42 @@
+<section class="chap" id="scope">
+<div class="wrap">
+  {% include chap-head.html c=include.chap h="400장의 그림을 만드는 프로젝트가 아니다." lead="게임처럼 보이는 핵심 장면을 만들고, 그 장면에서 작동하는 단원을 실제 데이터로 검증하는 프로젝트다. 비주얼의 질과 제작 범위를 분리한다." %}
+
+  <div class="grid g3">
+    <div class="leaf"><span class="tag tag-wax">A · 제출본</span><h4 style="margin-top:10px;">핵심 장면의 완성도</h4><p>배포 가능한 Web Build · 10명 절차 생성 · Campaign → Mission → Party Select · 2D Auto Battle Vertical Slice · Result / MVP / AI Growth · 트레이스 / 인스펙터 · Evaluation Dashboard P0 · 최소 Anchor + Candidate 1 의 실제 Smoke/DEV 결과.</p></div>
+    <div class="leaf"><span class="tag tag-ember">B · 데모데이</span><h4 style="margin-top:10px;">자율성의 깊이</h4><p>로컬 Model Ladder · 자율 성장 · 캠프 · MBTI 행동 차이 · Boss Fingerprint · Re-plan / Retreat · E4 핵심 차트 5종 · Failure Drill-down / Replay.</p></div>
+    <div class="leaf"><span class="tag">C · 제품 비전</span><h4 style="margin-top:10px;">20년 전체</h4><p>20 Mission · Life Event · Taken / Recruitment · 일시 이탈과 복귀 · Boss 4 Cycle · 캠페인 결산 · 장기 벤치마크. 해커톤 제출의 의무가 아니다.</p></div>
+  </div>
+
+  <div class="grid g2" style="margin-top:16px;align-items:start;">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>P0 Source Asset</th><th>수량</th></tr></thead>
+        <tbody>
+          {% for a in site.data.economy.assets %}<tr><td>{{ a.k }} <span class="sub">{{ a.sub }}</span></td><td class="num">{{ a.n }}</td></tr>{% endfor %}
+          <tr><td><strong>합계</strong> <span class="sub">숫자보다 Visual QA 통과 개수가 중요하다</span></td><td class="num"><strong>{{ site.data.economy.assets_total }}</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="leaf">
+      <h4>Production Gate</h4>
+      <ol class="flow" style="margin-top:12px;"><li>A · Visual Bible</li><li>B · Evaluation Slice</li><li>C · P0 Battle Slice</li><li class="hot">D · P1 허용</li></ol>
+      <p style="margin-top:14px;">추가 아트는 <strong>Battle Slice 와 Evaluation Slice 가 둘 다 Ready</strong> 일 때만 허용한다. “Variant 를 계속 만들다 Evaluation 은 마지막 주”는 금지다. 전체 확장 시 400~450 장은 장기 Asset Universe 일 뿐 해커톤 목표가 아니다.</p>
+      <p>GPT 이미지 생성은 속도를 높이지만 병목은 얼굴 · 손 · 무기 · Foot line 의 <strong>Consistency QA</strong> 다.</p>
+    </div>
+  </div>
+
+  <div class="leaf" style="margin-top:16px;">
+    <h4>아키텍처 원칙</h4>
+    <ul class="ink" style="margin-top:10px;columns:2 280px;column-gap:28px;">
+      <li>Domain Rule 은 LLM 을 모른다.</li>
+      <li>Decision Model 은 Port — Fake · Replay · Local · API 가 같은 Interface.</li>
+      <li>트레이스는 Frontend 와 Eval 의 계약이다.</li>
+      <li>같은 Seed + Replay 는 같은 판을 재현한다.</li>
+      <li>Scenario · Content 는 Domain Rule 을 바꾸지 않는다.</li>
+      <li>Balance 숫자는 단일 출처.</li>
+      <li>숨은 Chain-of-Thought 를 저장하거나 요구하지 않는다 — state · action · reason code · outcome 만.</li>
+    </ul>
+  </div>
+</div>
+</section>

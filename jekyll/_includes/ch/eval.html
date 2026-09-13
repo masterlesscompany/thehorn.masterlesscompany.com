@@ -1,0 +1,64 @@
+{% assign e = site.data.eval %}
+<section class="chap tint" id="eval">
+<div class="wrap">
+  {% include chap-head.html c=include.chap h="모델만 바꾼다. 나머지는 전부 얼린다." lead="E4 — Autonomous Character Growth / Minimum Viable Gaming Agent. 같은 몸 · 같은 MBTI · 같은 Life Seed · 같은 Class · 같은 초기 Stats · 같은 미션 · 같은 주사위 · 같은 Harness 에서 모델만 줄여, 캐릭터다움이 어디서 처음 무너지는지 찾는다." %}
+
+  <div class="warn" style="margin-bottom:8px;">
+    <svg class="ic" aria-hidden="true"><use href="#i-warn"/></svg>
+    <p><strong>아직 공식 E4 실행 결과가 없습니다.</strong> 평가 상태는 <code>{{ e.state }}</code> 입니다. 아래 대시보드는 화면 구조만 보여주며, 모든 결과 칸은 <code>NOT RUN</code> 입니다 — 실험하지 않은 값은 채우지 않습니다(Evaluation PART 1 §42).</p>
+  </div>
+
+  <p class="muted" style="margin:0 0 4px;">8B · 4B · 2B · 1B 는 모델 크기다 — B 는 파라미터 10억 개를 뜻하고, 작을수록 가볍고 싸지만 판단이 무너지기 쉽다.</p>
+  {% include mock/evaluation.html %}
+
+  <div class="leaf" style="margin-top:28px;border-left:3px solid var(--wax);">
+    <h4>“그냥 랜덤 아니에요?”</h4>
+    <p>아니라는 것을 말이 아니라 재현으로 보인다. 난수는 전부 주사위 포트 하나를 통하므로 <strong>같은 Seed 는 같은 판</strong>이 된다. 단원의 판단은 State · Reason Code · 판정 결과와 함께 트레이스에 남고, Replay 는 그 트레이스로 같은 사건을 다시 만든다. 애니메이션은 판정을 바꾸지 않는다. 그래서 모델만 바꿨을 때 달라진 행동은 우연이 아니라 <strong>모델의 차이</strong>로 읽을 수 있다 — v4 코드는 이것을 다른 프로세스에서 돌린 CI 로 이미 확인하고 있다(<a href="#status">XII장</a>).</p>
+  </div>
+
+  <div class="grid g2" style="margin-top:16px;">
+    <div class="leaf">
+      <h4>연구 질문</h4>
+      <ul class="ink" style="margin-top:10px;">{% for q in e.research_questions %}<li><strong>{{ q.id }}</strong> {{ q.q }}</li>{% endfor %}</ul>
+    </div>
+    <div class="leaf">
+      <h4>Anchor 는 정답이 아니다</h4>
+      <p>Anchor 는 우리 장비에서 돌릴 수 있는 가장 강한 로컬 모델, 곧 “여기서부터 줄여 보자”의 출발점이다. 8B 가 Spear 를, 2B 가 Short Sword 를 골랐다고 2B 가 틀린 것이 아니다 — 둘 다 그 단원에게 맞을 수 있다.</p>
+      <p>그래서 “통계적으로 차이가 안 났다”를 “같다”고 말하지 않는다. 미리 정한 허용 폭과 짝비교 95% 신뢰구간으로 <strong>비열등성</strong>을 판단한다.</p>
+    </div>
+  </div>
+
+  <div class="sub-h"><h3>쉬운 시험부터, 통과한 모델만 다음 시험으로</h3></div>
+  <ol class="flow">{% for s in e.funnel %}<li{% if s.s == 3 %} class="hot"{% endif %}>{{ s.s }} · {{ s.name }}</li>{% endfor %}</ol>
+  <p class="muted" style="margin-top:10px;">DEV 는 연습 문제(Prompt 를 고쳐도 된다), HOLDOUT 은 진짜 시험이다. HOLDOUT 을 보고 Prompt 를 고치면 새 평가 버전이다. 합격선은 시험 전에 얼리고(FROZEN), 결과를 보고 낮추지 않는다.</p>
+
+  <div class="grid g2" style="margin-top:20px;align-items:start;">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Hard Gate <span class="tag tag-ember" style="margin-left:6px;">초기안 · Freeze 전</span></th><th>기준</th></tr></thead>
+        <tbody>{% for g in e.hard_gates %}<tr><td>{{ g.m }}</td><td class="num">{{ g.g }}</td></tr>{% endfor %}</tbody>
+      </table>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Agent Gate <span class="tag tag-ember" style="margin-left:6px;">초기안 · Freeze 전</span></th><th>기준</th></tr></thead>
+        <tbody>{% for g in e.agent_gates %}<tr><td>{{ g.m }}</td><td class="num">{{ g.g }}</td></tr>{% endfor %}</tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="grid g2" style="margin-top:16px;">
+    <div class="leaf">
+      <h4>결과는 이렇게만 말한다</h4>
+      <ul class="ink" style="margin-top:10px;">{% for c in e.allowed_claims %}<li>“{{ c }}”</li>{% endfor %}</ul>
+      <h4 style="margin-top:16px;">이렇게는 말하지 않는다</h4>
+      <ul class="ink no" style="margin-top:10px;">{% for c in e.banned_claims %}<li><s>“{{ c }}”</s></li>{% endfor %}</ul>
+    </div>
+    <div class="leaf">
+      <h4>실패를 지우지 않는다 — Failure Taxonomy</h4>
+      <div class="tags" style="margin-top:10px;">{% for f in e.failures %}<span class="tag">{{ f }}</span>{% endfor %}</div>
+      <p style="margin-top:12px;">“1B 는 캠프에서 전원이 지시를 그대로 복사했다”는 숨길 결과가 아니라 <strong>어디서 자율성이 무너졌는지</strong>의 근거다. 원인은 MODEL · HARNESS · RULE · DATASET · METRIC · RUNTIME · CONTENT 로 나누고, 모르면 UNKNOWN 이라고 적는다.</p>
+    </div>
+  </div>
+</div>
+</section>

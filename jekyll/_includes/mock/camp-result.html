@@ -1,0 +1,21 @@
+<figure class="mock" data-mock="camp-result">
+{% include mock/_bar.html scroll="1" t="CAMP RESULT" ko="Turn 1 · 지시 REST" %}
+<div class="mock-scroll"><div class="mock-body wide">
+  <div class="hud" style="margin-bottom:12px;"><span class="res"><svg class="ic" aria-hidden="true"><use href="#i-rest"/></svg>지시 · REST</span>
+  {% assign obey = site.data.mock_roster | where_exp: "p", "p.rest.act == 'REST'" %}
+  <span class="res">따름 {{ obey | size }} / {{ site.data.mock_roster | size }}</span></div>
+  <ul class="camp-rows">
+    {% for p in site.data.mock_roster %}
+      {% assign k = site.data.classes | where: "key", p.cls | first %}
+      <li class="{% if p.rest.act != 'REST' %}diff{% endif %}">
+        <span class="cid">{{ p.id }}</span>
+        {% include emb.html c=p.cls %}
+        <span class="cname"><b>{{ p.name }}</b><small>{{ k.name }} · {{ p.mbti }}</small></span>
+        <span class="cact">{{ p.rest.act }} {% if p.rest.act == 'REST' %}<span class="ok" aria-label="지시대로">✓</span>{% else %}<span class="bang" aria-label="지시와 다름">!</span>{% endif %}</span>
+        {% if p.rest.say %}<span class="csay">“{{ p.rest.say }}” <span class="chipset" style="display:inline-flex;margin-left:4px;">{% for c in p.rest.codes %}<span class="code">{{ c }}</span>{% endfor %}</span></span>{% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</div></div>
+<figcaption class="cap">지시와 다른 행동에는 <b>!</b> 가 붙고, 누르면 인스펙터가 Reason Code 를 연다. ISTJ 이졸데는 가족 부양 · 직전 실수 · 높은 불안 때문에 쉬지 않고 훈련장으로 갔다. 이것은 버그가 아니다. <b>항상 100% 따르는 단원은 자율 캐릭터가 아니라 버튼 실행기다.</b></figcaption>
+</figure>

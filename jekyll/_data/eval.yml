@@ -1,0 +1,76 @@
+# 평가 대시보드 — Eval PART 1 §43 · Visual Guide §29.
+#
+# ⚠ 이 파일에는 **실험 결과가 없다.** 아직 공식 E4 Run 이 없기 때문이다(PART 1 §42:
+# "실험 데이터가 없으면 Chart에는 NOT RUN을 표시하며 가짜 값을 넣지 않는다").
+# 결과 필드는 전부 status: NOT RUN 이고, scripts/check_site.py 가 대시보드 목업의
+# 결과 셀이 NOT RUN 뿐인지 검사한다.
+#
+# 게이트 수치는 결과가 아니라 **스펙(초기안)** 이다 — PART 1 §28·§29, Freeze 전.
+
+state: DRAFT     # PART 1 §4 — DRAFT · PILOT · PRE_REGISTERED · FROZEN · RUNNING · FINAL
+spec: v2.2
+
+header:
+  - { k: SPEC,      v: v2.2 }
+  - { k: STATE,     v: DRAFT }
+  - { k: MODEL,     v: NOT RUN }
+  - { k: QUANT,     v: NOT RUN }
+  - { k: HARDWARE,  v: NOT RUN }
+  - { k: SPLIT,     v: HOLDOUT }
+  - { k: SEEDS,     v: "160 (권장)" }
+  - { k: STATUS,    v: NOT RUN }
+
+# 사다리의 크기는 원문의 예시(PART 1 §6: 8B → 4B → 2B → 1B → 0.5B)다. 실제 family 에 따라 바뀐다.
+ladder:
+  - { size: 8B,   role: Anchor,    status: NOT RUN }
+  - { size: 4B,   role: Candidate, status: NOT RUN }
+  - { size: 2B,   role: Candidate, status: NOT RUN }
+  - { size: 1B,   role: Candidate, status: NOT RUN }
+
+# Heatmap 행 — PART 1 §43.3
+tasks: [Build, Growth, MBTI, Camp, Tactical, Plan→Action, Re-plan, Retreat]
+
+# 결과 문장 형식 — PART 1 §39
+allowed_claims:
+  - 본 평가 범위에서 Model X는 사전 정의한 Build/Persona/Camp/Process Gate를 통과했고 Model Y는 Camp Autonomy에서 실패했다.
+  - Model X는 Gate 통과 모델 중 Peak VRAM이 가장 낮아 Minimum Viable Gaming Agent로 선정했다.
+banned_claims:
+  - 2B는 8B와 똑같다.
+  - 세상에서 가장 좋은 Gaming AI다.
+  - p>0.05라 동일하다.
+
+research_questions:
+  - { id: RQ1, q: "어디까지 줄여도 Build 가 신체·Stats·Class 와 정합성을 유지하는가?" }
+  - { id: RQ2, q: "Growth Point 를 경험에 맞게 배분하는가?" }
+  - { id: RQ3, q: "MBTI 8축의 행동 차이가 작은 모델에서도 유지되는가?" }
+  - { id: RQ4, q: "Camp 에서 지시를 기계적으로 따르지 않고 합리적으로 순응·거부하는가?" }
+  - { id: RQ5, q: "계획→행동, Re-plan, Retreat 는 어느 규모에서 먼저 붕괴하는가?" }
+  - { id: RQ6, q: "Gate 를 만족하는 모델 중 VRAM·Latency 가 가장 낮은 것은?" }
+
+funnel:
+  - { s: 0, name: Compatibility, what: "load · schema · tool · context · runtime" }
+  - { s: 1, name: Smoke,         what: "24 Snapshot" }
+  - { s: 2, name: DEV,           what: "160 Snapshot — Prompt·Harness 수정 가능" }
+  - { s: 3, name: HOLDOUT,       what: "160 Snapshot — 보고 고치면 새 버전" }
+  - { s: 4, name: Episode,       what: "통과 모델만" }
+  - { s: 5, name: Long Horizon,  what: "최종 2개 · 20 Mission" }
+  - { s: 6, name: Deployment,    what: "VRAM · RAM · latency · OOM" }
+
+hard_gates:
+  - { m: Schema Validity,   g: "≥ 99%" }
+  - { m: Legal Action,      g: "≥ 99%" }
+  - { m: Impossible Action, g: "≤ 1%" }
+  - { m: Holdout OOM,       g: "0" }
+  - { m: Fatal Crash,       g: "0" }
+
+agent_gates:
+  - { m: Build Feasibility,       g: "≥ 95%" }
+  - { m: MBTI Axis Direction,     g: "max(0.70, Anchor−0.10)" }
+  - { m: Camp Justified Decision, g: "max(0.70, Anchor−0.10)" }
+  - { m: PAC@3,                   g: "max(0.75, Anchor−0.10)" }
+  - { m: Replan@2,                g: "max(0.75, Anchor−0.10)" }
+  - { m: Retreat F1,              g: "max(0.70, Anchor−0.10)" }
+
+failures: [F01 Schema, F02 Hallucinated Action, F03 Impossible Action, F04 Tool Misuse, F05 Context Miss, F06 MBTI Collapse, F07 Life Seed Ignored, F08 Build Collapse, F09 Growth Collapse, F10 Mechanical Compliance, F11 Plan–Action Mismatch, F12 Re-plan Miss, F13 Premature Retreat, F14 Late Retreat, F15 Timeout, F16 OOM, F17 Runtime Crash, F18 Fallback, F19 Trace Integrity]
+
+drill: [Scenario, Input State, Model Decision, Reason Codes, Rule Outcome, Trace, Replay]

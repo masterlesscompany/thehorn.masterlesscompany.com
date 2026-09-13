@@ -1,0 +1,29 @@
+<section class="chap" id="why">
+<div class="wrap">
+  {% include chap-head.html c=include.chap h="AI 로 게임을 만들 수 있을까?" lead="배경 그림이나 대사를 생성하는 수준이 아니다. 게임 속 캐릭터에게 실제 성장과 판단의 자유를 넘겼을 때, AI 가 캐릭터를 ‘키울’ 수 있는가 — 이 프로젝트는 그 질문에서 출발했다." %}
+
+  <div class="grid g3">
+    <div class="leaf"><span class="tag tag-wax">질문 1</span><h3 style="margin-top:12px;">AI 로 게임을 만들 수 있을까?</h3><p>대사 생성이 아니라, 캐릭터가 자기 삶을 스스로 전개하는 게임.</p></div>
+    <div class="leaf"><span class="tag tag-wax">질문 2</span><h3 style="margin-top:12px;">성장과 판단을 어디까지 맡길 수 있을까?</h3><p>무기 · 성장 포인트 · 숙련 · 지시 순응 · 계획 수정 · 동료 보호 · 철수 — 전부 단원(Character AI)의 몫.</p></div>
+    <div class="leaf"><span class="tag tag-wax">질문 3</span><h3 style="margin-top:12px;">자유도를 지키며 모델을 얼마나 줄일 수 있을까?</h3><p>게임은 반복 호출이 많다. 큰 API 모델은 비싸고 느리고 끊긴다. 내 컴퓨터에서 도는 로컬 모델은 VRAM(그래픽카드 메모리)과 정해진 형식으로 답하는 능력이 약하다.</p></div>
+  </div>
+
+  <div class="sub-h"><h3>같은 세계, 같은 단원, 같은 Seed — 모델만 줄인다</h3></div>
+  <div class="grid g2">
+    <div class="leaf">
+      <h4>재는 것</h4>
+      <ul class="ink" style="margin-top:10px;">
+        <li>성장 방식이 유지되는가 · 경험에 따라 성장 방향이 달라지는가</li>
+        <li>MBTI 기반 행동 특성이 유지되는가</li>
+        <li>같은 클래스라도 신체 · 스탯에 따라 다른 빌드가 나오는가</li>
+        <li>계획한 행동을 실제로 수행하는가 · 위험해졌을 때 Re-plan 하는가</li>
+        <li>싸울 가치가 없을 때 철수할 수 있는가</li>
+        <li>VRAM 과 Latency 는 얼마나 줄어드는가</li>
+      </ul>
+    </div>
+    <div class="leaf" style="display:flex;flex-direction:column;justify-content:center;">
+      <p class="say say-lg">가장 큰 모델을 쓰는 것이 아니라, 필요한 자율성을 만족하는 <span style="color:var(--wax);">가장 작은 모델</span>을 찾는다.<cite>기획서 확정본 v5.2 §0.3</cite></p>
+    </div>
+  </div>
+</div>
+</section>

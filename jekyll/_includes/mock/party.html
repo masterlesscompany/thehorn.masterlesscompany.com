@@ -1,0 +1,23 @@
+{% assign m = site.data.missions.missions | where: "n", 2 | first %}
+<figure class="mock" data-mock="party">
+{% include mock/_bar.html t="PARTY SELECT" ko="출전 선택 · M2" %}
+<div class="mock-body">
+  <div class="hud" style="justify-content:space-between;margin-bottom:14px;">
+    <span class="res">Required <b style="margin-left:4px;">{{ m.crew }}</b></span>
+    <span class="res">Selected <b style="margin-left:4px;color:var(--ember-2);">{{ m.crew }} / {{ m.crew }}</b></span>
+    <span class="res"><span class="ok">✓</span> Class 3종 <small>최소 {{ m.guard }} 필요</small></span>
+  </div>
+  <ul class="pick">
+    {% for p in site.data.mock_roster %}
+      {% assign on = false %}{% if p.id == "A" or p.id == "B" or p.id == "C" or p.id == "D" or p.id == "F" %}{% assign on = true %}{% endif %}
+      <li class="{% if on %}on{% endif %}{% if p.st == '부상' %} hurt{% endif %}">
+        {% include emb.html c=p.cls %}
+        <span><b>{{ p.name }}</b><small>{{ p.mbti }} · 피로 {{ p.fat }}</small></span>
+        <span class="chk" aria-label="{% if on %}선택됨{% else %}선택 안 됨{% endif %}">{% if on %}✓{% endif %}</span>
+      </li>
+    {% endfor %}
+  </ul>
+  <div style="margin-top:14px;display:flex;justify-content:flex-end;"><span class="gbtn hot">자동 진형으로 출전</span></div>
+</div>
+<figcaption class="cap">출전하면 피로와 부상 · Taken 위험을 지고 성장 기회를 얻는다. 쉬는 단원은 저절로 회복한다. 미션마다 인원이 달라 <b>10명을 어떻게 돌릴지</b>가 유저의 판단이 된다. 진형은 단장(Orchestrator)이 짠다.</figcaption>
+</figure>

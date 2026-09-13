@@ -1,0 +1,37 @@
+{% assign ms = site.data.missions.missions %}
+{% assign camps = ms | where_exp: "m", "m.camp" | map: "n" %}
+{% assign bosses = ms | where_exp: "m", "m.kind != 'normal'" | map: "n" %}
+{% assign guarded = ms | where_exp: "m", "m.guard" %}
+<section class="chap tint" id="campaign">
+<div class="wrap">
+  {% include chap-head.html c=include.chap h="스무 번의 계약, 스무 해의 세월." lead="계약 스무 개가 다섯 개씩 네 시대로 묶인다. 각 시대의 끝에는 Boss 가 있고, Boss 가 끝나면 모두가 다섯 살을 먹는다." %}
+
+  {% include mock/campaign.html %}
+
+  <div class="grid g4" style="margin-top:28px;">
+    {% for c in site.data.missions.cycles %}
+      <div class="leaf" style="border-top:3px solid var(--{{ c.key }});">
+        <span class="who" style="color:var(--{{ c.key }});">CYCLE {{ c.n }} · {{ c.season }}</span>
+        <h4 style="margin-top:6px;">{{ c.arc }}</h4>
+        <p style="font-family:var(--serif);font-size:14.5px;">“{{ c.feel }}”</p>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="grid g3" style="margin-top:16px;">
+    <div class="leaf">
+      <h4>인원은 미션이 정한다</h4>
+      <ul class="ink" style="margin-top:10px;">{% for r in site.data.missions.crew_reasons %}<li><strong>{{ r.n }}명</strong> — {{ r.why }}</li>{% endfor %}</ul>
+    </div>
+    <div class="leaf">
+      <h4>Troll Guard(초반 조합 안전장치)는 처음 두 판만</h4>
+      <p>{% for m in guarded %}M{{ m.n }}({{ m.crew }}명){% unless forloop.last %} · {% endunless %}{% endfor %} 은 최소 {{ guarded.first.guard }}개 Class 가 필요하다. 그 뒤로는 5 Bard 도 7 Warrior 도 막지 않는다 — 망하면 결과가 알려준다.</p>
+    </div>
+    <div class="leaf">
+      <h4>초반엔 잘 죽지 않는다</h4>
+      <p>HP 가 0이 되면 바로 죽지 않고 <strong>DOWNED(쓰러짐)</strong> 이 되고, 그다음에 Injured(부상) · Taken(끌려감) · Dead(사망) 중 하나로 갈린다. 초반엔 Death 가 매우 낮고 Injury 가 높다. 후반으로 갈수록 Death 가 오른다. 확률은 한 파일(balance.py)에만 있다.</p>
+    </div>
+  </div>
+  <p class="muted" style="margin-top:16px;">Camp: M{{ camps | join: " · M" }} 이후 · Boss: M{{ bosses | join: " · M" }} · 이후 +5년 · Life Event · Recruitment Dice.</p>
+</div>
+</section>

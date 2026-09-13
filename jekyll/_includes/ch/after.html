@@ -1,0 +1,32 @@
+<section class="chap" id="after">
+<div class="wrap">
+  {% include chap-head.html c=include.chap h="전장이 끝나면 장부를 적는다." lead="Result → Reward → MVP → Casualty → Taken? → AI Growth. 이야기는 결과 화면에서 이어진다." %}
+
+  {% include mock/result.html %}
+
+  <div class="grid g2" style="margin-top:0;align-items:start;">
+    {% include mock/taken.html %}
+    {% include mock/growth.html %}
+  </div>
+
+  <div class="grid g2" style="margin-top:28px;align-items:start;">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Cycle</th><th>Mission</th><th>구조비 배율</th></tr></thead>
+        <tbody>
+          {% for t in site.data.economy.rescue_tiers %}<tr><td>{{ t.cycle }}</td><td>{{ t.missions }}</td><td class="num">{{ t.mult }}</td></tr>{% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Growth Point</th><th>참가 생환자</th><th>MVP 추가</th></tr></thead>
+        <tbody>
+          {% for g in site.data.economy.growth_payout %}<tr><td>{{ g.kind }}</td><td class="num">{{ g.survivor }}</td><td class="num">{{ g.mvp }}</td></tr>{% endfor %}
+        </tbody>
+      </table>
+      <p class="muted" style="padding:10px 16px 14px;margin:0;">Boss 는 Gold · Growth 가 더 많고 Recruitment Dice 를 하나 준다. 시작 Gold 는 Cycle 1 Taken 두 명을 구할 수 있는 만큼(예: 구조비 100 · 시작 200). 정확한 값은 Pilot 에서 정한다.</p>
+    </div>
+  </div>
+</div>
+</section>

@@ -1,0 +1,30 @@
+{% assign mvp = site.data.mock_roster | where: "id", "A" | first %}
+<figure class="mock" data-mock="result">
+{% include mock/_bar.html scroll="1" t="MISSION RESULT" ko="전과 보고 · M2" %}
+<div class="mock-scroll"><div class="mock-body wide res-grid">
+  <div class="plate">
+    <p class="ph">RESULT</p>
+    <p class="big">방책 사수 <span class="ok">성공</span></p>
+    <ol class="flow-n"><li class="on">Result</li><li class="on">Reward</li><li class="on">MVP</li><li>Casualty</li><li>Taken?</li><li>AI Growth</li></ol>
+    <div class="hud" style="margin-top:12px;"><span class="res"><svg class="ic" aria-hidden="true"><use href="#i-gold"/></svg>+120 <small>Gold</small></span><span class="res"><svg class="ic" aria-hidden="true"><use href="#i-growth"/></svg>생환자 +1</span></div>
+  </div>
+  <div class="plate mvp">
+    <p class="ph">MVP · Contribution Score</p>
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:10px;">{% include emb.html c=mvp.cls %}<div><b style="font-family:var(--serif);font-size:17px;">{{ mvp.name }}</b><br><span class="dim" style="font-size:12.5px;">Guardian · Growth +1 +2</span></div><svg class="ic" style="margin-left:auto;width:28px;height:28px;color:var(--ember-2);" aria-hidden="true"><use href="#i-mvp"/></svg></div>
+    <ul class="contrib">
+      <li><span>Damage prevented</span><span class="meter"><i style="width:90%"></i></span></li>
+      <li><span>Cover</span><span class="meter"><i style="width:70%"></i></span></li>
+      <li><span>Objective</span><span class="meter"><i style="width:55%"></i></span></li>
+      <li><span>Damage</span><span class="meter"><i style="width:20%"></i></span></li>
+    </ul>
+  </div>
+  <div class="plate">
+    <p class="ph">CASUALTY</p>
+    <ul class="cas">
+      <li><span class="tagn inj">Injured</span>이졸데 · 다음 계약 전 회복 필요</li>
+      <li><span class="tagn tak">Taken</span>브리지트 · 돌아오지 못했다</li>
+    </ul>
+  </div>
+</div></div>
+<figcaption class="cap">MVP 는 AI 의 기분이 아니라 트레이스에서 계산한다 — 목표 기여 · 피해 · <b>막아준 피해</b> · 지원 · 응급처치 · 사기 · 제어 · 엄호 · 구조. 그래서 한 대도 제대로 못 때린 방패잡이가 MVP 가 될 수 있다.</figcaption>
+</figure>

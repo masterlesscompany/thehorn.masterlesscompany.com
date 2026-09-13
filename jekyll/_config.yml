@@ -1,0 +1,50 @@
+# 자유중대 (Free Company) — 프로젝트 사이트
+#
+# 소스는 저장소 루트가 아니라 이 `jekyll/` 하위에 격리한다 — 하네스(.claude/)·
+# 스크립트·설계 문서가 지킬 스캔 범위에 섞이지 않게 한다(secu-agent 원형).
+
+title: 자유중대
+title_en: Free Company
+tagline: 캐릭터를 조종하지 않는다. 출발점과 환경을 만들 뿐이다.
+description: >-
+  AI 캐릭터가 주어진 신체·성격·초기 방향 안에서 스스로 성장하고 판단하는 과정을
+  게임이라는 재현 가능한 환경에서 평가하는 Agent Testbed. 그 자율성을 유지하는
+  가장 작은 모델을 찾는다.
+lang: ko
+
+# ⚠ baseurl 은 여기서 비워 둔다 — 로컬 `jekyll serve` 기준이다.
+# 배포는 프로젝트 페이지(whoareryu.github.io/thehorn/)라 `/thehorn` 가 한 겹
+# 붙는데, 배포 워크플로가 `--baseurl` 로 덮어쓴다.
+# 그래서 사이트 안의 모든 내부 링크는 반드시 relative_url 필터를 통과시킨다.
+# scripts/check_site.py 가 원시 `href="/…"` 의 부재를 검사한다.
+baseurl: ""
+url: "https://whoareryu.github.io"
+github_username: whoareryu
+
+plugins: []
+
+collections:
+  # 기획 원문 6편. 본문은 원문 그대로이고 front matter 만 사이트용이다.
+  specs:
+    output: true
+  # 개별 페이지는 만들지 않는다(output: false). 렌더링은 /log/ 가 한꺼번에 한다.
+  logs:
+    output: false
+
+defaults:
+  - scope: { path: "", type: specs }
+    values: { layout: doc }
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+  # 원문의 \[ … \] 수식을 MathJax 없이 그대로 두면 kramdown 이 빈 블록을 만든다.
+  # 수식 엔진을 끄고 원문 기호가 글자로 보이게 둔다.
+  math_engine: null
+
+exclude:
+  - .jekyll-cache/
+  - Gemfile
+  - Gemfile.lock
+  - vendor/

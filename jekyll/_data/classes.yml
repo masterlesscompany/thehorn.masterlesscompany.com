@@ -1,0 +1,58 @@
+# 클래스 5종 — 기획서 §8(무기 풀) · §49(Combat Variant) · Visual Guide §6.2(Motion Family).
+# 클래스는 완성된 직업이 아니라 AI 가 고를 수 있는 행동·무기·전술의 가능 공간이다(§1.3).
+# 무기 사이 기본 공격력은 동일하다(§9) — 그래서 `diff` 에는 숫자가 아니라 전술 특성만 쓴다.
+
+- key: warrior
+  name: Warrior
+  ko: 전사
+  role: 근접 압박 — 가장 넓은 무기 공간
+  variants: 6
+  motions: [Slash, Thrust, Heavy]
+  weapons:
+    - { name: Long Sword,  diff: 균형 }
+    - { name: Short Sword, diff: 빠른 행동 }
+    - { name: Hammer,      diff: 방어 돌파 }
+    - { name: Axe,         diff: 큰 행동비용 · 압박 }
+    - { name: Dual Axe,    diff: 연속 행동 · 방어 불리 }
+    - { name: Spear,       diff: Reach }
+
+- key: guardian
+  name: Guardian
+  ko: 수호자
+  role: 전열 유지 — Shield 는 고정 Affordance
+  variants: 3
+  motions: [Strike, Block]
+  weapons:
+    - { name: Shield + Short Sword, diff: 막고 빠르게 }
+    - { name: Shield + Mace,        diff: 막고 둔탁하게 }
+    - { name: Shield + Axe,         diff: 막고 압박 }
+
+- key: archer
+  name: Archer
+  ko: 궁수
+  role: 거리 — 사거리와 기동의 저울질
+  variants: 3
+  motions: [Aim, Shoot]
+  weapons:
+    - { name: Short Bow,  diff: 기동 }
+    - { name: Long Bow,   diff: 긴 사거리 · 준비 }
+    - { name: Combat Bow, diff: 균형 }
+
+- key: bard
+  name: Bard
+  ko: 음유시인
+  role: 지원 — 나팔수 전용이 아니다
+  variants: 1
+  motions: [Bandage, Horn]
+  weapons:
+    - { name: Tool Kit, diff: "사기 · 정신피로 완화 · 응급처치 · 운반 · 전장 신호(Horn)" }
+
+- key: rogue
+  name: Rogue
+  ko: 도적
+  role: 교란 — 정찰·측면·함정
+  variants: 2
+  motions: [Stab, Throw, Trap Set]
+  weapons:
+    - { name: Short Dagger,    diff: 근접 찌르기 }
+    - { name: Throwing Dagger, diff: 투척 }

@@ -1,0 +1,45 @@
+{% assign s = site.data.status %}
+<section class="chap tint" id="status">
+<div class="wrap">
+  {% include chap-head.html c=include.chap h="이미 증명한 것, 아직 남은 것." lead="게임 본체 저장소에는 이전 기획(v4 · 「에르덴 용병단」)을 구현한 코드가 있다. 무엇이 이미 테스트로 굳었고, v5.2 로 가려면 무엇이 바뀌어야 하는지 그대로 적는다." %}
+
+  <div class="warn">
+    <svg class="ic" aria-hidden="true"><use href="#i-warn"/></svg>
+    <p><strong>이 장의 수치는 이전 버전(v4) 코드 기준 실측입니다 — v5.2 기능이 아닙니다.</strong>
+    측정일 {{ s.measured }} · 대상 커밋 <code>{{ s.commit }}</code> · 저장소 <code>{{ s.repo }}</code>. E1 은 규칙 기반 Fake 모델의 결과이고, 실모델 결과는 아직 없습니다.</p>
+  </div>
+
+  <div class="grid g4" style="margin-top:20px;">
+    {% for x in s.stats %}<div class="stat"><div class="n">{{ x.n }}<small>{{ x.unit }}</small></div><div class="k">{{ x.k }}</div><div class="s">{{ x.s }}</div></div>{% endfor %}
+  </div>
+
+  <div class="sub-h"><h3>기획서의 약속을 의견이 아니라 테스트로</h3></div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>약속</th><th>v4 코드에서 강제하는 방식</th><th>v5.2 에서도 유효한 근거</th></tr></thead>
+      <tbody>{% for g in s.guards %}<tr><td><strong>{{ g.rule }}</strong></td><td>{{ g.how }}</td><td>{{ g.v52 }}</td></tr>{% endfor %}</tbody>
+    </table>
+  </div>
+
+  <div class="sub-h"><h3>E1 · 단장이 실제로 도움이 되는가</h3><p class="muted">Fake 모델 · 조합당 시드 200 · 같은 시드로 ON/OFF 를 짝지어 비교(McNemar). p 는 “이 차이가 우연일 확률”이고, 작을수록 우연이 아니다</p></div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>조합</th><th>단장 ON 승률</th><th>OFF 승률</th><th>ON만 이김 / OFF만 이김</th><th>p</th><th>판정</th></tr></thead>
+      <tbody>{% for r in s.e1 %}<tr><td><strong>{{ r.combo }}</strong></td><td class="num">{{ r.on }}</td><td class="num">{{ r.off }}</td><td class="num">{{ r.wins }}</td><td class="num">{{ r.p }}</td><td>{{ r.verdict }}</td></tr>{% endfor %}</tbody>
+    </table>
+  </div>
+  <p class="muted" style="margin-top:10px;">전사 몰빵에서 단장이 오히려 손해라는 결과를 감추지 않는다 — 조합을 가리지 않는 고정 편성 규칙의 한계이고, 다음 실험 대상이다.</p>
+
+  <div class="sub-h"><h3>v4 → v5.2 전환 격차</h3></div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>영역</th><th>v4 코드 (지금)</th><th>v5.2 정본 (이 사이트)</th></tr></thead>
+      <tbody>{% for g in s.gap %}<tr><td><strong>{{ g.area }}</strong></td><td>{{ g.v4 }}</td><td>{{ g.v52 }}</td></tr>{% endfor %}</tbody>
+    </table>
+  </div>
+  <div class="leaf" style="margin-top:16px;">
+    <h4>v4 가 이미 증명했고 v5.2 가 그대로 가져가는 것</h4>
+    <div class="tags" style="margin-top:10px;">{% for k in s.kept %}<span class="tag tag-moss">{{ k }}</span>{% endfor %}</div>
+  </div>
+</div>
+</section>

@@ -1,0 +1,57 @@
+<section class="chap" id="birth">
+<div class="wrap">
+  {% include chap-head.html c=include.chap h="이름도 몸도 성격도, 정해진 사람은 없다." lead="고정된 주인공은 없다. 게임을 시작하면 모병관이 열 명을 데려오고, 한 사람씩 주사위와 룰렛 위에서 태어난다. 유저가 고르는 것은 여덟 단계 중 둘뿐이다." %}
+
+  {% include mock/creation.html %}
+
+  <div class="grid g3" style="margin-top:28px;">
+    <div class="leaf"><h4>Physical — 타고난 것</h4><p>키 · 체형(마름 · 보통 · 건장) · 몸무게. 생성 때 한 번 정해지고 성장 포인트로 바꿀 수 없다. 큰 몸이 무조건 좋지 않다 — 몸과 스탯과 빌드가 맞아야 한다.</p></div>
+    <div class="leaf"><h4>Age — 20세에서 40세</h4><p>눈이 높을수록 젊다. 다섯 미션마다 다섯 해가 흘러, 40세로 시작한 단원은 60세에 캠페인을 마친다.</p></div>
+    <div class="leaf"><h4>Gender — 이야기에만</h4><p>이름 · Life Seed · Life Event 사유에 관여한다. 공격력 · HP · 능력치 · 클래스 적합도 · 판정에는 영향이 0이다.</p></div>
+  </div>
+
+  <div class="sub-h"><h3>MBTI 는 심리 진단이 아니라 여덟 개의 행동 규칙이다</h3><p class="muted">16 Type = 네 글자의 합. ISTJ = I + S + T + J</p></div>
+  <div class="grid g4">
+    {% for a in site.data.mbti.axes %}
+      <div class="leaf">
+        <span class="who" style="color:var(--ink-3);">{{ a.pair }}</span>
+        {% for p in a.poles %}
+          <h4 style="margin-top:10px;"><span style="font-family:var(--cinzel);color:var(--wax);">{{ p.l }}</span> · {{ p.name }}</h4>
+          <p style="font-family:var(--serif);font-size:14.5px;">“{{ p.quote }}”</p>
+        {% endfor %}
+        <p class="muted" style="margin-top:10px;font-size:12.5px;">평가: {{ a.measure }}</p>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="sub-h"><h3>CLASS ≠ BUILD</h3><p class="muted">클래스는 직업이 아니라 고를 수 있는 행동 · 무기 · 전술의 공간이다</p></div>
+  <div class="grid g5">
+    {% for k in site.data.classes %}
+      <div class="leaf">
+        <span style="display:flex;align-items:center;gap:10px;"><span class="emb {{ k.key }}" style="background:var(--night-2);" aria-hidden="true"><svg class="ic"><use href="#i-{{ k.key }}"/></svg></span><span><h4 style="margin:0;">{{ k.name }}</h4><span class="muted" style="font-size:12.5px;">{{ k.ko }} · 전투 외형 {{ k.variants }}종</span></span></span>
+        <p style="margin-top:12px;font-size:14px;">{{ k.role }}</p>
+        <div class="tags" style="margin-top:10px;">{% for w in k.weapons %}<span class="tag">{{ w.name }}</span>{% endfor %}</div>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% assign vs = 0 %}{% for k in site.data.classes %}{% assign vs = vs | plus: k.variants %}{% endfor %}
+  <div class="grid g2" style="margin-top:16px;align-items:start;">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>무기</th><th>기본 공격력</th><th>핵심 차이</th></tr></thead>
+        <tbody>
+          {% for k in site.data.classes %}{% if k.key == "warrior" or k.key == "archer" %}{% for w in k.weapons %}<tr><td><strong>{{ w.name }}</strong></td><td>동일</td><td>{{ w.diff }}</td></tr>{% endfor %}{% endif %}{% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="leaf">
+      <h4>좋은 아이템을 먹어 강해지는 게임이 아니다</h4>
+      <p>무기 사이의 기본 공격력은 같다. 차이는 Reach · 행동 속도 · 방어 돌파 · 기동 · 연속 행동 · 사거리 같은 <strong>싸우는 방법</strong>이다. 강해지는 이유는 Stat · 숙련 · 경험 · 판단 · 협업이다.</p>
+      <p>그래서 AI 가 고른 무기는 전투 화면에서 반드시 보여야 한다 — 성별을 포함해 <strong>{{ vs | times: 2 }}개 Combat Variant</strong>. 같은 Warrior 도 Spear 와 Axe 는 다르게 싸운다.</p>
+    </div>
+  </div>
+
+  {% include mock/detail.html %}
+</div>
+</section>

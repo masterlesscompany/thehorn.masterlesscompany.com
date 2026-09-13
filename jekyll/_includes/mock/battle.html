@@ -1,0 +1,44 @@
+{% assign r = site.data.mock_roster %}
+<figure class="mock" data-mock="battle">
+{% include mock/_bar.html scroll="1" t="BATTLE" ko="M2 방어 계약 · 턴 4 / 자동전투" %}
+<div class="mock-scroll"><div class="mock-body wide" style="padding:0;">
+  <div class="scene">
+    <div class="scene-top">
+      <span class="res">목표 · 방책 사수</span>
+      <span class="res">턴 4</span>
+      <span class="res orch"><b>단장</b>&nbsp;<span class="dtag re">REPLAN</span>&nbsp;<small>전열 붕괴 징후 → Guardian 뒤로 Archer 보호</small></span>
+    </div>
+    <div class="field">
+      <div class="side ally" aria-label="아군 2열 진형">
+        <div class="rank back">
+          {% comment %} 결정 태그 어휘는 Visual Guide §22 를 따른다 — PROTECT · FLANK · HOLD · SUPPORT · REPLAN · RETREAT {% endcomment %}
+          {% assign u = r | where: "id", "D" | first %}<div class="unit"><span class="dtag">HOLD</span>{% include emb.html c=u.cls %}<b>{{ u.name }}</b><small>{{ u.weapon }}</small><span class="meter"><i style="width:{{ u.hp }}%"></i></span></div>
+          {% assign u = r | where: "id", "C" | first %}<div class="unit"><span class="dtag">SUPPORT</span>{% include emb.html c=u.cls %}<b>{{ u.name }}</b><small>{{ u.weapon }}</small><span class="meter"><i style="width:{{ u.hp }}%"></i></span></div>
+        </div>
+        <div class="rank front">
+          {% assign u = r | where: "id", "A" | first %}<div class="unit sel"><span class="dtag hot">PROTECT</span>{% include emb.html c=u.cls %}<b>{{ u.name }}</b><small>{{ u.weapon }}</small><span class="meter"><i style="width:63%"></i></span></div>
+          {% assign u = r | where: "id", "B" | first %}<div class="unit hit">{% include emb.html c=u.cls %}<b>{{ u.name }}</b><small>{{ u.weapon }}</small><span class="meter low"><i style="width:18%"></i></span></div>
+          {% assign u = r | where: "id", "F" | first %}<div class="unit"><span class="dtag">FLANK</span>{% include emb.html c=u.cls %}<b>{{ u.name }}</b><small>{{ u.weapon }} · Reach</small><span class="meter"><i style="width:{{ u.hp }}%"></i></span></div>
+        </div>
+      </div>
+      <div class="clash" aria-hidden="true"></div>
+      <div class="side foe" aria-label="적">
+        <div class="rank front">
+          <div class="unit enemy"><span class="emb"><svg class="ic" aria-hidden="true"><use href="#i-guardian"/></svg></span><b>Orc Shieldbearer</b><small>전열 · 방어</small><span class="meter"><i style="width:80%"></i></span></div>
+          <div class="unit enemy"><span class="emb"><svg class="ic" aria-hidden="true"><use href="#i-rogue"/></svg></span><b>Goblin Raider</b><small>근접</small><span class="meter"><i style="width:40%"></i></span></div>
+        </div>
+        <div class="rank back">
+          <div class="unit enemy"><span class="emb"><svg class="ic" aria-hidden="true"><use href="#i-rogue"/></svg></span><b>Goblin Raider</b><small>근접</small><span class="meter"><i style="width:100%"></i></span></div>
+          <div class="unit enemy"><span class="emb"><svg class="ic" aria-hidden="true"><use href="#i-warrior"/></svg></span><b>Gnoll Charger</b><small>빠른 압박</small><span class="meter"><i style="width:70%"></i></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="scene-bot">
+      <span class="gbtn wax"><svg class="ic" aria-hidden="true"><use href="#i-bard"/></svg>RETREAT SIGNAL</span>
+      <span class="dim" style="font-size:12.5px;">Bard 출전 중 → 즉시 전달</span>
+      <span class="gbtn" style="margin-left:auto;"><svg class="ic" aria-hidden="true"><use href="#i-inspector"/></svg>인스펙터 ›</span>
+    </div>
+  </div>
+</div></div>
+<figcaption class="cap">단원이 화면의 중심이다. 최대 7명을 위한 <b>2열 진형</b>. 머리 위 결정 태그(PROTECT · FLANK · HOLD · SUPPORT · REPLAN · RETREAT)는 1초 남짓 떴다 사라지고, 누르면 인스펙터가 열린다. 유저의 유일한 버튼은 <b>RETREAT SIGNAL</b>(뿔피리)이다. 누르면 철수 절차가 시작되고, Bard 가 없으면 전달이 1턴 늦는다.</figcaption>
+</figure>

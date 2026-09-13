@@ -1,0 +1,11 @@
+{% comment %}
+  목업 머리띠. 모든 목업이 이 부품을 거치므로 MOCK 배지가 빠질 수 없다
+  (Visual Guide §29.8 — 개발 Mock 은 MOCK 배지). check_site.py 가 figure 마다 확인한다.
+  인자: t(영문 화면명) · ko(한국어 부제) · badge(기본 "MOCK · 예시")
+{% endcomment %}
+<figcaption class="mock-bar">
+  <span class="rv" aria-hidden="true"></span><span class="rv" aria-hidden="true"></span><span class="rv" aria-hidden="true"></span>
+  <b>{{ include.t }}</b><span class="ko">{{ include.ko }}</span>
+  {% if include.scroll %}<span class="scroll-hint">← 옆으로 밀어 보기 →</span>{% endif %}
+  <span class="badge-mock" title="실제 플레이 데이터가 아닌 화면 예시">{{ include.badge | default: "MOCK · 예시" }}</span>
+</figcaption>

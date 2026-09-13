@@ -1,0 +1,32 @@
+{% assign bs = site.data.missions.missions | where_exp: "m", "m.kind != 'normal'" %}
+<section class="chap tint" id="boss">
+<div class="wrap">
+  {% include chap-head.html c=include.chap h="같은 조합이 아니라, 같은 방법을 벌한다." lead="보스는 우리 파티의 클래스 구성이 아니라 실제 행동 로그에서 Behavior Fingerprint 를 만든다. 5 Warrior 를 두 번 보내도 괜찮다. 같은 방식으로 싸우는 것이 문제다." %}
+
+  {% include mock/fingerprint.html %}
+
+  <div class="grid g4" style="margin-top:28px;">
+    {% for m in bs %}
+      <div class="leaf"><span class="who" style="color:var(--wax);">M{{ m.n }} · {{ m.crew }}명</span><h4 style="margin-top:6px;">{{ m.stage }}</h4><p>{{ m.note }}.</p></div>
+    {% endfor %}
+  </div>
+
+  <div class="grid g2" style="margin-top:16px;">
+    <div class="leaf">
+      <h4>무엇을 기억하는가</h4>
+      <div class="tags" style="margin-top:10px;">
+        {% comment %} for 태그 안에서는 필터가 먹지 않는다 — 먼저 assign 으로 나눈다 {% endcomment %}
+        {% assign fps = "Class composition,Weapon distribution,Range distribution,Formation,Action distribution,Target preference,Support dependency,Retreat pattern" | split: "," %}
+        {% for f in fps %}<span class="tag">{{ f }}</span>{% endfor %}
+      </div>
+      <p style="margin-top:12px;">평가(E2)는 Class 조합만으로 유사도가 정해지지 않는지를 따로 시험한다. 같은 조합 + 다른 Build 와 행동이면 유사도가 낮아져야 한다.</p>
+    </div>
+    <div class="leaf">
+      <h4>계산은 코드가, 타이밍은 LLM 이</h4>
+      <ol class="flow" style="margin-top:12px;"><li>Trace</li><li>Fingerprint 집계 · 코드</li><li>과거와 Similarity · 코드</li><li>Counter 후보 · 코드</li><li class="hot">언제 · 어떻게 실행 · LLM</li></ol>
+      <p style="margin-top:12px;">인스펙터는 근거가 된 과거 행동을 보여준다.</p>
+    </div>
+  </div>
+  <p class="say" style="margin-top:36px;">당신의 캐릭터는 적이 학습한 것보다 더 많이 변했는가?<cite>Final Boss 의 질문 — 통합시나리오 v3.2 §30</cite></p>
+</div>
+</section>
