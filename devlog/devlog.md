@@ -10,7 +10,7 @@ categories: devlog
 
 > 프로젝트: Masterless Company (용병단명: 뿔피리 / Company of the Horn) — 캐릭터가 스스로 판단하는 AI Agent 기반 2D 오토배틀
 > 연구 질문: **자율성을 유지하는 최소 모델은 무엇인가**
-> 팀: BeyondFacade — 류준(Team Lead · Agent Harness) · 장민석(Evaluation) · 신채연(Game Frontend · Rule Engine) · **이은상(QA)** · 김충식(Scenario · Content)
+> 팀: beyondbob — 류준(Team Lead · Agent Harness) · 장민석(Evaluation) · 신채연(Game Frontend · Rule Engine) · **이은상(QA)** · 김충식(Scenario · Content)
 > 제출: 2026-09-20 (예선) · 2026-10-17 데모데이 (본선)
 
 ## 2026-09-10
