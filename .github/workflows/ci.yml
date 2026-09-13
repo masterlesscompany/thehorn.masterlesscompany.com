@@ -1,0 +1,82 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['docs/**', '*.md']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      # --frozen 이 없으면 uv 가 매 실행마다 의존성을 다시 해결한다. 그러면
+      # 초록불이 잠금 파일을 보증하지 않고, 같은 커밋을 다음 주에 다시 돌리면
+      # 다른 스택에서 도는 셈이 된다.
+      - name: 의존성 설치
+        working-directory: backend
+        run: uv sync --dev --frozen
+
+      - name: 린트
+        working-directory: backend
+        run: |
+          uv run ruff check .
+          uv run ruff format --check .
+
+      - name: 테스트
+        working-directory: backend
+        run: uv run pytest -q
+
+      # 같은 시드가 **다른 프로세스**에서도 같은 판을 만들어야 한다. 한 프로세스
+      # 안에서만 재는 테스트는 해시 순서 의존(dict/set 순회)을 못 잡는다 —
+      # 실제로 그 결함이 있었고 승패까지 갈렸다(QA 라운드 1 P0-3).
+      - name: 프로세스 간 결정론
+        working-directory: backend
+        run: |
+          PYTHONHASHSEED=0     uv run python ../scripts/make_trace_sample.py --stdout > /tmp/a.jsonl
+          PYTHONHASHSEED=12345 uv run python ../scripts/make_trace_sample.py --stdout > /tmp/b.jsonl
+          diff /tmp/a.jsonl /tmp/b.jsonl
+
+      # 실험이 재현되지 않으면 차트가 근거가 되지 못한다.
+      - name: 실험 스모크
+        working-directory: backend
+        run: uv run python -m eval.run -e e1 -n 3 -q -o /tmp/e1.json
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: 의존성 설치
+        working-directory: frontend
+        run: npm ci
+
+      # 파이썬이 만든 docs/trace-samples/one-run.jsonl 을 프론트 테스트가 읽는다.
+      # 양쪽이 같은 파일을 읽으므로 트레이스 계약이 갈라질 수 없다.
+      - name: 테스트
+        working-directory: frontend
+        run: npm test
+
+      - name: 타입 검사
+        working-directory: frontend
+        run: npx tsc --noEmit
+
+      # 빌드에 환경변수를 주지 않는다. 모든 라우트가 요청 시점 렌더라 빌드가
+      # 백엔드를 부르지 않는 것을 실측으로 확인했다. 더미 값을 넣어 두면 그
+      # 사실이 가려지고, 진짜 비밀이 필요해지는 순간에도 CI 는 초록불을 낸다.
+      - name: 빌드
+        working-directory: frontend
+        run: npm run build
