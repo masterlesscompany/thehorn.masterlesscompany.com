@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- 매일 23:00 에 scripts/nightly.sh. __BASE__ 는 nightly_install.sh 가 채운다.
+     맥이 잠자기였으면 깨어난 뒤 한 번 돌고, 전원이 꺼져 있었으면 그날은 건너뛴다. -->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.masterlesscompany.thehorn.nightly</string>
+  <key>ProgramArguments</key>
+  <array><string>/bin/bash</string><string>__BASE__/nightly.sh</string></array>
+  <key>StartCalendarInterval</key>
+  <dict><key>Hour</key><integer>23</integer><key>Minute</key><integer>0</integer></dict>
+  <key>StandardOutPath</key><string>__HOME__/Library/Logs/thehorn-nightly.log</string>
+  <key>StandardErrorPath</key><string>__HOME__/Library/Logs/thehorn-nightly.log</string>
+</dict>
+</plist>

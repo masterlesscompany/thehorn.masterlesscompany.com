@@ -22,10 +22,12 @@ jobs:
       # 빈 baseurl 에서는 relative_url 을 빼먹은 링크도 우연히 풀리기 때문이다.
       - name: 빌드 · 검사 (로컬 기준)
         run: |
+          python3 scripts/split_devlog.py
           cd jekyll && bundle exec jekyll build && cd ..
           python3 scripts/check_site.py
 
       - name: 빌드 · 검사 (배포 기준 /thehorn)
         run: |
+          python3 scripts/split_devlog.py
           cd jekyll && bundle exec jekyll build --baseurl /thehorn && cd ..
           python3 scripts/check_site.py --baseurl /thehorn

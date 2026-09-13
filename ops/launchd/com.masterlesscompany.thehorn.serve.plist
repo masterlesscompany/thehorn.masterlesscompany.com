@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- ~/.local/share/thehorn/live/ 를 http://127.0.0.1:4000 으로 띄워 둔다. 파일을 읽기만 한다 — 갱신은 nightly 가 한다.
+     jekyll serve 와 달리 파일이 바뀌어도 다시 빌드하지 않는다. 127.0.0.1 에만 묶어 LAN 에 노출하지 않는다. -->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.masterlesscompany.thehorn.serve</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/python3</string><string>-m</string><string>http.server</string>
+    <string>4000</string><string>--bind</string><string>127.0.0.1</string>
+    <string>--directory</string><string>__BASE__/live</string>
+  </array>
+  <key>RunAtLoad</key><true/>
+  <key>KeepAlive</key><true/>
+  <key>StandardOutPath</key><string>/dev/null</string>
+  <key>StandardErrorPath</key><string>__HOME__/Library/Logs/thehorn-serve.log</string>
+</dict>
+</plist>

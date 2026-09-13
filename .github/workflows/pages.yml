@@ -1,16 +1,13 @@
 name: Deploy Jekyll site to Pages
 
-# 원격 저장소가 아직 없다(로컬 git 만 — 2026-09-11 결정). 원격을 만들면 이 워크플로가
-# 그대로 돈다. 무료 플랜은 **public** 저장소에만 Pages 를 준다 — secu-agent 에서
-# private 전환 뒤 configure-pages 가 Not Found 로 죽은 적이 있다.
-# 처음 한 번 Settings → Pages → Source 를 "GitHub Actions" 로 지정한다.
+# 사이트는 파일을 고칠 때마다 바뀌지 않는다 — 매일 밤 23:00(KST) 에 한 번, 그 시각의 main 을
+# 검사해 통과한 것만 배포한다(설계 2026-09-13 §3). 급하면 Actions 탭에서 수동 실행한다.
+# GitHub 예약 실행은 부하에 따라 수십 분 늦게 돌 수 있다.
+# 무료 플랜은 **public** 저장소에만 Pages 를 준다. Settings → Pages → Source 는 "GitHub Actions".
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'jekyll/**'
-      - '.github/workflows/pages.yml'
+  schedule:
+    - cron: '0 14 * * *'   # UTC 14:00 = KST 23:00
   workflow_dispatch:
 
 permissions:
@@ -37,8 +34,11 @@ jobs:
       - id: pages
         uses: actions/configure-pages@v5
 
-      # baseurl 을 여기서 덮어쓴다. _config.yml 은 빈 값(로컬 기준)이고
-      # 배포는 프로젝트 페이지라 `/thehorn` 가 한 겹 붙는다.
+      # baseurl 을 configure-pages 의 base_path 로 덮어쓴다. 사용자 도메인이면 빈 값이다.
+      # 팀 개발일지 원본(devlog/devlog.md)을 날짜별 로그로 쪼갠다. 산출물은 커밋하지 않는다.
+      - name: 개발일지 반영
+        run: python3 scripts/split_devlog.py
+
       - name: Build with Jekyll
         working-directory: jekyll
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
